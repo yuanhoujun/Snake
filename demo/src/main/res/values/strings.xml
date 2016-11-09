@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Snake</string>
+    <string name="discover">发现</string>
+    <string name="follow">关注</string>
+    <string name="message">消息</string>
+    <string name="mine">我的</string>
+    <string name="pen_name">笔名</string>
+    <string name="interest">爱好</string>
+    <string name="life_motto">人生格言</string>
+    <string name="url_jianshu">http://www.jianshu.com/users/db019edd34b4/latest_articles</string>
+    <string name="be_good_at">擅长</string>
+    <string name="lanuage">Android/iOS/Java Web/C++/Kotlin</string>
+    <string name="be_urself">活出自己的精彩！</string>
+    <string name="interest_content">编程，旅游，运动，综艺</string>
+    <string name="ouyangfeng">欧阳锋</string>
+    <string name="jianshu">简书</string>
+    <string name="go_to_author_jianshu">关注作者简书</string>
+    <string name="about_author">查看作者简介</string>
+    <string name="go_to_autor_jianshu">关注作者简书</string>
+</resources>

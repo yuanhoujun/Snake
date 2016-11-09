@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="me.foji.demo.MainActivity"
+    android:background="@android:color/white">
+
+<android.support.v4.view.ViewPager
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/divider_line"
+    android:id="@+id/viewPager"/>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#dddddd"
+    android:layout_above="@+id/mainTab"
+    android:id="@+id/divider_line"/>
+<RadioGroup
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal"
+    android:layout_alignParentBottom="true"
+    android:checkedButton="@+id/message"
+    android:id="@+id/mainTab">
+    <RadioButton
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:button="@null"
+        android:text="@string/message"
+        android:textSize="14dp"
+        android:textColor="@drawable/selector_main_tab_text_color"
+        android:gravity="center"
+        android:id="@+id/message"/>
+    <RadioButton
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:button="@null"
+        android:text="@string/discover"
+        android:textSize="14dp"
+        android:textColor="@drawable/selector_main_tab_text_color"
+        android:gravity="center"
+        android:id="@+id/discover"/>
+
+    <RadioButton
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:button="@null"
+        android:text="@string/follow"
+        android:textSize="14dp"
+        android:textColor="@drawable/selector_main_tab_text_color"
+        android:gravity="center"
+        android:id="@+id/follow"/>
+
+    <RadioButton
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:button="@null"
+        android:text="@string/mine"
+        android:textSize="14dp"
+        android:textColor="@drawable/selector_main_tab_text_color"
+        android:gravity="center"
+        android:id="@+id/mine"/>
+</RadioGroup>
+</RelativeLayout>

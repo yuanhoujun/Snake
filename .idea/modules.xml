@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Android_Slide_To_Close.iml" filepath="$PROJECT_DIR$/Android_Slide_To_Close.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Snake/Snake.iml" filepath="$PROJECT_DIR$/Snake/Snake.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
+    </modules>
+  </component>
+</project>
