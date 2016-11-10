@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,30 +14,26 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import me.foji.snake.SlideToCloseBuilder;
-import me.foji.snake.Snake;
-import me.foji.snake.util.Logger;
 import me.foji.snake.util.Utils;
 import me.foji.snake.widget.SnakeFrameLayout;
 
 /**
- * 扩展Fragment,增加addLifecycleListener、push、pop等接口
+ * 要实现Fragment滑动关闭功能，需要继承该Fragment 或 me.foji.snake.app.Fragment
+ * 推荐继承自该类,以保证充分向下兼容
  *
  * @author Scott Smith  @Date 2016年10月2016/10/18日 11:19
  */
 public class Fragment extends android.support.v4.app.Fragment {
     private ObjectAnimator mSlideToCloseAnimator;
     private ObjectAnimator mSlideToReleaseAnimator;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Snake.init(this).start();
-    }
+    private int mLastVisibility ;
+    private boolean mOverrideCheck = true;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = onBindView(inflater,container,savedInstanceState);
+        mOverrideCheck = false;
         if(null == view) return null;
         return buildSnakeView(view);
     }
@@ -57,8 +52,10 @@ public class Fragment extends android.support.v4.app.Fragment {
                     if(null != fragment) {
                         View lastView = fragment.getView();
                         if(null != lastView) {
+                            mLastVisibility = lastView.getVisibility();
+
                             lastView.setVisibility(View.VISIBLE);
-                            final float ratio = (float)left / getContext().getResources().getDisplayMetrics().widthPixels - 1;
+                            final float ratio = (float)left / Utils.screenWidth(getContext()) - 1;
                             lastView.setLeft((int) (ratio * Utils.dp2px(getContext(),100f)));
                             lastView.invalidate();                        }
                     }
@@ -92,6 +89,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                             public void onAnimationEnd(Animator animation) {
                                 getActivity().getSupportFragmentManager().popBackStackImmediate();
                                 finalLastView.setLeft(0);
+                                finalLastView.setVisibility(mLastVisibility);
                             }
 
                             @Override
@@ -104,7 +102,6 @@ public class Fragment extends android.support.v4.app.Fragment {
 
                             }
                         });
-                        final View finalLastView1 = lastView;
                         mSlideToCloseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                             @Override
                             public void onAnimationUpdate(ValueAnimator animation) {
@@ -142,6 +139,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                             public void onAnimationEnd(Animator animation) {
                                 finalLastView2.setLeft(0);
                                 snakeFrameLayout.reset();
+                                finalLastView2.setVisibility(mLastVisibility);
                             }
 
                             @Override
@@ -219,6 +217,14 @@ public class Fragment extends android.support.v4.app.Fragment {
     @Nullable
     public View onBindView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(mOverrideCheck) {
+            throw new RuntimeException("不能重写onCreateView方法，请使用onBindView方法代替");
+        }
     }
 
     @Override

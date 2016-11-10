@@ -17,13 +17,15 @@ import me.foji.snake.util.Utils;
 import me.foji.snake.widget.SnakeFrameLayout;
 
 /**
- * 扩展Fragment,增加addLifecycleListener、push、pop等接口
+ * 要实现Fragment滑动关闭功能，需要继承该Fragment 或 me.foji.snake.v4.app.Fragment
  *
  * @author Scott Smith  @Date 2016年10月2016/10/18日 11:19
  */
 public class Fragment extends android.app.Fragment {
     private ObjectAnimator mSlideToCloseAnimator;
     private ObjectAnimator mSlideToReleaseAnimator;
+    private int mLastVisibility ;
+    private boolean mOverrideCheck = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class Fragment extends android.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = onBindView(inflater,container,savedInstanceState);
+        mOverrideCheck = false;
         if(null == view) return null;
         return buildSnakeView(view);
     }
@@ -53,10 +56,12 @@ public class Fragment extends android.app.Fragment {
                     if(null != fragment) {
                         View lastView = fragment.getView();
                         if(null != lastView) {
+                            mLastVisibility = lastView.getVisibility();
                             lastView.setVisibility(View.VISIBLE);
-                            final float ratio = (float)left / getActivity().getResources().getDisplayMetrics().widthPixels - 1;
+                            final float ratio = (float)left / Utils.screenWidth(getActivity()) - 1;
                             lastView.setLeft((int) (ratio * Utils.dp2px(getActivity(), 100f)));
-                            lastView.invalidate();                        }
+                            lastView.invalidate();
+                        }
                     }
                 }
 
@@ -70,7 +75,7 @@ public class Fragment extends android.app.Fragment {
 
                     if(null == lastView) return;
 
-                    final int screenW = getActivity().getResources().getDisplayMetrics().widthPixels;
+                    final int screenW = Utils.screenWidth(getActivity());
 
                     // 关闭当前页面
                     if(isTouchEdge && close) {
@@ -88,6 +93,7 @@ public class Fragment extends android.app.Fragment {
                             public void onAnimationEnd(Animator animation) {
                                 getActivity().getFragmentManager().popBackStackImmediate();
                                 finalLastView.setLeft(0);
+                                finalLastView.setVisibility(mLastVisibility);
                             }
 
                             @Override
@@ -100,17 +106,16 @@ public class Fragment extends android.app.Fragment {
 
                             }
                         });
-                        final View finalLastView1 = lastView;
                         mSlideToCloseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                             @Override
                             public void onAnimationUpdate(ValueAnimator animation) {
                                 int value = (int) animation.getAnimatedValue();
-                                float ratio =  (float)value/screenW - 1;
+                                float ratio =  1.0f * value / screenW - 1;
                                 finalLastView.setLeft((int) (ratio * Utils.dp2px(getActivity(),100f)));
                             }
                         });
 
-                        mSlideToCloseAnimator.setDuration((long) (300 * (float)left / screenW));
+                        mSlideToCloseAnimator.setDuration((long) (300f * left / screenW));
 
                         mSlideToCloseAnimator.setTarget(view);
                         mSlideToCloseAnimator.setIntValues(left,screenW);
@@ -125,7 +130,7 @@ public class Fragment extends android.app.Fragment {
                         if(null == mSlideToReleaseAnimator) {
                             mSlideToReleaseAnimator = ObjectAnimator.ofInt(view, "left", left, 0);
                         }
-                        mSlideToReleaseAnimator.setDuration((long) (1000 * (float)left / screenW));
+                        mSlideToReleaseAnimator.setDuration((long) (1000f * left / screenW));
 
                         final View finalLastView2 = lastView;
                         mSlideToReleaseAnimator.addListener(new Animator.AnimatorListener() {
@@ -138,6 +143,7 @@ public class Fragment extends android.app.Fragment {
                             public void onAnimationEnd(Animator animation) {
                                 finalLastView2.setLeft(0);
                                 snakeFrameLayout.reset();
+                                finalLastView2.setVisibility(mLastVisibility);
                             }
 
                             @Override
@@ -207,5 +213,30 @@ public class Fragment extends android.app.Fragment {
     @Nullable
     public View onBindView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(mOverrideCheck) {
+            throw new RuntimeException("不能重写onCreateView方法，请使用onBindView方法代替");
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if(null != mSlideToCloseAnimator) {
+            mSlideToCloseAnimator.removeAllListeners();
+            mSlideToCloseAnimator.cancel();
+            mSlideToCloseAnimator = null;
+        }
+
+        if(null != mSlideToReleaseAnimator) {
+            mSlideToReleaseAnimator.removeAllListeners();
+            mSlideToReleaseAnimator.cancel();
+            mSlideToReleaseAnimator = null;
+        }
     }
 }
