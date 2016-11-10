@@ -72,7 +72,8 @@ public class SnakeEngineImpl extends SnakeEngine {
         activityDestroyAsset(currentActivity);
 
         // 检查当前Activity滑动关闭功能是否开启 (默认开启)
-        boolean openStatus = SnakeManager.get().getOpenStatus(currentActivity);
+        // 栈底的Activity没必要开启滑动关闭功能
+        boolean openStatus = SnakeManager.get().getOpenStatus(currentActivity) && !SnakeManager.get().isFirst(currentActivity);
         // 开启状态才处理滑动关闭逻辑
         if(openStatus) {
             ViewGroup currentDecorView = (ViewGroup) currentActivity.getWindow().getDecorView();
@@ -87,8 +88,6 @@ public class SnakeEngineImpl extends SnakeEngine {
             currentDecorView.addView(newContentView);
 
             AppCompatActivity lastActivity = SnakeManager.get().lastActivity();
-            // 起始Activity没必要使用滑动关闭功能
-            if(null == lastActivity) return;
 
             final View lastContentView0 = ((ViewGroup)lastActivity.getWindow().getDecorView()).getChildAt(0);
             final int screenW = Utils.screenWidth(currentActivity);
@@ -143,7 +142,7 @@ public class SnakeEngineImpl extends SnakeEngine {
                             @Override
                             public void onAnimationUpdate(ValueAnimator animation) {
                                 int value = (int) animation.getAnimatedValue();
-                                float ratio =  (float)value/screenW - 1;
+                                float ratio =  1.0f * value / screenW - 1;
                                 lastContentView0.setLeft((int) (ratio * Utils.dp2px(currentActivity,100f)));
                             }
                         });

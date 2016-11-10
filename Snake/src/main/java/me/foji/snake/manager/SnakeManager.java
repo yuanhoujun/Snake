@@ -35,6 +35,10 @@ public class SnakeManager {
         return null;
     }
 
+    public boolean isFirst(AppCompatActivity activity) {
+        return activities.size() > 0 && activities.indexOf(activity) == activities.size() - 1;
+    }
+
     public void insert(AppCompatActivity appCompatActivity) {
         if(!activities.contains(appCompatActivity)) {
             activities.add(0,appCompatActivity);

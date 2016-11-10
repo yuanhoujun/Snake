@@ -25,7 +25,6 @@ public class SnakeFrameLayout extends FrameLayout {
     private OnHorizontalScrollListener onHorizontalScrollListener;
     private boolean isTouchEdge = false;
     private int mXRange = getResources().getDisplayMetrics().widthPixels;
-    private boolean mSlideToCloseEnable = true;
 
     // 阴影Drawable
     private GradientDrawable mShadowDrawable;
@@ -46,11 +45,6 @@ public class SnakeFrameLayout extends FrameLayout {
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
                 return true;
-            }
-
-            @Override
-            public void onViewDragStateChanged(int state) {
-                super.onViewDragStateChanged(state);
             }
 
             @Override
@@ -109,10 +103,6 @@ public class SnakeFrameLayout extends FrameLayout {
         mViewDragHelper.setMinVelocity(minVelocity);
     }
 
-    public void setSlideToCloseEnable(boolean enable) {
-        mSlideToCloseEnable = enable;
-    }
-
     public void setShadowStartColor(@ColorInt int shadowStartColor) {
         mShadowStartColor = shadowStartColor;
     }
@@ -146,10 +136,6 @@ public class SnakeFrameLayout extends FrameLayout {
         return mViewDragHelper.shouldInterceptTouchEvent(ev);
     }
 
-    public void requestDisallowIntercept() {
-
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         getParent().requestDisallowInterceptTouchEvent(true);
@@ -163,7 +149,6 @@ public class SnakeFrameLayout extends FrameLayout {
             invalidate();
         }
     }
-
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
