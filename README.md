@@ -2,7 +2,14 @@
 ---
 Android轻松实现类似iOS滑动关闭功能
 
+![Alt text](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/master/image/demo.gif)
+
 # 使用方法
+在你的app module的build.gradle脚本中添加如下依赖:
+<pre>
+    compile 'me.foji.snake:Snake:0.0.2'
+</pre>
+注意：0.0.2版本可能正在审核中，如果不能正常使用，请修改为0.0.1版本
 ### 注意：Activity和Fragment的使用方法有一些不一样
 ## Activity集成方法
 ## 第一步：
