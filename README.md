@@ -1,7 +1,7 @@
 # Snake
 ---
 Android轻松实现类似iOS滑动关闭功能
-
+![Alt text](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/master/image/demo.gif)
 # 使用方法
 ### 注意：Activity和Fragment的使用方法有一些不一样
 ## Activity集成方法
