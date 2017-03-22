@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import me.foji.snake.annotations.SlideToClose;
+
 /**
  * Created by scott on 2016/11/6.
  */
+@SlideToClose(enable = false)
 public class FragmentMesssage extends BaseFragment {
     private LinearLayout messageItemLayout;
 

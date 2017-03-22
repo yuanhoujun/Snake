@@ -14,7 +14,7 @@ public class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 使用方式同Activity完全一样, 记得也要在onDestory里面调用回收方法
-        Snake.init(this).enable(openSlideToClose()).start();
+        Snake.init(this);
     }
 
     protected boolean openSlideToClose() {
@@ -24,6 +24,5 @@ public class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Snake.onDestroy(this);
     }
 }

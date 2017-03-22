@@ -10,6 +10,9 @@ import android.widget.RadioButton;
 
 import java.util.ArrayList;
 
+import me.foji.snake.annotations.SlideToClose;
+
+@SlideToClose(enable = false)
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private RadioButton message;
@@ -95,11 +98,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             }
         }
-    }
-
-    @Override
-    protected boolean openSlideToClose() {
-        return false;
     }
 
     class PagerAdapter extends FragmentPagerAdapter {

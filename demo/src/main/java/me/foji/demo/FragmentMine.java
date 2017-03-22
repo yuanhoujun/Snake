@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.foji.snake.annotations.SlideToClose;
+
 /**
  * Created by scott on 2016/11/6.
  */
+@SlideToClose(enable = false)
 public class FragmentMine extends BaseFragment {
     @Nullable
     @Override

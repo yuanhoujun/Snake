@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import me.foji.snake.annotations.SlideToClose;
+
 /**
  * @author Scott Smith  @Date 2016年11月2016/11/7日 14:11
  */
