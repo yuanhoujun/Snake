@@ -68,6 +68,7 @@ Note：要使注解生效，请确保在Activity的onCreate方法中调用了<co
 Fragment的集成方法相对Activity较为复杂，但依然可以使用少量的代码即可搞定！
 ## 第一步：
 一个合格的程序员应该会给自己的Fragment设置一个基类，这里假设叫做BaseFragment，为了保证可以使用滑动关闭功能，需要对基类对一点小小的修改：
+
 1）如果你的BaseFragment是继承自android.app.Fragment, 则将基类修改为me.foji.snake.app.Fragment, 其实它只是android.app.Fragment的一个子类而已，请放心使用。
 
 2）如果你的基类的onCreateView方法中有对布局进行了一些共同的处理，请将这部分代码移至<code>    public View onBindView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</code>方法中
