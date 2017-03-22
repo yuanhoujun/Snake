@@ -134,6 +134,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="@string/go_to_author_jianshu"
         android:textSize="14dp"
         android:textColor="#333333"
