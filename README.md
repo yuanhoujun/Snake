@@ -79,7 +79,7 @@ Fragment的集成方法相对Activity较为复杂，但依然可以使用少量�
 @Override
 public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    // 使用方式同Activity完全一样, 记得也要在onDestory里面调用回收方法
+    // 使用方式同Activity完全一样
     Snake.init(this);
 }
 </pre>
