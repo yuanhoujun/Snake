@@ -27,5 +27,5 @@ dependencies {
     })
     compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
     testCompile 'junit:junit:4.12'
-    compile project(":Snake")
+    compile 'com.github.yuanhoujun:Android_Slide_To_Close:0.0.3'
 }
