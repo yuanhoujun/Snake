@@ -126,18 +126,17 @@ public class Snake {
         bindLifeCycle(fragment);
     }
 
-    @Deprecated
-    public static void onDestroy(AppCompatActivity activity) {
+    private static void onDestroy(AppCompatActivity activity) {
         SnakeManager.get().remove(activity);
         SnakeManager.get().removeAnimator(activity);
         SnakeManager.get().removeOpenStatus(activity);
     }
 
-    public static void onDestroy(me.foji.snake.v4.app.Fragment fragment) {
+    private static void onDestroy(me.foji.snake.v4.app.Fragment fragment) {
         SlideToCloseBuilder.get().clear(fragment);
     }
 
-    public static void onDestroy(me.foji.snake.app.Fragment fragment) {
+    private static void onDestroy(me.foji.snake.app.Fragment fragment) {
         SlideToCloseBuilder.get().clear(fragment);
     }
 }
