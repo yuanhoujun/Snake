@@ -8,9 +8,10 @@ import java.util.HashMap;
 import me.foji.snake.widget.SnakeFrameLayout;
 
 /**
- * Created by scott on 2016/10/23.
+ * 使用该类构建SnakeEngine，SnakeEngine用于完成滑动关闭逻辑
+ *
+ * @author Scott Smith
  */
-
 public class SlideToCloseBuilder {
     private Fragment mSupportFragment;
     private android.app.Fragment mFragment;

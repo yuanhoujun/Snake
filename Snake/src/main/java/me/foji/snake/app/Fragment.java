@@ -27,12 +27,6 @@ public class Fragment extends android.app.Fragment {
     private int mLastVisibility ;
     private boolean mOverrideCheck = true;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Snake.init(this).start();
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
