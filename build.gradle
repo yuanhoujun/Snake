@@ -14,7 +14,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url 'https://bintray.com/ouyangfeng2016' }
+        maven { url "http://oss.jfrog.org/oss-snapshot-local/" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -22,5 +23,17 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+// Define versions in a single place
+ext {
+    // Sdk and tools
+    minSdkVersion = 14
+    targetSdkVersion = 25
+    compileSdkVersion = 25
+    buildToolsVersion = '25.0.2'
+
+    // App dependencies
+    supportLibraryVersion = '25.2.0'
+    lifecycleBinderVersion = '1.0.0'
+}
 
 
