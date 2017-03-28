@@ -12,14 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import me.foji.snake.SlideToCloseBuilder;
-import me.foji.snake.Snake;
 import me.foji.snake.util.Utils;
 import me.foji.snake.widget.SnakeFrameLayout;
 
 /**
  * 要实现Fragment滑动关闭功能，需要继承该Fragment 或 me.foji.snake.v4.app.Fragment
  *
- * @author Scott Smith  @Date 2016年10月2016/10/18日 11:19
+ * @author Scott Smith  @Date 2016年10月18日 11:19
  */
 public class Fragment extends android.app.Fragment {
     private ObjectAnimator mSlideToCloseAnimator;
@@ -38,11 +37,12 @@ public class Fragment extends android.app.Fragment {
 
     private View buildSnakeView(final View view) {
         if(needBuildSnakeView()) {
-            final SnakeFrameLayout snakeFrameLayout = new SnakeFrameLayout(getActivity(), view);
+            final SnakeFrameLayout snakeFrameLayout = new SnakeFrameLayout(getActivity() ,view);
             snakeFrameLayout.setShadowStartColor(SlideToCloseBuilder.get().shadowStartColor());
             snakeFrameLayout.setShadowEndColor(SlideToCloseBuilder.get().shadowEndColor());
             snakeFrameLayout.setMinVelocity(SlideToCloseBuilder.get().minVelocity());
-            snakeFrameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            snakeFrameLayout.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             snakeFrameLayout.setOnHorizontalScrollListener(new SnakeFrameLayout.OnHorizontalScrollListener() {
                 @Override
                 public void onScroll(int left) {
@@ -51,11 +51,11 @@ public class Fragment extends android.app.Fragment {
                         View lastView = fragment.getView();
                         if(null != lastView) {
                             mLastVisibility = lastView.getVisibility();
+
                             lastView.setVisibility(View.VISIBLE);
                             final float ratio = (float)left / Utils.screenWidth(getActivity()) - 1;
-                            lastView.setLeft((int) (ratio * Utils.dp2px(getActivity(), 100f)));
-                            lastView.invalidate();
-                        }
+                            lastView.setLeft((int) (ratio * Utils.dp2px(getActivity(),100f)));
+                            lastView.invalidate();                        }
                     }
                 }
 
@@ -69,7 +69,7 @@ public class Fragment extends android.app.Fragment {
 
                     if(null == lastView) return;
 
-                    final int screenW = Utils.screenWidth(getActivity());
+                    final int screenW = getActivity().getResources().getDisplayMetrics().widthPixels;
 
                     // 关闭当前页面
                     if(isTouchEdge && close) {
@@ -104,12 +104,12 @@ public class Fragment extends android.app.Fragment {
                             @Override
                             public void onAnimationUpdate(ValueAnimator animation) {
                                 int value = (int) animation.getAnimatedValue();
-                                float ratio =  1.0f * value / screenW - 1;
-                                finalLastView.setLeft((int) (ratio * Utils.dp2px(getActivity(),100f)));
+                                float ratio =  (float)value/screenW - 1;
+                                finalLastView.setLeft((int) (ratio * Utils.dp2px(getActivity() , 100f)));
                             }
                         });
 
-                        mSlideToCloseAnimator.setDuration((long) (300f * left / screenW));
+                        mSlideToCloseAnimator.setDuration((long) (300 * (float)left / screenW));
 
                         mSlideToCloseAnimator.setTarget(view);
                         mSlideToCloseAnimator.setIntValues(left,screenW);
@@ -124,7 +124,7 @@ public class Fragment extends android.app.Fragment {
                         if(null == mSlideToReleaseAnimator) {
                             mSlideToReleaseAnimator = ObjectAnimator.ofInt(view, "left", left, 0);
                         }
-                        mSlideToReleaseAnimator.setDuration((long) (1000f * left / screenW));
+                        mSlideToReleaseAnimator.setDuration((long) (1000 * (float)left / screenW));
 
                         final View finalLastView2 = lastView;
                         mSlideToReleaseAnimator.addListener(new Animator.AnimatorListener() {
@@ -155,7 +155,7 @@ public class Fragment extends android.app.Fragment {
                             public void onAnimationUpdate(ValueAnimator animation) {
                                 int value = (int) animation.getAnimatedValue();
                                 float ratio =  (float)value/screenW - 1;
-                                finalLastView2.setLeft((int) (ratio * Utils.dp2px(getActivity(),100f)));
+                                finalLastView2.setLeft((int) (ratio * Utils.dp2px(getActivity() ,100f)));
                             }
                         });
 
@@ -183,7 +183,7 @@ public class Fragment extends android.app.Fragment {
     private boolean needBuildSnakeView() {
         boolean enable = SlideToCloseBuilder.get().getOpenStatus(this);
         boolean isStart = SlideToCloseBuilder.get().isStart(this);
-        return enable && isStart && getFragmentManager().getBackStackEntryCount() > 0;
+        return enable && isStart;
     }
 
     private android.app.Fragment lastFragment() {
