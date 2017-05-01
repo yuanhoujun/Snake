@@ -26,7 +26,9 @@ dependencies {
 # 版本更新日志：
 # Version 0.0.5
 这个版本主要修复了以下问题：
+
 1）me.snake.app.Fragment类在第二个Fragment无法使用侧滑正常回退至第一个Fragment
+
 2）如果不使用继承基类的方式使用Snake框架，将导致Snake运行异常
 
 
