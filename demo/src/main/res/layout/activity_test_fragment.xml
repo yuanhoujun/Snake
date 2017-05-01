@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:id="@+id/container">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="me.foji.demo.TestFragmentActivity"
+    android:id="@+id/container">
+
     <!-- 注意：如果将Fragment声明在布局文件中，必须指定Tag ,
               并且Tag名称要和加入回退栈的Tag名称保持一致 -->
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="me.foji.demo.FragmentConversation"
-        android:tag="me.foji.demo.FragmentConversation"/>
+        android:name="me.foji.demo.FragmentOne"
+        android:tag="me.foji.demo.FragmentOne"/>
 </FrameLayout>

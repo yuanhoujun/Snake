@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import me.foji.snake.SlideToCloseBuilder;
 import me.foji.snake.util.Utils;
 import me.foji.snake.widget.SnakeFrameLayout;
@@ -201,14 +199,6 @@ public class Fragment extends android.support.v4.app.Fragment {
         android.support.v4.app.Fragment fragment = null;
         if(!TextUtils.isEmpty(name)) {
             fragment = manager.findFragmentByTag(name);
-        }
-
-        // 待定
-        if(null == fragment) {
-            List<android.support.v4.app.Fragment> fragments = manager.getFragments();
-            if(null != fragments && fragments.size() > 1) {
-                fragment = fragments.get(fragments.size() - 2);
-            }
         }
 
         return fragment;

@@ -39,4 +39,11 @@
         </LinearLayout>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_test_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="测试me.soji.snake.app.Fragment"
+        android:textSize="16dp"/>
 </LinearLayout>

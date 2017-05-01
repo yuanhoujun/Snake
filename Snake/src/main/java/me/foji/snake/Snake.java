@@ -57,12 +57,12 @@ public class Snake {
     private static void processAnnotations(me.foji.snake.v4.app.Fragment fragment) {
         SlideToClose slideToClose = fragment.getClass().getAnnotation(SlideToClose.class);
         if(null != slideToClose) {
-            SlideToCloseBuilder.get().enable(slideToClose.enable());
+            SlideToCloseBuilder.get().enable(fragment, slideToClose.enable());
             SlideToCloseBuilder.get().shadowStartColor(slideToClose.shadowStartColor());
             SlideToCloseBuilder.get().shadowEndColor(slideToClose.shadowEndColor());
             SlideToCloseBuilder.get().minVelocity(slideToClose.minVelocity());
         }
-        SlideToCloseBuilder.get().start();
+        SlideToCloseBuilder.get().start(fragment);
     }
 
     public static void init(me.foji.snake.v4.app.Fragment fragment) {
@@ -93,12 +93,12 @@ public class Snake {
     private static void processAnnotations(me.foji.snake.app.Fragment fragment) {
         SlideToClose slideToClose = fragment.getClass().getAnnotation(SlideToClose.class);
         if(null != slideToClose) {
-            SlideToCloseBuilder.get().enable(slideToClose.enable());
+            SlideToCloseBuilder.get().enable(fragment, slideToClose.enable());
             SlideToCloseBuilder.get().shadowStartColor(slideToClose.shadowStartColor());
             SlideToCloseBuilder.get().shadowEndColor(slideToClose.shadowEndColor());
             SlideToCloseBuilder.get().minVelocity(slideToClose.minVelocity());
         }
-        SlideToCloseBuilder.get().start();
+        SlideToCloseBuilder.get().start(fragment);
     }
 
     private static void bindLifeCycle(final me.foji.snake.app.Fragment fragment) {

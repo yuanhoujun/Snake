@@ -68,12 +68,30 @@ public class SlideToCloseBuilder {
         return this;
     }
 
+    public SlideToCloseBuilder enable(me.foji.snake.app.Fragment fragment, boolean enable) {
+        mOpenStatuses.put(fragment,enable);
+        return this;
+    }
+
+    public SlideToCloseBuilder enable(me.foji.snake.v4.app.Fragment fragment, boolean enable) {
+        mSupportOpenStatuses.put(fragment,enable);
+        return this;
+    }
+
     public void start() {
         if(null != mSupportFragment) {
             mSupportRunStatuses.put(mSupportFragment,true);
         } else {
             mRunStatuses.put(mFragment,true);
         }
+    }
+
+    public void start(me.foji.snake.app.Fragment fragment) {
+        mRunStatuses.put(fragment, true);
+    }
+
+    public void start(Fragment fragment) {
+        mSupportRunStatuses.put(fragment, true);
     }
 
     public boolean getOpenStatus(Fragment fragment) {
