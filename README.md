@@ -23,6 +23,13 @@ dependencies {
 }
 </pre>
 
+# 版本更新日志：
+# Version 0.0.5
+这个版本主要修复了以下问题：
+1）me.snake.app.Fragment类在第二个Fragment无法使用侧滑正常回退至第一个Fragment
+2）如果不使用继承基类的方式使用Snake框架，将导致Snake运行异常
+
+
 ### 注意：Activity和Fragment的使用方法有一些不一样
 ## Activity集成方法
 ## 第一步：
@@ -89,4 +96,9 @@ public void onCreate(@Nullable Bundle savedInstanceState) {
 Note: Fragment和Activity一样，也使用注解完成自定义设置
 
 ## 注意事项：
-由于Snake需要依赖于FragmentManager获取前一个Fragment，而这依赖于你对Fragment回退栈的处理。所以，为了保证Snake在Fragment中的正常使用，请将前一个Fragment放到回退栈中，并且设置合适的Tag名称！
+* 由于Snake需要依赖于FragmentManager获取前一个Fragment，而这依赖于你对Fragment回退栈的处理。所以，为了保证Snake在Fragment中的正常使用，请将前一个Fragment放到回退栈中，并且设置合适的Tag名称！
+* 为了保证侧滑功能可以正常使用，我们在style文件中设置了窗体透明。这个时候，如果你的根布局没有设置背景色，将导致
+  页面透明，直接可以看到前一级页面。因此，为了保证Snake功能运行正常，请将每一个页面的根布局设置一个背景色。可以统一
+  在基类里面处理
+  
+**如果你在使用过程中还出现了其它问题，请给我推送issue，或者去我的简书给我留言，我一定会在第一时间进行修复！**  

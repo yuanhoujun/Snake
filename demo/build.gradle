@@ -26,6 +26,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+//    compile 'com.github.yuanhoujun:Android_Slide_To_Close:0.0.3'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile 'com.github.yuanhoujun:Android_Slide_To_Close:0.0.3'
+    compile project(":Snake")
 }
