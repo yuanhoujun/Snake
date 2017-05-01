@@ -19,7 +19,7 @@ allprojects {
 在你的app工程中，增加如下依赖:
 <pre>
 dependencies {
-    compile 'com.github.yuanhoujun:Android_Slide_To_Close:0.0.3'
+    compile 'com.github.yuanhoujun:Android_Slide_To_Close:0.0.5'
 }
 </pre>
 
