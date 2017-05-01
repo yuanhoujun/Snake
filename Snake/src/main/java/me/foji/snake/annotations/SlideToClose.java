@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 请描述使用该类使用方法！！！
+ * 滑动关闭基础注解
  *
  * @author Scott Smith 2017-03-21 16:47
  */
