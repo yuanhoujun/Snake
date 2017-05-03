@@ -31,6 +31,8 @@ dependencies {
 
 2）如果不使用继承基类的方式使用Snake框架，将导致Snake运行异常
 
+# Version 0.0.6
+修复了 issue #3 ： Activity关闭出现内存泄露问题，感谢 [yuki-ryoko](https://github.com/yuki-ryoko)
 
 ### 注意：Activity和Fragment的使用方法有一些不一样
 ## Activity集成方法
