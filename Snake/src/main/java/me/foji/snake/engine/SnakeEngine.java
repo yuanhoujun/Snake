@@ -54,4 +54,9 @@ public abstract class  SnakeEngine {
      * 开启滑动关闭功能,必须调用该方法才能生效
      */
     public abstract void start();
+
+    /**
+     * 回收内存
+     */
+    public abstract void recycle();
 }

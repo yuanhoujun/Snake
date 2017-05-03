@@ -221,6 +221,11 @@ public class SnakeEngineImpl extends SnakeEngine {
         }
     }
 
+    @Override
+    public void recycle() {
+        currentActivity = null;
+    }
+
     private void activityDestroyAsset(AppCompatActivity appCompatActivity) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && appCompatActivity.isDestroyed()) {
             throw new RuntimeException("不能在已经销毁的Activity: " + appCompatActivity + "上面启用滑动关闭功能");

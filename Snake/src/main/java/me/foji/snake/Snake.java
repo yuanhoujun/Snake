@@ -130,6 +130,9 @@ public class Snake {
         SnakeManager.get().remove(activity);
         SnakeManager.get().removeAnimator(activity);
         SnakeManager.get().removeOpenStatus(activity);
+        if(null != mSnakeEngine) {
+            mSnakeEngine.recycle();
+        }
     }
 
     private static void onDestroy(me.foji.snake.v4.app.Fragment fragment) {
