@@ -129,10 +129,12 @@ public class SlideToCloseBuilder {
     public void clear(Fragment fragment) {
         mSupportOpenStatuses.remove(fragment);
         mSupportRunStatuses.remove(fragment);
+        mSupportFragment = null;
     }
 
     public void clear(me.foji.snake.app.Fragment fragment) {
         mOpenStatuses.remove(fragment);
         mRunStatuses.remove(fragment);
+        mFragment = null;
     }
 }
