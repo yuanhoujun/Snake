@@ -1,4 +1,5 @@
 # Snake
+# 一行代码实现滑动关闭功能：Snake.init(this) ==> Enjoying...
 ---
 Android轻松实现类似iOS滑动关闭功能
 
