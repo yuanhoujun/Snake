@@ -1,8 +1,8 @@
 package me.foji.demo;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fragments.add(new FragmentDiscover());
         fragments.add(new FragmentFollow());
         fragments.add(new FragmentMine());
-        mViewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), fragments));
+        mViewPager.setAdapter(new PagerAdapter(getFragmentManager(), fragments));
 
         message.setOnClickListener(this);
         follow.setOnClickListener(this);
@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    class PagerAdapter extends FragmentPagerAdapter {
+    class PagerAdapter extends android.support.v13.app.FragmentPagerAdapter {
         private ArrayList<BaseFragment> fragments = new ArrayList<>();
 
         public PagerAdapter(FragmentManager fm, ArrayList<BaseFragment> fragments) {

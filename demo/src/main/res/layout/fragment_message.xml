@@ -46,4 +46,11 @@
         android:layout_marginTop="10dp"
         android:text="测试me.soji.snake.app.Fragment"
         android:textSize="16dp"/>
+
+    <Button
+        android:id="@+id/btn_snake"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="生成Fragment接口实现类，测试"/>
 </LinearLayout>

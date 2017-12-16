@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@android:color/white">
     <LinearLayout
@@ -22,6 +23,13 @@
             android:textColor="#333333"
             android:text="其实你真的很棒，不要在意别人怎么说..."/>
     </LinearLayout>
+
+    <me.foji.widget.QuickAutoScrollViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        app:scrollFactor="5"
+        app:timeInterval="1000"/>
 
     <Button
         android:layout_width="match_parent"

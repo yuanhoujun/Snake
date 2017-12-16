@@ -3,9 +3,12 @@ package me.foji.demo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.youngfeng.annotations.EnableDragToClose;
+
 /**
  * Created by scott on 2016/11/6.
  */
+@EnableDragToClose()
 public class ActivityMessage extends BaseActivity {
 
     @Override

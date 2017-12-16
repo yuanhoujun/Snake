@@ -2,6 +2,7 @@ package me.foji.demo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.TypeSpec;
+
+import java.io.File;
+import java.io.IOException;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.foji.snake.annotations.SlideToClose;
 
 /**
@@ -18,6 +27,7 @@ import me.foji.snake.annotations.SlideToClose;
 public class FragmentMesssage extends BaseFragment {
     private LinearLayout messageItemLayout;
     private Button mSlideToCloseBtn;
+    @BindView(R.id.btn_snake) Button mSnakeBtn;
 
     @Nullable
     @Override
@@ -25,6 +35,7 @@ public class FragmentMesssage extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         messageItemLayout = (LinearLayout) view.findViewById(R.id.item_message);
         mSlideToCloseBtn = (Button) view.findViewById(R.id.btn_test_fragment);
+        ButterKnife.bind(this, view);
 
         return view;
     }
@@ -48,6 +59,17 @@ public class FragmentMesssage extends BaseFragment {
                 startActivity(intent);
             }
         });
+
+        mSnakeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    public void impl() throws IOException {
+
     }
 
     @Override

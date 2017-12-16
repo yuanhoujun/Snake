@@ -1,0 +1,13 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":snake-annotations")
+    implementation 'com.google.auto:auto-common:0.8'
+
+    api 'com.squareup:javapoet:1.9.0'
+    compileOnly "com.google.auto.service:auto-service:1.0-rc3"
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

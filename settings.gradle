@@ -1,1 +1,1 @@
-include ':demo', ':Snake'
+include ':demo', ':snake', ':snake-compiler', ':snake-annotations'
