@@ -1,4 +1,4 @@
-package com.youngfeng.util;
+package com.youngfeng.snake.util;
 
 import android.app.Fragment;
 import android.app.FragmentManager;

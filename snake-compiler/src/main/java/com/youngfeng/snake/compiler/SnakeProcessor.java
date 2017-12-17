@@ -7,7 +7,7 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import com.youngfeng.annotations.EnableDragToClose;
+import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -24,7 +24,6 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
@@ -115,7 +114,7 @@ public class SnakeProcessor extends AbstractProcessor {
         }
 
         if(null != bindMethodBuilder && null != mFiler) {
-            ClassName snakeHackLayoutClass = ClassName.get("com.youngfeng.view", "SnakeHackLayout");
+            ClassName snakeHackLayoutClass = ClassName.get("com.youngfeng.snake.view", "SnakeHackLayout");
             TypeElement snakeHackLayoutTypeElement = mElementUtils.getTypeElement(snakeHackLayoutClass.toString());
             ClassName snakeClass = ClassName.get("com.youngfeng", "Snake");
             TypeElement snakeTypeElement = mElementUtils.getTypeElement(snakeClass.toString());

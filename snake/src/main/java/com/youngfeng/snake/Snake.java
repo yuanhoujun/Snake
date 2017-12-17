@@ -1,4 +1,4 @@
-package com.youngfeng;
+package com.youngfeng.snake;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -7,10 +7,10 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.youngfeng.annotations.EnableDragToClose;
-import com.youngfeng.annotations.PrimaryConstructor;
-import com.youngfeng.util.FragmentManagerHelper;
-import com.youngfeng.view.SnakeHackLayout;
+import com.youngfeng.snake.annotations.EnableDragToClose;
+import com.youngfeng.snake.annotations.PrimaryConstructor;
+import com.youngfeng.snake.util.FragmentManagerHelper;
+import com.youngfeng.snake.view.SnakeHackLayout;
 
 import java.lang.reflect.Constructor;
 

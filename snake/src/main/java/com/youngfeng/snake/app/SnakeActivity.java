@@ -1,4 +1,4 @@
-package com.youngfeng.app;
+package com.youngfeng.snake.app;
 
 import android.support.v7.app.AppCompatActivity;
 

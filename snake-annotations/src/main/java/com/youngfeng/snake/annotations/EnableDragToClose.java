@@ -1,4 +1,4 @@
-package com.youngfeng.annotations;
+package com.youngfeng.snake.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

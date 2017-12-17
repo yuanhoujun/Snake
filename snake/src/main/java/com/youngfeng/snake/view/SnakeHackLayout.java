@@ -1,4 +1,4 @@
-package com.youngfeng.view;
+package com.youngfeng.snake.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
