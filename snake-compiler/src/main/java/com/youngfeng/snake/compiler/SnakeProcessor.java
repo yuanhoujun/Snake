@@ -11,8 +11,11 @@ import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -105,7 +108,7 @@ public class SnakeProcessor extends AbstractProcessor {
                             String variableTypeName = variableElement.getSimpleName().toString();
                             callSuper = callSuper.replaceFirst("%s", variableTypeName);
                         }
-                        bindMethodBuilder.addStatement(callSuper);
+                        bindMethodBuilder.addStatement(callSuper).addCode("\n");
                     }
 
                     break;
@@ -123,19 +126,27 @@ public class SnakeProcessor extends AbstractProcessor {
                     .addStatement("$T enableDragToClose = getClass().getAnnotation($T.class)",
                             EnableDragToClose.class, EnableDragToClose.class)
                     .addStatement("if(null != enableDragToClose && !enableDragToClose.value()) return view")
+                    .addCode("\n")
                     .addStatement("$T snakeLayout = $T.getLayout(getActivity(), view, true)",
                             snakeHackLayoutTypeElement.asType(), snakeHackLayoutTypeElement.asType())
                     .addStatement("$T.openDragToCloseForFragment(snakeLayout, this)", snakeTypeElement.asType())
+                    .addCode("\n")
                     .addStatement("return snakeLayout")
                     .build();
 
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.CHINA);
+            String dateStr = dateFormat.format(new Date());
             TypeSpec typeSpec = TypeSpec.classBuilder(simpleName + "_SnakeProxy")
+                                        .addJavadoc("Use this class to implement drag to close current fragment\n")
+                                        .addJavadoc("\n")
+                                        .addJavadoc("@author Scott Smith $L\n", dateStr)
                                         .addModifiers(Modifier.PUBLIC)
                                         .superclass(typeName)
                                         .addMethod(method)
                                         .build();
 
-            JavaFile javaFile = JavaFile.builder(packageName, typeSpec).build();
+            JavaFile javaFile = JavaFile.builder(packageName, typeSpec)
+                    .addFileComment("Generated code from Snake. Do not edit!").build();
             try {
                 javaFile.writeTo(mFiler);
             } catch (IOException e) {
