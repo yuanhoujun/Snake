@@ -128,7 +128,7 @@ public class Snake {
         View topWindowView = decorView.getChildAt(0);
         decorView.removeView(topWindowView);
 
-        SnakeHackLayout snakeHackLayout = SnakeHackLayout.getLayout(activity, topWindowView, false);
+        SnakeHackLayout snakeHackLayout = SnakeHackLayout.getLayout(activity, topWindowView, true);
         decorView.addView(snakeHackLayout);
 
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {

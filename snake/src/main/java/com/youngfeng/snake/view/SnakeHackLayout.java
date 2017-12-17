@@ -75,12 +75,6 @@ public class SnakeHackLayout extends FrameLayout {
             }
 
             @Override
-            public void onEdgeDragStarted(int edgeFlags, int pointerId) {
-                super.onEdgeDragStarted(edgeFlags, pointerId);
-
-            }
-
-            @Override
             public int getViewHorizontalDragRange(View child) {
                 return mXRange;
             }
@@ -188,6 +182,11 @@ public class SnakeHackLayout extends FrameLayout {
         getParent().requestDisallowInterceptTouchEvent(true);
         mViewDragHelper.processTouchEvent(event);
         return true;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return mViewDragHelper.shouldInterceptTouchEvent(ev);
     }
 
     @Override
