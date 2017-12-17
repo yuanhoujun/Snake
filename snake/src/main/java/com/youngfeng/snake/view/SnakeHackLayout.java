@@ -69,11 +69,15 @@ public class SnakeHackLayout extends FrameLayout {
 
             @Override
             public void onEdgeTouched(int edgeFlags, int pointerId) {
+                if(null != onEdgeDragListener) {
+                    onEdgeDragListener.onDragStart(SnakeHackLayout.this);
+                }
             }
 
             @Override
             public void onEdgeDragStarted(int edgeFlags, int pointerId) {
                 super.onEdgeDragStarted(edgeFlags, pointerId);
+
             }
 
             @Override
@@ -274,6 +278,13 @@ public class SnakeHackLayout extends FrameLayout {
     }
 
     public interface OnEdgeDragListener {
+        /**
+         * 控件拖拽开始
+         *
+         * @param parent 父布局
+         */
+        void onDragStart(SnakeHackLayout parent);
+
         /**
          * 控件正在拖拽中
          *

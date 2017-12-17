@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.annotations.PrimaryConstructor;
 import com.youngfeng.snake.util.FragmentManagerHelper;
+import com.youngfeng.snake.util.SoftKeyboardHelper;
 import com.youngfeng.snake.view.SnakeHackLayout;
 
 import java.lang.reflect.Constructor;
@@ -69,6 +70,11 @@ public class Snake {
         final FragmentManagerHelper fragmentManagerHelper = FragmentManagerHelper.get(fragment.getFragmentManager());
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
             @Override
+            public void onDragStart(SnakeHackLayout parent) {
+                SoftKeyboardHelper.hideKeyboardDelayed(fragment, 300);
+            }
+
+            @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
                 View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
                 if(null != viewOfLastFragment) {
@@ -122,6 +128,11 @@ public class Snake {
         decorView.addView(snakeHackLayout);
 
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
+            @Override
+            public void onDragStart(SnakeHackLayout parent) {
+                SoftKeyboardHelper.hideKeyboardDelayed(activity, 300);
+            }
+
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
 
