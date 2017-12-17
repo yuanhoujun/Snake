@@ -116,7 +116,7 @@ public class SnakeProcessor extends AbstractProcessor {
         if(null != bindMethodBuilder && null != mFiler) {
             ClassName snakeHackLayoutClass = ClassName.get("com.youngfeng.snake.view", "SnakeHackLayout");
             TypeElement snakeHackLayoutTypeElement = mElementUtils.getTypeElement(snakeHackLayoutClass.toString());
-            ClassName snakeClass = ClassName.get("com.youngfeng", "Snake");
+            ClassName snakeClass = ClassName.get("com.youngfeng.snake", "Snake");
             TypeElement snakeTypeElement = mElementUtils.getTypeElement(snakeClass.toString());
 
             MethodSpec method = bindMethodBuilder
