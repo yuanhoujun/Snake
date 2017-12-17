@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.youngfeng.annotations.EnableDragToClose;
 import com.youngfeng.annotations.PrimaryConstructor;
@@ -15,7 +13,6 @@ import com.youngfeng.util.FragmentManagerHelper;
 import com.youngfeng.view.SnakeHackLayout;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import me.foji.snake.util.Utils;
 
@@ -86,7 +83,9 @@ public class Snake {
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            fragmentManagerHelper.backToLastFragment();
+                            if (!fragmentManagerHelper.backStackEmpty()) {
+                                fragmentManagerHelper.backToLastFragment();
+                            }
                         }
                     });
 

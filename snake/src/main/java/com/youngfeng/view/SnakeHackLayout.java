@@ -25,14 +25,12 @@ import me.foji.snake.util.Utils;
 public class SnakeHackLayout extends FrameLayout {
     // 使用官方控件，简化拖拽处理
     private ViewDragHelper mViewDragHelper;
-    private boolean isTouchEdge;
     private OnEdgeDragListener onEdgeDragListener;
 
     // 释放因子：决定页面滑动释放的力度（值为3，即页面滑动超过父控件宽度的1/3后页面可以滑动关闭）
     private final int DEFALT_RELEASE_FACTOR = 3;
     private int mReleaseFactor = DEFALT_RELEASE_FACTOR;
     private int mXRange;
-    private boolean isReleased = true;
 
     // 子视图原始坐标
     private PointF mOriginPoint = new PointF(0f, 0f);
@@ -50,6 +48,7 @@ public class SnakeHackLayout extends FrameLayout {
     private int mShadowStartColor = DEFAULT_SHADOW_START_COLOR;
     private int mShadowEndColor = DEFAULT_SHADOW_END_COLOR;
     private int mShadowWidth = (int) Utils.dp2px(getContext(),15f);
+    private boolean isSettling = false;
 
     public SnakeHackLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -70,13 +69,11 @@ public class SnakeHackLayout extends FrameLayout {
 
             @Override
             public void onEdgeTouched(int edgeFlags, int pointerId) {
-                isTouchEdge = true;
             }
 
             @Override
             public void onEdgeDragStarted(int edgeFlags, int pointerId) {
                 super.onEdgeDragStarted(edgeFlags, pointerId);
-                isReleased = false;
             }
 
             @Override
@@ -92,12 +89,8 @@ public class SnakeHackLayout extends FrameLayout {
             @Override
             public int clampViewPositionHorizontal(View child, int left, int dx) {
                 if(left < mOriginPoint.x) left = (int) mOriginPoint.x;
-                left = isTouchEdge ? left : (int) child.getX();
+                left = mViewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT) ? left : (int) child.getX();
                 left = mAllowDragChildView ? left : (int) mOriginPoint.x;
-
-                if(null != onEdgeDragListener && isTouchEdge) {
-                    onEdgeDragListener.onDrag(SnakeHackLayout.this, child, left);
-                }
 
                 return left;
             }
@@ -109,18 +102,7 @@ public class SnakeHackLayout extends FrameLayout {
 
             @Override
             public void onViewDragStateChanged(int state) {
-                if(state == ViewDragHelper.STATE_SETTLING && isReleased) {
-                    if(null != onReleaseStateListener) {
-                        View childView = null;
-
-                        if(getChildCount() > 0) {
-                            childView = getChildAt(0);
-                        }
-
-                        onReleaseStateListener.onReleaseCompleted(SnakeHackLayout.this, childView);
-                    }
-                    isReleased = false;
-                }
+                isSettling = ViewDragHelper.STATE_SETTLING == state;
             }
 
             @Override
@@ -133,11 +115,21 @@ public class SnakeHackLayout extends FrameLayout {
                     mShadowDrawable.setColors(new int[] {shadowStartColor , shadowEndColor});
                     invalidate();
                 }
+
+                if(null != onEdgeDragListener && needListenForDraging(mViewDragHelper, changedView)) {
+                    onEdgeDragListener.onDrag(SnakeHackLayout.this, changedView, left);
+                }
+
+                if(left <= 0 || left >= mXRange) {
+                    if (null != onReleaseStateListener && isSettling) {
+                        onReleaseStateListener.onReleaseCompleted(SnakeHackLayout.this, changedView);
+                    }
+                }
             }
 
             @Override
             public void onViewReleased(View releasedChild, float xvel, float yvel) {
-                if(null != onEdgeDragListener && isTouchEdge) {
+                if(null != onEdgeDragListener && mViewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT)) {
                     boolean shouldClose = xvel > mViewDragHelper.getMinVelocity();
 
                     if(!shouldClose) {
@@ -146,13 +138,18 @@ public class SnakeHackLayout extends FrameLayout {
 
                     onEdgeDragListener.onRelease(SnakeHackLayout.this, releasedChild, releasedChild.getLeft(), shouldClose);
                 }
-                isTouchEdge = false;
-                isReleased = true;
             }
         });
         mViewDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
 
         mShadowDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,new int[] {mShadowStartColor, mShadowEndColor});
+    }
+
+    // Only listen for left edge was touched and the child view has left edge when finger leave
+    private boolean needListenForDraging(ViewDragHelper viewDragHelper, View childView) {
+        return viewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT)
+                || (viewDragHelper.getViewDragState() == ViewDragHelper.STATE_SETTLING
+                    && childView.getLeft() > 0);
     }
 
     public static SnakeHackLayout getLayout(Context context, View contentView, boolean allowDragChildView) {
@@ -180,7 +177,6 @@ public class SnakeHackLayout extends FrameLayout {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         mXRange = right - left;
-        Log.e("Snake", "XRange = " + mXRange);
     }
 
     @Override
@@ -223,10 +219,6 @@ public class SnakeHackLayout extends FrameLayout {
             invalidate();
 
             this.onReleaseStateListener = onReleaseStateListener;
-
-            if(null != this.onReleaseStateListener) {
-                this.onReleaseStateListener.onReleaseCompleted(this, view);
-            }
         }
     }
 

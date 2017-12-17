@@ -81,7 +81,7 @@ public class SnakeProcessor extends AbstractProcessor {
             return;
         }
 
-        // Do nothing if it has processed!!!
+        // Do nothing if it has been processed!!!
         if(elementType.toString().endsWith("_SnakeProxy")) return;
 
         TypeElement typeElement = (TypeElement) element;
