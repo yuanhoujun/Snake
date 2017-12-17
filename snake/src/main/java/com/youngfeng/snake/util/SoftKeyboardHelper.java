@@ -36,17 +36,19 @@ public class SoftKeyboardHelper {
         }
     };
 
-    public static void hideKeyboard(@NonNull Fragment fragment) {
-        if(fragment.isDetached() || fragment.isRemoving() || null == fragment.getActivity()) return;
+    public static boolean hideKeyboard(@NonNull Fragment fragment) {
+        if(fragment.isDetached() || fragment.isRemoving() || null == fragment.getActivity()) return true;
 
         InputMethodManager inputMethodManager = (InputMethodManager) fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         View rootView = fragment.getView();
         if(rootView instanceof ViewGroup) {
             View focusedChild = ((ViewGroup)rootView).getFocusedChild();
             if(null != focusedChild) {
-                inputMethodManager.hideSoftInputFromWindow(focusedChild.getWindowToken(), 0);
+                return inputMethodManager.hideSoftInputFromWindow(focusedChild.getWindowToken(), 0);
             }
         }
+
+        return true;
     }
 
     public static void hideKeyboardDelayed(@NonNull final Fragment fragment, int delayMillis) {
@@ -54,14 +56,14 @@ public class SoftKeyboardHelper {
         mMainHandler.sendMessageDelayed(message, delayMillis);
     }
 
-    public static void hideKeyboard(@NonNull Activity activity) {
-        if(activity.isFinishing()) return;
-
+    public static boolean hideKeyboard(@NonNull Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         View focusedChild = activity.getCurrentFocus();
         if(null != focusedChild) {
-            inputMethodManager.hideSoftInputFromWindow(focusedChild.getWindowToken(), 0);
+            return inputMethodManager.hideSoftInputFromWindow(focusedChild.getWindowToken(), 0);
         }
+
+        return true;
     }
 
     public static void hideKeyboardDelayed(@NonNull final Activity activity, int delayMillis) {

@@ -69,13 +69,17 @@ public class Snake {
 
         final FragmentManagerHelper fragmentManagerHelper = FragmentManagerHelper.get(fragment.getFragmentManager());
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
+            private boolean keyboardHideSuccess = false;
+
             @Override
             public void onDragStart(SnakeHackLayout parent) {
-                SoftKeyboardHelper.hideKeyboardDelayed(fragment, 300);
+                keyboardHideSuccess = SoftKeyboardHelper.hideKeyboard(fragment);
             }
 
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
+                if(!keyboardHideSuccess) return;
+
                 View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
                 if(null != viewOfLastFragment) {
                     float ratio = (left * 1.0f) / parent.getWidth();
@@ -130,7 +134,7 @@ public class Snake {
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
             @Override
             public void onDragStart(SnakeHackLayout parent) {
-                SoftKeyboardHelper.hideKeyboardDelayed(activity, 300);
+                SoftKeyboardHelper.hideKeyboard(activity);
             }
 
             @Override
