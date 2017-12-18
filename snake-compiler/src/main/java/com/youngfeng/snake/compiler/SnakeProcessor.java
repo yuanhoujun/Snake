@@ -3,14 +3,17 @@ package com.youngfeng.snake.compiler;
 import com.google.auto.common.SuperficialValidation;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -127,12 +130,16 @@ public class SnakeProcessor extends AbstractProcessor {
                             EnableDragToClose.class, EnableDragToClose.class)
                     .addStatement("if(null != enableDragToClose && !enableDragToClose.value()) return view")
                     .addCode("\n")
-                    .addStatement("$T snakeLayout = $T.getLayout(getActivity(), view, true)",
-                            snakeHackLayoutTypeElement.asType(), snakeHackLayoutTypeElement.asType())
-                    .addStatement("$T.openDragToCloseForFragment(snakeLayout, this)", snakeTypeElement.asType())
+                    .addStatement("mSnakeLayout = $T.getLayout(getActivity(), view, true)",
+                            snakeHackLayoutTypeElement.asType())
+                    .addStatement("$T.openDragToCloseForFragment(mSnakeLayout, this)", snakeTypeElement.asType())
                     .addCode("\n")
-                    .addStatement("return snakeLayout")
+                    .addStatement("return mSnakeLayout")
                     .build();
+
+
+            FieldSpec field = FieldSpec.builder(TypeName.get(snakeHackLayoutTypeElement.asType()),
+                    "mSnakeLayout", Modifier.PRIVATE).build();
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.CHINA);
             String dateStr = dateFormat.format(new Date());
@@ -143,6 +150,8 @@ public class SnakeProcessor extends AbstractProcessor {
                                         .addModifiers(Modifier.PUBLIC)
                                         .superclass(typeName)
                                         .addMethod(method)
+                                        .addMethod(buildMethodEnableDragToClose())
+                                        .addField(field)
                                         .build();
 
             JavaFile javaFile = JavaFile.builder(packageName, typeSpec)
@@ -153,6 +162,19 @@ public class SnakeProcessor extends AbstractProcessor {
                 e.printStackTrace();
             }
         }
+    }
+
+    private MethodSpec buildMethodEnableDragToClose() {
+        ParameterSpec parameter = ParameterSpec.builder(Boolean.class, "enable").build();
+
+        return MethodSpec.methodBuilder("enableDragToClose")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(parameter)
+                .addCode("if(null != mSnakeLayout) { \n")
+                .addCode("\tmSnakeLayout.ignoreDragEvent(!enable);\n")
+                .addCode("}")
+                .returns(TypeName.VOID)
+                .build();
     }
 
     // Depend whether the method's name is onCreateView

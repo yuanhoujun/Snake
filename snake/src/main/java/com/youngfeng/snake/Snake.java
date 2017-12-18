@@ -19,6 +19,7 @@ import com.youngfeng.snake.util.TranslucentConversionListener;
 import com.youngfeng.snake.view.SnakeHackLayout;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 import com.youngfeng.snake.util.Utils;
 
@@ -237,5 +238,14 @@ public class Snake {
         if(!(topWindowView instanceof SnakeHackLayout)) return;
 
         ((SnakeHackLayout) topWindowView).ignoreDragEvent(!enable);
+    }
+
+    public static void enableDragToClose(@NonNull Fragment fragment, boolean enable) {
+        try {
+            Method method = fragment.getClass().getMethod("enableDragToClose", Boolean.class);
+            method.invoke(fragment, enable);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 }
