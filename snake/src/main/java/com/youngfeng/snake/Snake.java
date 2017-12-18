@@ -1,21 +1,25 @@
 package com.youngfeng.snake;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.Fragment;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.annotations.PrimaryConstructor;
+import com.youngfeng.snake.util.ActivityHelper;
+import com.youngfeng.snake.util.ActivityManager;
 import com.youngfeng.snake.util.FragmentManagerHelper;
 import com.youngfeng.snake.util.SoftKeyboardHelper;
 import com.youngfeng.snake.view.SnakeHackLayout;
 
 import java.lang.reflect.Constructor;
 
-import me.foji.snake.util.Utils;
+import com.youngfeng.snake.util.Utils;
 
 /**
  * 框架入口，用于集成滑动关闭功能
@@ -23,6 +27,45 @@ import me.foji.snake.util.Utils;
  * @author Scott Smith 2017-12-11 12:17
  */
 public class Snake {
+
+    public static void init(Application application) {
+        application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                ActivityManager.get().put(activity);
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                ActivityManager.get().remove(activity);
+            }
+        });
+    }
 
     public static <T extends Fragment> T newProxy(Class<? extends T> fragment, Object... args) {
         checkAnnotationNotEmpty(fragment);
@@ -126,6 +169,10 @@ public class Snake {
 
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         View topWindowView = decorView.getChildAt(0);
+
+        // Just return if top window view was SnakeHackLayout.
+        if(topWindowView instanceof SnakeHackLayout) return;
+
         decorView.removeView(topWindowView);
 
         SnakeHackLayout snakeHackLayout = SnakeHackLayout.getLayout(activity, topWindowView, true);
@@ -135,6 +182,7 @@ public class Snake {
             @Override
             public void onDragStart(SnakeHackLayout parent) {
                 SoftKeyboardHelper.hideKeyboard(activity);
+                ActivityHelper.setWindowTranslucent(activity, true);
             }
 
             @Override
@@ -146,6 +194,13 @@ public class Snake {
             public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose) {
                 if(shouldClose) {
                     activity.finish();
+                } else {
+                    parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
+                        @Override
+                        public void onReleaseCompleted(SnakeHackLayout parent, View view) {
+                            ActivityHelper.setWindowTranslucent(activity, false);
+                        }
+                    });
                 }
             }
         });

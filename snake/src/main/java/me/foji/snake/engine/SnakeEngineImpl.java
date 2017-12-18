@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import me.foji.snake.manager.SnakeAnimator;
 import me.foji.snake.manager.SnakeManager;
-import me.foji.snake.util.Utils;
+import com.youngfeng.snake.util.Utils;
 import me.foji.snake.widget.SnakeFrameLayout;
 
 /**

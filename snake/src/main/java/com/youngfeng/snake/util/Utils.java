@@ -1,4 +1,4 @@
-package me.foji.snake.util;
+package com.youngfeng.snake.util;
 
 import android.content.Context;
 import android.graphics.Color;

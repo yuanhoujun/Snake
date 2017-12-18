@@ -15,7 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import me.foji.snake.util.Utils;
+import com.youngfeng.snake.util.Utils;
 
 /**
  * SnakeHackLayout 用于滑动关闭视图处理

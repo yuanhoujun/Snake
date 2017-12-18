@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import me.foji.snake.SlideToCloseBuilder;
-import me.foji.snake.util.Utils;
+import com.youngfeng.snake.util.Utils;
 import me.foji.snake.widget.SnakeFrameLayout;
 
 /**

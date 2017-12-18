@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import me.foji.snake.util.Utils;
+import com.youngfeng.snake.util.Utils;
 
 /**
  * 使用该布局使Activity、Fragment根布局具备监听边缘滑动功能

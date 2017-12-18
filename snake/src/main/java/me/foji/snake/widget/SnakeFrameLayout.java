@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import me.foji.snake.util.Utils;
+import com.youngfeng.snake.util.Utils;
 
 /**
  * 用于控制页面滑动的布局文件
