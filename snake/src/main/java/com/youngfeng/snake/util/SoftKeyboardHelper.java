@@ -59,6 +59,7 @@ public class SoftKeyboardHelper {
     public static boolean hideKeyboard(@NonNull Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         View focusedChild = activity.getCurrentFocus();
+
         if(null != focusedChild) {
             return inputMethodManager.hideSoftInputFromWindow(focusedChild.getWindowToken(), 0);
         }

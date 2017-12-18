@@ -15,6 +15,7 @@ import com.youngfeng.snake.util.ActivityHelper;
 import com.youngfeng.snake.util.ActivityManager;
 import com.youngfeng.snake.util.FragmentManagerHelper;
 import com.youngfeng.snake.util.SoftKeyboardHelper;
+import com.youngfeng.snake.util.TranslucentConversionListener;
 import com.youngfeng.snake.view.SnakeHackLayout;
 
 import java.lang.reflect.Constructor;
@@ -131,7 +132,7 @@ public class Snake {
             }
 
             @Override
-            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose) {
+            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent) {
                 if(shouldClose) {
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
@@ -175,14 +176,20 @@ public class Snake {
 
         decorView.removeView(topWindowView);
 
-        SnakeHackLayout snakeHackLayout = SnakeHackLayout.getLayout(activity, topWindowView, true);
+        final SnakeHackLayout snakeHackLayout = SnakeHackLayout.getLayout(activity, topWindowView, false);
         decorView.addView(snakeHackLayout);
 
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
             @Override
             public void onDragStart(SnakeHackLayout parent) {
                 SoftKeyboardHelper.hideKeyboard(activity);
-                ActivityHelper.setWindowTranslucent(activity, true);
+
+                ActivityHelper.setWindowTranslucent(activity, true, new TranslucentConversionListener() {
+                    @Override
+                    public void onTranslucentConversionComplete(boolean drawComplete) {
+                        snakeHackLayout.setAllowDragChildView(drawComplete);
+                    }
+                });
             }
 
             @Override
@@ -191,14 +198,18 @@ public class Snake {
             }
 
             @Override
-            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose) {
+            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent) {
                 if(shouldClose) {
+                    // The current activity will keep open if ignore drag event。
+                    if(ignoreDragEvent) return;
+
                     activity.finish();
                 } else {
                     parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            ActivityHelper.setWindowTranslucent(activity, false);
+                            ActivityHelper.setWindowTranslucent(activity, false, null);
+                            snakeHackLayout.setAllowDragChildView(false);
                         }
                     });
                 }
@@ -214,5 +225,17 @@ public class Snake {
 
     public static void host(@NonNull Activity activity) {
         openDragToCloseForActivity(activity);
+    }
+
+    public static void enableDragToClose(@NonNull Activity activity, boolean enable) {
+        if(activity.isFinishing()) return;
+
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        View topWindowView = decorView.getChildAt(0);
+
+        // Do nothing if top window view is not SnakeHackLayout.
+        if(!(topWindowView instanceof SnakeHackLayout)) return;
+
+        ((SnakeHackLayout) topWindowView).ignoreDragEvent(!enable);
     }
 }

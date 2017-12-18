@@ -49,6 +49,7 @@ public class SnakeHackLayout extends FrameLayout {
     private int mShadowEndColor = DEFAULT_SHADOW_END_COLOR;
     private int mShadowWidth = (int) Utils.dp2px(getContext(),15f);
     private boolean isSettling = false;
+    private boolean ignoreDragEvent = false;
 
     public SnakeHackLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -64,7 +65,7 @@ public class SnakeHackLayout extends FrameLayout {
         mViewDragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
-                return true;
+                return !ignoreDragEvent;
             }
 
             @Override
@@ -134,7 +135,7 @@ public class SnakeHackLayout extends FrameLayout {
                         shouldClose = releasedChild.getLeft() > mXRange / mReleaseFactor;
                     }
 
-                    onEdgeDragListener.onRelease(SnakeHackLayout.this, releasedChild, releasedChild.getLeft(), shouldClose);
+                    onEdgeDragListener.onRelease(SnakeHackLayout.this, releasedChild, releasedChild.getLeft(), shouldClose, ignoreDragEvent);
                 }
             }
         });
@@ -203,6 +204,15 @@ public class SnakeHackLayout extends FrameLayout {
      */
     public void setAllowDragChildView(boolean allowDragChildView) {
         mAllowDragChildView = allowDragChildView;
+    }
+
+    /**
+     * 设置是否忽略当前拖拽事件（拖拽将不会导致子视图滑动，但onRelease滑动监听依然可以生效
+     *
+     * @param ignore true 忽略 false 反之
+     */
+    public void ignoreDragEvent(boolean ignore) {
+        ignoreDragEvent = ignore;
     }
 
     public void setOnEdgeDragListener(OnEdgeDragListener onEdgeDragListener) {
@@ -300,8 +310,9 @@ public class SnakeHackLayout extends FrameLayout {
          * @param view 当前释放的View
          * @param left 距离容器左侧的距离（单位：像素）
          * @param shouldClose true 需要关闭当前页面 false 需要还原当前页面
+         * @param ignoreDragEvent true 忽略拖拽事件 ，false 保持事件追踪（这个标记不影响onRelease回调)
          */
-        void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose);
+        void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent);
     }
 
     public interface OnReleaseStateListener {

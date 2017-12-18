@@ -112,7 +112,7 @@ public class ActivityHelper {
         return backgroundResourceId;
     }
 
-    public static void setWindowTranslucent(@NonNull final Activity activity, boolean translucent) {
+    public static void setWindowTranslucent(@NonNull final Activity activity, boolean translucent, final TranslucentConversionListener translucentConversionListener) {
         if(translucent) {
             activity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             activity.getWindow().getDecorView().setBackgroundDrawable(null);
@@ -121,6 +121,10 @@ public class ActivityHelper {
                 @Override
                 public void onTranslucentConversionComplete(boolean drawComplete) {
                     ActivityManager.get().setWindowTranslucent(activity, drawComplete);
+
+                    if(null != translucentConversionListener) {
+                        translucentConversionListener.onTranslucentConversionComplete(drawComplete);
+                    }
                 }
             });
         } else {
