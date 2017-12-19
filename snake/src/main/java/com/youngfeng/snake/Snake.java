@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.annotations.PrimaryConstructor;
+import com.youngfeng.snake.config.SnakeConfigReader;
 import com.youngfeng.snake.util.ActivityHelper;
 import com.youngfeng.snake.util.ActivityManager;
 import com.youngfeng.snake.util.FragmentManagerHelper;
@@ -67,6 +68,7 @@ public class Snake {
                 ActivityManager.get().remove(activity);
             }
         });
+        SnakeConfigReader.get().init(application);
     }
 
     public static <T extends Fragment> T newProxy(Class<? extends T> fragment, Object... args) {
