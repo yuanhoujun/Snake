@@ -2,6 +2,8 @@ package com.youngfeng.snake.config;
 
 import android.support.annotation.ColorInt;
 
+import java.security.PublicKey;
+
 /**
  * Snake basic parameter configuration
  *
@@ -37,4 +39,11 @@ public class SnakeConfig {
      * The end color of the edge shadows, direction: left -> right .
      */
     public @ColorInt int shadowEndColor;
+
+    public static final String TAG_ENABLE_FOR_ROOT_ACTIVITY = "enable_for_root_activity";
+    public static final String TAG_ONLY_LISTEN_TO_FAST_SWIPE = "only_listen_to_fast_swipe";
+    public static final String TAG_MIN_VELOCITY = "min_velocity";
+    public static final String TAG_HIDE_SHADOW_OF_EDGE = "hide_shadow_of_edge";
+    public static final String TAG_SHADOW_START_COLOR = "shadow_start_color";
+    public static final String TAG_SHADOW_END_COLOR = "shadow_end_color";
 }
