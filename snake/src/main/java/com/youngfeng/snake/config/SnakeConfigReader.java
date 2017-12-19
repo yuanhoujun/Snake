@@ -134,7 +134,27 @@ public class SnakeConfigReader {
         return result;
     }
 
-    public SnakeConfig config() {
-        return mSnakeConfig;
+    public boolean enableForRootActivity() {
+        return mSnakeConfig.enableForRootActivity;
+    }
+
+    public boolean onlyListenToFastSwipe() {
+        return mSnakeConfig.onlyListenToFastSwipe;
+    }
+
+    public int minVelocity() {
+        return mSnakeConfig.minVelocity;
+    }
+
+    public boolean hideShadowOfEdge() {
+        return mSnakeConfig.hideShadowOfEdge;
+    }
+
+    public int shadowStartColor() {
+        return mSnakeConfig.shadowStartColor;
+    }
+
+    public int shadowEndColor() {
+        return mSnakeConfig.shadowEndColor;
     }
 }

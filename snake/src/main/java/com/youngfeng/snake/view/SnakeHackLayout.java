@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ViewDragHelper;
@@ -50,6 +51,10 @@ public class SnakeHackLayout extends FrameLayout {
     private int mShadowWidth = (int) Utils.dp2px(getContext(),15f);
     private boolean isSettling = false;
     private boolean ignoreDragEvent = false;
+    // 设置是否仅监听快速滑动手势，该行为在用户快速往右滑动页面任意部分时将触发页面关闭
+    private boolean onlyListenToFastSwipe = false;
+    // 设置阴影边缘是否隐藏，默认显示
+    private boolean hideShadowOfEdge = false;
 
     public SnakeHackLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -89,7 +94,7 @@ public class SnakeHackLayout extends FrameLayout {
             public int clampViewPositionHorizontal(View child, int left, int dx) {
                 if(left < mOriginPoint.x) left = (int) mOriginPoint.x;
                 left = mViewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT) ? left : (int) child.getX();
-                left = mAllowDragChildView ? left : (int) mOriginPoint.x;
+                left = mAllowDragChildView && !onlyListenToFastSwipe ? left : (int) mOriginPoint.x;
 
                 return left;
             }
@@ -106,7 +111,7 @@ public class SnakeHackLayout extends FrameLayout {
 
             @Override
             public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !hideShadowOfEdge) {
                     int shadowStartColor = Utils.changeAlpha(mShadowStartColor, (int) (Color.alpha(mShadowStartColor) * (1 - (float)left / (float) mXRange)));
                     int shadowEndColor = Utils.changeAlpha(mShadowEndColor, (int) (Color.alpha(mShadowEndColor) * (1 - (float)left / (float) mXRange)));
 
@@ -128,7 +133,7 @@ public class SnakeHackLayout extends FrameLayout {
 
             @Override
             public void onViewReleased(View releasedChild, float xvel, float yvel) {
-                if(null != onEdgeDragListener && mViewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT)) {
+                if(null != onEdgeDragListener && (mViewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT) || onlyListenToFastSwipe)) {
                     boolean shouldClose = xvel > mViewDragHelper.getMinVelocity();
 
                     if(!shouldClose) {
@@ -220,6 +225,51 @@ public class SnakeHackLayout extends FrameLayout {
     }
 
     /**
+     * 设置滑动监听最小检测速度
+     *
+     * @param minVelocity
+     */
+    public void setMinVelocity(int minVelocity) {
+        mViewDragHelper.setMinVelocity(minVelocity);
+    }
+
+    /**
+     * 设置渐变阴影起始颜色
+     *
+     * @param shadowStartColor 颜色整型值
+     */
+    public void setShadowStartColor(@ColorInt  int shadowStartColor) {
+        mShadowStartColor = shadowStartColor;
+    }
+
+    /**
+     * 设置渐变阴影结束颜色
+     *
+     * @param shadowEndColor 颜色整形值
+     */
+    public void setShadowEndColor(@ColorInt int shadowEndColor) {
+        mShadowEndColor = shadowEndColor;
+    }
+
+    /**
+     * 设置是否仅监听快速滑动手势
+     *
+     * @param onlyListenToFastSwipe true 仅能使用快速滑动手势关闭当前页面 false 默认行为（滑动关闭）
+     */
+    public void setOnlyListenToFastSwipe(boolean onlyListenToFastSwipe) {
+        this.onlyListenToFastSwipe = onlyListenToFastSwipe;
+    }
+
+    /**
+     * 设置阴影边缘是否隐藏
+     *
+     * @param hideShadowOfEdge true 隐藏， false 显示
+     */
+    public void hideShadowOfEdge(boolean hideShadowOfEdge) {
+        this.hideShadowOfEdge = hideShadowOfEdge;
+    }
+
+    /**
      * 平滑移动View到指定位置
      *
      * @param view 移动的目标子视图
@@ -258,6 +308,7 @@ public class SnakeHackLayout extends FrameLayout {
         super.dispatchDraw(canvas);
 
         if(getChildCount() <= 0) return;
+        if(hideShadowOfEdge) return;
 
         canvas.save();
         int left = getChildAt(0).getLeft() - mShadowWidth;

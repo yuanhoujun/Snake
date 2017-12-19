@@ -3,14 +3,18 @@ package com.youngfeng.snake;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.annotations.PrimaryConstructor;
+import com.youngfeng.snake.annotations.SetDragParameter;
+import com.youngfeng.snake.config.SnakeConfigException;
 import com.youngfeng.snake.config.SnakeConfigReader;
 import com.youngfeng.snake.util.ActivityHelper;
 import com.youngfeng.snake.util.ActivityManager;
@@ -114,6 +118,8 @@ public class Snake {
     public static void openDragToCloseForFragment(@NonNull SnakeHackLayout snakeHackLayout, @NonNull final Fragment fragment) {
         assertFragmentActive(fragment);
 
+        setDragParameter(fragment.getClass().getAnnotation(SetDragParameter.class), snakeHackLayout);
+
         final FragmentManagerHelper fragmentManagerHelper = FragmentManagerHelper.get(fragment.getFragmentManager());
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
             private boolean keyboardHideSuccess = false;
@@ -164,6 +170,38 @@ public class Snake {
         }
     }
 
+    private static void setDragParameter(@Nullable SetDragParameter dragParameter, SnakeHackLayout snakeHackLayout) {
+        if(null != dragParameter) {
+            snakeHackLayout.hideShadowOfEdge(dragParameter.hideShadowOfEdge());
+            snakeHackLayout.setMinVelocity(dragParameter.minVelocity());
+            snakeHackLayout.setOnlyListenToFastSwipe(dragParameter.onlyListenToFastSwipe());
+
+            if(!dragParameter.hideShadowOfEdge()) {
+                try {
+                    snakeHackLayout.setShadowStartColor(Color.parseColor(dragParameter.shadowStartColor()));
+                } catch (IllegalArgumentException e) {
+                    throw new SnakeConfigException(
+                            String.format("The shadow start color string of  %s annotation is set error, eg: #ff0000, current value: %s",
+                                    SetDragParameter.class.getSimpleName(), dragParameter.shadowStartColor()));
+                }
+
+                try {
+                    snakeHackLayout.setShadowEndColor(Color.parseColor(dragParameter.shadowEndColor()));
+                } catch (IllegalArgumentException e) {
+                    throw new SnakeConfigException(
+                            String.format("The shadow end color string of  %s annotation is set error, eg: #ff0000, current value: %s",
+                                    SetDragParameter.class.getSimpleName(), dragParameter.shadowEndColor()));
+                }
+            }
+        } else {
+            snakeHackLayout.hideShadowOfEdge(SnakeConfigReader.get().hideShadowOfEdge());
+            snakeHackLayout.setMinVelocity(SnakeConfigReader.get().minVelocity());
+            snakeHackLayout.setOnlyListenToFastSwipe(SnakeConfigReader.get().onlyListenToFastSwipe());
+            snakeHackLayout.setShadowStartColor(SnakeConfigReader.get().shadowStartColor());
+            snakeHackLayout.setShadowEndColor(SnakeConfigReader.get().shadowEndColor());
+        }
+    }
+
     public static void openDragToCloseForActivity(@NonNull final Activity activity) {
         assertActivityDestroyed(activity);
         checkAnnotationNotEmpty(activity.getClass());
@@ -181,6 +219,9 @@ public class Snake {
 
         final SnakeHackLayout snakeHackLayout = SnakeHackLayout.getLayout(activity, topWindowView, false);
         decorView.addView(snakeHackLayout);
+
+        SetDragParameter dragParameter = activity.getClass().getAnnotation(SetDragParameter.class);
+        setDragParameter(dragParameter, snakeHackLayout);
 
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
             @Override
@@ -205,6 +246,9 @@ public class Snake {
                 if(shouldClose) {
                     // The current activity will keep open if ignore drag event。
                     if(ignoreDragEvent) return;
+
+                    // The drag event will be ignored if it is root activity. (default behavior)
+                    if(ActivityManager.get().isRootActivity(activity) && !SnakeConfigReader.get().enableForRootActivity()) return;
 
                     activity.finish();
                 } else {
