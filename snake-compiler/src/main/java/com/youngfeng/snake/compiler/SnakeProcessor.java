@@ -167,12 +167,25 @@ public class SnakeProcessor extends AbstractProcessor {
     private MethodSpec buildMethodEnableDragToClose() {
         ParameterSpec parameter = ParameterSpec.builder(Boolean.class, "enable").build();
 
+        ClassName snakeConfigExceptionClass = ClassName.get("com.youngfeng.snake.config", "SnakeConfigException");
+        TypeElement snakeConfigExceptionTypeElement = mElementUtils.getTypeElement(snakeConfigExceptionClass.toString());
+
+
         return MethodSpec.methodBuilder("enableDragToClose")
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(parameter)
+                .addStatement("$T enableDragToClose = getClass().getAnnotation($T.class)", EnableDragToClose.class, EnableDragToClose.class)
+                .addCode("if(enable) {\n")
+                .addCode("\tif(null == enableDragToClose || !enableDragToClose.value()) {\n")
+                .addStatement("\t\tthrow new $T($S + getClass().getName() + $S)",
+                        snakeConfigExceptionTypeElement.asType(),
+                        "If you want to dynamically turn the slide-off feature on or off, add the EnableDragToClose annotation to ",
+                        " and set to true")
+                .addCode("\t}\n")
+                .addCode("}\n\n")
                 .addCode("if(null != mSnakeLayout) { \n")
                 .addCode("\tmSnakeLayout.ignoreDragEvent(!enable);\n")
-                .addCode("}")
+                .addCode("}\n")
                 .returns(TypeName.VOID)
                 .build();
     }
@@ -218,7 +231,6 @@ public class SnakeProcessor extends AbstractProcessor {
     }
 
     private boolean isBindingInWrongClass(Element element, Class<? extends Annotation> annotationClass) {
-
         boolean hasError = false;
 
         TypeMirror elementType = element.asType();
