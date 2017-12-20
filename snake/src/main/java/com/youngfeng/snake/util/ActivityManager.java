@@ -34,7 +34,7 @@ public class ActivityManager {
         instance.originBackgroundResourceId = ActivityHelper.getWindowBackgroundResourceId(activity);
 
         if(!mActivityStack.contains(instance)) {
-            mActivityStack.add(instance);
+            mActivityStack.add(0, instance);
         }
     }
 
