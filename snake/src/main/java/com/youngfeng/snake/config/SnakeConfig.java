@@ -1,5 +1,6 @@
 package com.youngfeng.snake.config;
 
+import android.graphics.Color;
 import android.support.annotation.ColorInt;
 
 import java.security.PublicKey;
@@ -23,7 +24,7 @@ public class SnakeConfig {
     /**
      * The minimum listening speed of rapid sliding.
      */
-    public int minVelocity;
+    public int minVelocity = 2000;
 
     /**
      * The will not draw the edge of page if you set this variable to true.
@@ -33,12 +34,12 @@ public class SnakeConfig {
     /**
      * The start color of the edge shadows, direction: left -> right .
      */
-    public @ColorInt int shadowStartColor;
+    public @ColorInt int shadowStartColor = Color.parseColor("#00000000");
 
     /**
      * The end color of the edge shadows, direction: left -> right .
      */
-    public @ColorInt int shadowEndColor;
+    public @ColorInt int shadowEndColor = Color.parseColor("#50000000");
 
     public static final String TAG_ENABLE_FOR_ROOT_ACTIVITY = "enable_for_root_activity";
     public static final String TAG_ONLY_LISTEN_TO_FAST_SWIPE = "only_listen_to_fast_swipe";
