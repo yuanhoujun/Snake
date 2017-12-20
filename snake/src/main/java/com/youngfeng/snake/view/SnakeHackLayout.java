@@ -70,11 +70,15 @@ public class SnakeHackLayout extends FrameLayout {
         mViewDragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
-                return !ignoreDragEvent;
+                if(null == onEdgeDragListener) return !ignoreDragEvent;
+                return onEdgeDragListener.canDragToClose() && !ignoreDragEvent;
             }
 
             @Override
             public void onEdgeTouched(int edgeFlags, int pointerId) {
+                if(ignoreDragEvent) return;
+                if(null != onEdgeDragListener && !onEdgeDragListener.canDragToClose()) return;
+
                 if(null != onEdgeDragListener) {
                     onEdgeDragListener.onDragStart(SnakeHackLayout.this);
                 }
@@ -270,6 +274,16 @@ public class SnakeHackLayout extends FrameLayout {
     }
 
     /**
+     * 动态设置是否可以滑动关闭当前页面
+     *
+     * @return true yes , false no
+     */
+    public boolean canDragToClose() {
+        if(null == onEdgeDragListener) return false;
+        return onEdgeDragListener.canDragToClose();
+    }
+
+    /**
      * 平滑移动View到指定位置
      *
      * @param view 移动的目标子视图
@@ -337,13 +351,23 @@ public class SnakeHackLayout extends FrameLayout {
         }
     }
 
-    public interface OnEdgeDragListener {
+    public interface OnReleaseStateListener {
+        /**
+         * 释放完成（页面还原或关闭完成）
+         *
+         * @param parent 父布局
+         * @param view 当前释放的View
+         */
+        void onReleaseCompleted(SnakeHackLayout parent, View view);
+    }
+
+    public abstract static class OnEdgeDragListener {
         /**
          * 控件拖拽开始
          *
          * @param parent 父布局
          */
-        void onDragStart(SnakeHackLayout parent);
+        public abstract void onDragStart(SnakeHackLayout parent);
 
         /**
          * 控件正在拖拽中
@@ -352,7 +376,7 @@ public class SnakeHackLayout extends FrameLayout {
          * @param view 当前拖拽的View
          * @param left 距离容器左侧的距离（单位：像素）
          */
-        void onDrag(SnakeHackLayout parent, View view, int left);
+        public abstract void onDrag(SnakeHackLayout parent, View view, int left);
 
         /**
          * 拖拽过程被释放
@@ -363,16 +387,15 @@ public class SnakeHackLayout extends FrameLayout {
          * @param shouldClose true 需要关闭当前页面 false 需要还原当前页面
          * @param ignoreDragEvent true 忽略拖拽事件 ，false 保持事件追踪（这个标记不影响onRelease回调)
          */
-        void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent);
-    }
+        public abstract void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent);
 
-    public interface OnReleaseStateListener {
         /**
-         * 释放完成（页面还原或关闭完成）
+         * 设置是否可以拖拽关闭当前页面，默认为true
          *
-         * @param parent 父布局
-         * @param view 当前释放的View
+         * @return true 可以拖拽关闭 false 将导致拖拽关闭功能失效
          */
-        void onReleaseCompleted(SnakeHackLayout parent, View view);
+        public boolean canDragToClose() {
+            return true;
+        }
     }
 }

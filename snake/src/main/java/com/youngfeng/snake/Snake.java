@@ -243,12 +243,12 @@ public class Snake {
 
             @Override
             public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent) {
-                if(shouldClose) {
-                    // The current activity will keep open if ignore drag event。
-                    if(ignoreDragEvent) return;
+                // Just return if snakeHackLayout set canDragToClose == false
+                if(!parent.canDragToClose()) return;
 
-                    // The drag event will be ignored if it is root activity. (default behavior)
-                    if(ActivityManager.get().isRootActivity(activity) && !SnakeConfigReader.get().enableForRootActivity()) return;
+                if(shouldClose) {
+                    // Just return if ignore the drag event
+                    if(ignoreDragEvent) return;
 
                     activity.finish();
                 } else {
@@ -260,6 +260,11 @@ public class Snake {
                         }
                     });
                 }
+            }
+
+            @Override
+            public boolean canDragToClose() {
+                return !ActivityManager.get().isRootActivity(activity) || SnakeConfigReader.get().enableForRootActivity();
             }
         });
     }
@@ -276,6 +281,14 @@ public class Snake {
 
     public static void enableDragToClose(@NonNull Activity activity, boolean enable) {
         if(activity.isFinishing()) return;
+
+        if(enable) {
+            EnableDragToClose enableDragToClose = activity.getClass().getAnnotation(EnableDragToClose.class);
+            if (null == enableDragToClose || !enableDragToClose.value()) {
+                throw new SnakeConfigException("If you want to dynamically turn the slide-off feature on or off, add the EnableDragToClose annotation to "
+                        + activity.getClass().getName() + " and set to true");
+            }
+        }
 
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         View topWindowView = decorView.getChildAt(0);
