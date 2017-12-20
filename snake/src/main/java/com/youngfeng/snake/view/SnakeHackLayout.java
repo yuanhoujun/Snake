@@ -222,6 +222,10 @@ public class SnakeHackLayout extends FrameLayout {
      */
     public void ignoreDragEvent(boolean ignore) {
         ignoreDragEvent = ignore;
+        // Return to start position
+        if(getChildCount() > 0) {
+            smoothScrollToStart(getChildAt(0), null);
+        }
     }
 
     public void setOnEdgeDragListener(OnEdgeDragListener onEdgeDragListener) {

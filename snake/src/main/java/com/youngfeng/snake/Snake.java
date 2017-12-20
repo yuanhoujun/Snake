@@ -264,7 +264,11 @@ public class Snake {
 
             @Override
             public boolean canDragToClose() {
-                return !ActivityManager.get().isRootActivity(activity) || SnakeConfigReader.get().enableForRootActivity();
+                if(ActivityManager.get().isRootActivity(activity) && !SnakeConfigReader.get().enableForRootActivity()) {
+                    return false;
+                }
+
+                return true;
             }
         });
     }
