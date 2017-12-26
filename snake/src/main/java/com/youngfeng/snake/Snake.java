@@ -2,7 +2,6 @@ package com.youngfeng.snake;
 
 import android.app.Activity;
 import android.app.Application;
-import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import com.youngfeng.snake.config.SnakeConfigReader;
 import com.youngfeng.snake.util.ActivityHelper;
 import com.youngfeng.snake.util.ActivityManager;
 import com.youngfeng.snake.util.FragmentManagerHelper;
+import com.youngfeng.snake.util.GlobalActivityLifecycleDelegate;
 import com.youngfeng.snake.util.SoftKeyboardHelper;
 import com.youngfeng.snake.util.TranslucentConversionListener;
 import com.youngfeng.snake.view.SnakeHackLayout;
@@ -35,36 +35,17 @@ import com.youngfeng.snake.util.Utils;
  */
 public class Snake {
 
+    /**
+     * Initializes snake with default configurations, it will find configuration file in asset/snake.xml,
+     * Snake will use default configruation if not found snake.xml.
+     *
+     * @param application application instance
+     */
     public static void init(Application application) {
-        application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+        application.registerActivityLifecycleCallbacks(new GlobalActivityLifecycleDelegate() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 ActivityManager.get().put(activity);
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
             }
 
             @Override
@@ -75,7 +56,17 @@ public class Snake {
         SnakeConfigReader.get().init(application);
     }
 
-    public static <T extends Fragment> T newProxy(Class<? extends T> fragment, Object... args) {
+    /**
+     * Create a fragment proxy object using the specified constructor.
+     * It will be use the empty parameter constructor if not specify the primaryconstructor annotation
+     * in constructor.
+     *
+     * @param fragment specified fragment class
+     * @param args specified constructor parameters
+     *
+     * @return fragment proxy object
+     */
+    public static <T extends android.app.Fragment> T newProxy(Class<? extends T> fragment, Object... args) {
         checkAnnotationNotEmpty(fragment);
 
         try {
@@ -108,6 +99,16 @@ public class Snake {
         return null;
     }
 
+    /**
+     * Create a support fragment proxy object using the specified constructor.
+     * It will be use the empty parameter constructor if not specify the primaryconstructor annotation
+     * in constructor.
+     *
+     * @param fragment specified support fragment class
+     * @param args specified constructor parameters
+     *
+     * @return support fragment proxy object
+     */
     public static <T extends android.support.v4.app.Fragment> T newSupportProxy(Class<? extends T> fragment, Object... args) {
         checkAnnotationNotEmpty(fragment);
 
@@ -141,6 +142,7 @@ public class Snake {
         return null;
     }
 
+    // Asset annotation EnableDragToClose not empty
     private static void checkAnnotationNotEmpty(Class<?> clazz) {
         if(clazz.getAnnotation(EnableDragToClose.class) == null) {
             throw new IllegalStateException(String.format("Please add %s annotation to class %s first,  eg: @%s.",
@@ -148,7 +150,13 @@ public class Snake {
         }
     }
 
-    public static void openDragToCloseForFragment(@NonNull SnakeHackLayout snakeHackLayout, @NonNull final Fragment fragment) {
+    /**
+     * Open DragToClose for fragment, just for internal using.
+     *
+     * @param snakeHackLayout SnakeHackLayout
+     * @param fragment the current fragment
+     */
+    public static void openDragToCloseForFragment(@NonNull SnakeHackLayout snakeHackLayout, @NonNull final android.app.Fragment fragment) {
         assertFragmentActive(fragment);
 
         setDragParameter(fragment.getClass().getAnnotation(SetDragParameter.class), snakeHackLayout);
@@ -202,6 +210,12 @@ public class Snake {
         });
     }
 
+    /**
+     * Open DragToClose for support fragment, just for internal using.
+     *
+     * @param snakeHackLayout SnakeHackLayout
+     * @param fragment the current fragment
+     */
     public static void openDragToCloseForFragment(@NonNull SnakeHackLayout snakeHackLayout, @NonNull final android.support.v4.app.Fragment fragment) {
         assertFragmentActive(fragment);
 
@@ -256,7 +270,7 @@ public class Snake {
         });
     }
 
-    private static void assertFragmentActive(Fragment fragment) {
+    private static void assertFragmentActive(android.app.Fragment fragment) {
         if(fragment.isDetached() || fragment.isRemoving()) {
             throw new IllegalStateException("You can't add this feature to a detached or removing fragment");
         }
@@ -300,7 +314,12 @@ public class Snake {
         }
     }
 
-    public static void openDragToCloseForActivity(@NonNull final Activity activity) {
+    /**
+     * Open DragToClose for activity, just for internal using.
+     *
+     * @param activity the specified activity
+     */
+    private static void openDragToCloseForActivity(@NonNull final Activity activity) {
         assertActivityDestroyed(activity);
         checkAnnotationNotEmpty(activity.getClass());
 
@@ -377,10 +396,21 @@ public class Snake {
         }
     }
 
+    /**
+     * Let snake host the current activity.
+     *
+     * @param activity the specified activity instance
+     */
     public static void host(@NonNull Activity activity) {
         openDragToCloseForActivity(activity);
     }
 
+    /**
+     * Turn the slide-off function on or off for activity.
+     *
+     * @param activity the specified activity
+     * @param enable true: turn on, false: turn off
+     */
     public static void enableDragToClose(@NonNull Activity activity, boolean enable) {
         if(activity.isFinishing()) return;
 
@@ -401,7 +431,29 @@ public class Snake {
         ((SnakeHackLayout) topWindowView).ignoreDragEvent(!enable);
     }
 
-    public static void enableDragToClose(@NonNull Fragment fragment, boolean enable) {
+    /**
+     * Turn the slide-off function on or off for fragment.
+     *
+     * @param fragment the specified fragment
+     * @param enable true: turn on, false: turn off
+     */
+    public static void enableDragToClose(@NonNull android.app.Fragment fragment, boolean enable) {
+        try {
+            Method method = fragment.getClass().getMethod("enableDragToClose", Boolean.class);
+            method.invoke(fragment, enable);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Turn the slide-off function on or off for support fragment.
+     *
+     * @param fragment the specified support fragment
+     * @param enable true: turn on, false: turn off
+     */
+    public static void enableDragToClose(@NonNull android.support.v4.app.Fragment fragment, boolean enable) {
         try {
             Method method = fragment.getClass().getMethod("enableDragToClose", Boolean.class);
             method.invoke(fragment, enable);
