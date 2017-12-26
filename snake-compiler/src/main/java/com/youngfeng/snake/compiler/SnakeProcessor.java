@@ -13,7 +13,6 @@ import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -239,7 +238,7 @@ public class SnakeProcessor extends AbstractProcessor {
         if(!isSubtypeOfType(elementType, FRAGMENT_TYPE) && !isSubtypeOfType(elementType, SUPPORT_FRAGMENT_TYPE)
                 && !isSubtypeOfType(elementType, ACTIVITY_TYPE)) {
             error(element, "%s only can be used in %s or %s or their child class ",
-                    EnableDragToClose.class.getName(), "android.app.Activity", "android.app.Fragment");
+                    EnableDragToClose.class.getName(), "Activity", "Fragment");
             hasError = true;
         }
 
