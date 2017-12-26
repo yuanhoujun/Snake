@@ -109,7 +109,7 @@ public class Snake {
      *
      * @return support fragment proxy object
      */
-    public static <T extends android.support.v4.app.Fragment> T newSupportProxy(Class<? extends T> fragment, Object... args) {
+    public static <T extends android.support.v4.app.Fragment> T newProxySupport(Class<? extends T> fragment, Object... args) {
         checkAnnotationNotEmpty(fragment);
 
         try {

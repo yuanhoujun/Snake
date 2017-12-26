@@ -21,6 +21,6 @@ public class FirstSupportFragment extends BaseSupportFragment {
 
     @OnClick(R.id.btn_second_fragment)
     public void goToSecondFragment(View view) {
-        push(Snake.newSupportProxy(SecondSupportFragment.class));
+        push(Snake.newProxySupport(SecondSupportFragment.class));
     }
 }
