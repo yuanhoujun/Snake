@@ -25,6 +25,7 @@
         <activity android:name=".activities.SecondActivity"/>
 
         <activity android:name=".fragments.DragFragmentContainerActivity"/>
+        <activity android:name=".support.SupportDragFragmentContainerActivity"/>
 
     </application>
 

@@ -51,6 +51,21 @@ public class SoftKeyboardHelper {
         return true;
     }
 
+    public static boolean hideKeyboard(@NonNull android.support.v4.app.Fragment fragment) {
+        if(fragment.isDetached() || fragment.isRemoving() || null == fragment.getActivity()) return true;
+
+        InputMethodManager inputMethodManager = (InputMethodManager) fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        View rootView = fragment.getView();
+        if(rootView instanceof ViewGroup) {
+            View focusedChild = ((ViewGroup)rootView).getFocusedChild();
+            if(null != focusedChild) {
+                return inputMethodManager.hideSoftInputFromWindow(focusedChild.getWindowToken(), 0);
+            }
+        }
+
+        return true;
+    }
+
     public static void hideKeyboardDelayed(@NonNull final Fragment fragment, int delayMillis) {
         Message message = mMainHandler.obtainMessage(MESSAGE_WHAT_HIDE_KEYBOARD, fragment);
         mMainHandler.sendMessageDelayed(message, delayMillis);

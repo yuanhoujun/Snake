@@ -108,6 +108,39 @@ public class Snake {
         return null;
     }
 
+    public static <T extends android.support.v4.app.Fragment> T newSupportProxy(Class<? extends T> fragment, Object... args) {
+        checkAnnotationNotEmpty(fragment);
+
+        try {
+            Class<?> snakeProxyClass = Class.forName(fragment.getName() + "_SnakeProxy");
+            Constructor<?>[] constructors = snakeProxyClass.getConstructors();
+
+            Constructor<?> primaryConstructor = null;
+            if(null != constructors) {
+                for (Constructor<?> constructor : constructors) {
+                    PrimaryConstructor primaryConstructorAnno = constructor.getAnnotation(PrimaryConstructor.class);
+                    if(null != primaryConstructorAnno) {
+                        primaryConstructor = constructor;
+                        break;
+                    }
+                }
+            }
+
+            T result = null;
+            if(null != primaryConstructor) {
+                result = (T) primaryConstructor.newInstance(args);
+            } else {
+                result = (T) snakeProxyClass.newInstance();
+            }
+
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     private static void checkAnnotationNotEmpty(Class<?> clazz) {
         if(clazz.getAnnotation(EnableDragToClose.class) == null) {
             throw new IllegalStateException(String.format("Please add %s annotation to class %s first,  eg: @%s.",
@@ -169,7 +202,67 @@ public class Snake {
         });
     }
 
+    public static void openDragToCloseForFragment(@NonNull SnakeHackLayout snakeHackLayout, @NonNull final android.support.v4.app.Fragment fragment) {
+        assertFragmentActive(fragment);
+
+        setDragParameter(fragment.getClass().getAnnotation(SetDragParameter.class), snakeHackLayout);
+
+        final FragmentManagerHelper fragmentManagerHelper = FragmentManagerHelper.get(fragment.getFragmentManager());
+        snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
+            private int mVisibility = -1;
+
+            @Override
+            public void onDragStart(SnakeHackLayout parent) {
+                SoftKeyboardHelper.hideKeyboard(fragment);
+            }
+
+            @Override
+            public void onDrag(SnakeHackLayout parent, View view, int left) {
+                View viewOfLastFragment = fragmentManagerHelper.getViewOfLastSupportFragment();
+                if(null != viewOfLastFragment) {
+                    float ratio = (left * 1.0f) / parent.getWidth();
+
+                    if(View.VISIBLE != viewOfLastFragment.getVisibility()) {
+                        mVisibility = viewOfLastFragment.getVisibility();
+                        viewOfLastFragment.setVisibility(View.VISIBLE);
+                    }
+                    viewOfLastFragment.setLeft((int) ((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f)));
+                }
+            }
+
+            @Override
+            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent) {
+                if(shouldClose) {
+                    parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
+                        @Override
+                        public void onReleaseCompleted(SnakeHackLayout parent, View view) {
+                            if (!fragmentManagerHelper.supportBackStackEmpty()) {
+                                fragmentManagerHelper.backToSupportFragment();
+                            }
+                        }
+                    });
+                } else {
+                    parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
+                        @Override
+                        public void onReleaseCompleted(SnakeHackLayout parent, View view) {
+                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastSupportFragment();
+                            if(null != viewOfLastFragment && mVisibility >= 0) {
+                                viewOfLastFragment.setVisibility(mVisibility);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
     private static void assertFragmentActive(Fragment fragment) {
+        if(fragment.isDetached() || fragment.isRemoving()) {
+            throw new IllegalStateException("You can't add this feature to a detached or removing fragment");
+        }
+    }
+
+    private static void assertFragmentActive(android.support.v4.app.Fragment fragment) {
         if(fragment.isDetached() || fragment.isRemoving()) {
             throw new IllegalStateException("You can't add this feature to a detached or removing fragment");
         }

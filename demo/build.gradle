@@ -23,23 +23,11 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+
+    implementation project(":snake")
     compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-//    compile 'com.github.yuanhoujun:Android_Slide_To_Close:0.0.3'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    compile project(':snake')
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    compile 'com.github.yuanhoujun:AutoScrollViewPager:1.0.5'
-    compile 'com.squareup:javapoet:1.9.0'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile "com.android.support:multidex:1.0.1"
-    compile 'com.android.support:support-v13:25.2.0'
 
     implementation project(":snake-annotations")
     annotationProcessor project(":snake-compiler")

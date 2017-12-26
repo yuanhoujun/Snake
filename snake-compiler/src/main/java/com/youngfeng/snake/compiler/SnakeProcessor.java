@@ -46,6 +46,7 @@ import javax.tools.Diagnostic;
 @AutoService(Processor.class)
 public class SnakeProcessor extends AbstractProcessor {
     private static final String FRAGMENT_TYPE = "android.app.Fragment";
+    private static final String SUPPORT_FRAGMENT_TYPE = "android.support.v4.app.Fragment";
     private static final String ACTIVITY_TYPE = "android.app.Activity";
     private static final String LAYOUT_INFLATER_TYPE = "android.view.LayoutInflater";
     private static final String VIEWGROUP_TYPE = "android.view.ViewGroup";
@@ -210,7 +211,7 @@ public class SnakeProcessor extends AbstractProcessor {
     }
 
     private boolean isSubtypeOfFragment(TypeMirror typeMirror) {
-        return isSubtypeOfType(typeMirror, FRAGMENT_TYPE);
+        return isSubtypeOfType(typeMirror, FRAGMENT_TYPE) || isSubtypeOfType(typeMirror, SUPPORT_FRAGMENT_TYPE);
     }
 
     private boolean isFinalClass(Element element) {
@@ -235,7 +236,8 @@ public class SnakeProcessor extends AbstractProcessor {
 
         TypeMirror elementType = element.asType();
 
-        if(!isSubtypeOfType(elementType, FRAGMENT_TYPE) && !isSubtypeOfType(elementType, ACTIVITY_TYPE)) {
+        if(!isSubtypeOfType(elementType, FRAGMENT_TYPE) && !isSubtypeOfType(elementType, SUPPORT_FRAGMENT_TYPE)
+                && !isSubtypeOfType(elementType, ACTIVITY_TYPE)) {
             error(element, "%s only can be used in %s or %s or their child class ",
                     EnableDragToClose.class.getName(), "android.app.Activity", "android.app.Fragment");
             hasError = true;

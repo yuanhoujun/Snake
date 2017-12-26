@@ -6,6 +6,7 @@ import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.activities.FirstActivity;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.fragments.DragFragmentContainerActivity;
+import com.youngfeng.snake.demo.support.SupportDragFragmentContainerActivity;
 import com.youngfeng.snake.demo.ui.BaseActivity;
 
 import butterknife.OnClick;
@@ -30,7 +31,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_use_in_support_fragment)
     public void useInSupportFragment(View view) {
-
+        start(SupportDragFragmentContainerActivity.class);
     }
 
     @OnClick(R.id.btn_nest_scroll_widget)

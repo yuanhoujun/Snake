@@ -5,7 +5,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.AnimRes;
 import android.support.annotation.AnimatorRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -53,10 +55,24 @@ public class BaseActivity extends AppCompatActivity {
         addToolbarToContentView();
         super.setContentView(mContentView);
 
+        trackFragmentBackStack();
+    }
+
+    private void trackFragmentBackStack() {
         getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
                 Fragment fragment = getFragmentManager().findFragmentById(containerId());
+                if(null != fragment) {
+                    mCurrentFragmentTag = fragment.getTag();
+                }
+            }
+        });
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new android.support.v4.app.FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                android.support.v4.app.Fragment fragment = getSupportFragmentManager().findFragmentById(containerId());
                 if(null != fragment) {
                     mCurrentFragmentTag = fragment.getTag();
                 }
@@ -222,6 +238,102 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+
+    public void supportPush(@AnimRes int enter, @AnimRes int exit, @AnimRes int popEnter,
+                            @AnimRes int popExit, @NonNull Class<? extends BaseSupportFragment> fragment, boolean addToBackStack) {
+        try {
+            if (fragment.getName().equals(mCurrentFragmentTag)) return;
+
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setCustomAnimations(enter, exit, popEnter, popExit);
+
+            if (!TextUtils.isEmpty(mCurrentFragmentTag)) {
+                android.support.v4.app.Fragment currentFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
+
+                if (null != currentFragment) {
+                    transaction.hide(currentFragment);
+
+                    if(addToBackStack) {
+                        transaction.addToBackStack(mCurrentFragmentTag);
+                    }
+                }
+            }
+
+            android.support.v4.app.Fragment targetFragment = fragmentManager.findFragmentByTag(fragment.getName());
+
+            if (null != targetFragment && isActive((BaseSupportFragment) targetFragment)) {
+                transaction.show(targetFragment);
+            } else {
+                targetFragment = android.support.v4.app.Fragment.instantiate(this, fragment.getName());
+                if (null != targetFragment) {
+                    transaction.add(containerId(), targetFragment, fragment.getName());
+                }
+            }
+            transaction.commitAllowingStateLoss();
+
+            mCurrentFragmentTag = fragment.getName();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void supportPush(Class<? extends BaseSupportFragment> fragment, boolean addToBackStack) {
+        supportPush(R.anim.fragment_enter, R.anim.fragment_exit,
+                R.anim.fragment_pop_enter, R.anim.fragment_pop_exit, fragment, addToBackStack);
+    }
+
+    public void supportPush(Class<? extends BaseSupportFragment> fragment) {
+        supportPush(fragment, true);
+    }
+
+    public void supportSwitchTo(Class<? extends BaseSupportFragment> fragment) {
+        supportPush(0, 0, 0, 0, fragment, true);
+    }
+
+    public void supportPush(@AnimRes int enter, @AnimRes int exit, @AnimRes int popEnter,
+                            @AnimRes int popExit, @NonNull android.support.v4.app.Fragment fragment, boolean addToBackStack) {
+        try {
+            if (fragment.getClass().getName().equals(mCurrentFragmentTag)) return;
+
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setCustomAnimations(enter, exit, popEnter, popExit);
+
+            if (!TextUtils.isEmpty(mCurrentFragmentTag)) {
+                android.support.v4.app.Fragment currentFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
+
+                if (null != currentFragment) {
+                    transaction.hide(currentFragment);
+
+                    if(addToBackStack) {
+                        transaction.addToBackStack(mCurrentFragmentTag);
+                    }
+                }
+            }
+
+            if (fragment.isAdded()) {
+                transaction.show(fragment);
+            } else {
+                transaction.add(containerId(), fragment, fragment.getClass().getName());
+            }
+            transaction.commitAllowingStateLoss();
+
+            mCurrentFragmentTag = fragment.getClass().getName();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void supportPush(BaseSupportFragment fragment, boolean addToBackStack) {
+        supportPush(R.anim.fragment_enter, R.anim.fragment_exit,
+                R.anim.fragment_pop_enter, R.anim.fragment_pop_exit, fragment, addToBackStack);
+    }
+
+    public void supportPush(BaseFragment fragment) {
+        push(fragment, true);
+    }
+
     public boolean popFragment() {
         try {
             FragmentManager fragmentManager = getFragmentManager();
@@ -248,10 +360,39 @@ public class BaseActivity extends AppCompatActivity {
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
-            return false;
         }
 
-        finish();
+        return false;
+    }
+
+    public boolean popSupportFragment() {
+        try {
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+
+            String fragmentTag = null;
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentTag = fragmentManager
+                        .getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
+            }
+
+            android.support.v4.app.Fragment lastFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
+
+            if (fragmentManager.popBackStackImmediate()) {
+                mCurrentFragmentTag = fragmentTag;
+
+                /**
+                 * 假设A->B->C, B->C时B没有加入回退栈，回退到A将导致C没有正常退出，这里强制隐藏当前页面
+                 */
+                if (null != lastFragment) {
+                    getSupportFragmentManager().beginTransaction().hide(lastFragment).commitAllowingStateLoss();
+                }
+
+                return true;
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
@@ -261,6 +402,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private boolean isActive(@NonNull BaseFragment fragment) {
+        return fragment.isAdded() && !fragment.isDetached() && !fragment.isRemoving();
+    }
+
+    private boolean isActive(@NonNull BaseSupportFragment fragment) {
         return fragment.isAdded() && !fragment.isDetached() && !fragment.isRemoving();
     }
 
@@ -291,6 +436,13 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        popFragment();
+        final boolean isStateSaved = getSupportFragmentManager().isStateSaved();
+        if (isStateSaved && Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
+            return;
+        }
+
+        if(!popSupportFragment() && !popFragment()) {
+            finish();
+        }
     }
 }
