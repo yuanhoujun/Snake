@@ -70,8 +70,12 @@ public class SnakeHackLayout extends FrameLayout {
         mViewDragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
-                if(null == onEdgeDragListener) return !ignoreDragEvent;
-                return onEdgeDragListener.canDragToClose() && !ignoreDragEvent;
+                if(null == onEdgeDragListener) {
+                    return !ignoreDragEvent && mViewDragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE;
+                }
+                return onEdgeDragListener.canDragToClose()
+                        && !ignoreDragEvent
+                        && mViewDragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE;
             }
 
             @Override
