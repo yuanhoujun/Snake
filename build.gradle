@@ -2,6 +2,7 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -14,8 +15,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "http://oss.jfrog.org/oss-snapshot-local/" }
         maven { url 'https://jitpack.io' }
+        google()
     }
 }
 
@@ -28,11 +29,11 @@ ext {
     // Sdk and tools
     minSdkVersion = 14
     targetSdkVersion = 25
-    compileSdkVersion = 25
-    buildToolsVersion = '25.0.2'
+    compileSdkVersion = 26
+    buildToolsVersion = '26.0.2'
 
     // App dependencies
-    supportLibraryVersion = '25.2.0'
+    supportLibraryVersion = '26.1.0'
     lifecycleBinderVersion = '1.0.0'
 }
 
