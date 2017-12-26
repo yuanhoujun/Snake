@@ -41,7 +41,6 @@ dependencies {
     compile "com.android.support:multidex:1.0.1"
     compile 'com.android.support:support-v13:25.2.0'
 
-
     implementation project(":snake-annotations")
     annotationProcessor project(":snake-compiler")
 }

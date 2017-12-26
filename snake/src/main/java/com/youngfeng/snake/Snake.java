@@ -122,20 +122,23 @@ public class Snake {
 
         final FragmentManagerHelper fragmentManagerHelper = FragmentManagerHelper.get(fragment.getFragmentManager());
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
-            private boolean keyboardHideSuccess = false;
+            private int mVisibility = -1;
 
             @Override
             public void onDragStart(SnakeHackLayout parent) {
-                keyboardHideSuccess = SoftKeyboardHelper.hideKeyboard(fragment);
+               SoftKeyboardHelper.hideKeyboard(fragment);
             }
 
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
-                if(!keyboardHideSuccess) return;
-
                 View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
                 if(null != viewOfLastFragment) {
                     float ratio = (left * 1.0f) / parent.getWidth();
+
+                    if(View.VISIBLE != viewOfLastFragment.getVisibility()) {
+                        mVisibility = viewOfLastFragment.getVisibility();
+                        viewOfLastFragment.setVisibility(View.VISIBLE);
+                    }
                     viewOfLastFragment.setLeft((int) ((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f)));
                 }
             }
@@ -151,12 +154,14 @@ public class Snake {
                             }
                         }
                     });
-
                 } else {
                     parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-
+                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
+                            if(null != viewOfLastFragment && mVisibility >= 0) {
+                                viewOfLastFragment.setVisibility(mVisibility);
+                            }
                         }
                     });
                 }

@@ -17,4 +17,16 @@
     <string name="go_to_author_jianshu">关注作者简书</string>
     <string name="about_author">查看作者简介</string>
     <string name="go_to_autor_jianshu">关注作者简书</string>
+
+    <string name="use_in_activity">在Activity中使用</string>
+    <string name="use_in_fragment">在android.app.Fragment中使用</string>
+    <string name="use_in_support_fragment">在android.support.v4.app.Fragment中使用</string>
+    <string name="dynamic_off_on">随时开启/关闭</string>
+    <string name="nest_scroll_widget">嵌套滑动控件</string>
+
+    <string name="the_first_activity">The first activity</string>
+    <string name="the_second_activity">The second activity</string>
+    <string name="go_to_next_activity">Go to the second activity</string>
+    <string name="the_second_fragment">The second fragment</string>
+    <string name="the_third_fragment">The third fragment</string>
 </resources>

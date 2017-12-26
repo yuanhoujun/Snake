@@ -1,70 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.foji.demo.MainActivity"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
-<android.support.v4.view.ViewPager
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_above="@+id/divider_line"
-    android:id="@+id/viewPager"/>
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#dddddd"
-    android:layout_above="@+id/mainTab"
-    android:id="@+id/divider_line"/>
-<RadioGroup
-    android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:orientation="horizontal"
-    android:layout_alignParentBottom="true"
-    android:checkedButton="@+id/message"
-    android:id="@+id/mainTab">
-    <RadioButton
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:button="@null"
-        android:text="@string/message"
-        android:textSize="14dp"
-        android:textColor="@drawable/selector_main_tab_text_color"
-        android:gravity="center"
-        android:id="@+id/message"/>
-    <RadioButton
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:button="@null"
-        android:text="@string/discover"
-        android:textSize="14dp"
-        android:textColor="@drawable/selector_main_tab_text_color"
-        android:gravity="center"
-        android:id="@+id/discover"/>
+    <Button
+        android:id="@+id/btn_use_in_activity"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/use_in_activity"/>
 
-    <RadioButton
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:button="@null"
-        android:text="@string/follow"
-        android:textSize="14dp"
-        android:textColor="@drawable/selector_main_tab_text_color"
-        android:gravity="center"
-        android:id="@+id/follow"/>
+    <Button
+        android:id="@+id/btn_use_in_fragment"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/use_in_fragment"/>
 
-    <RadioButton
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:button="@null"
-        android:text="@string/mine"
-        android:textSize="14dp"
-        android:textColor="@drawable/selector_main_tab_text_color"
-        android:gravity="center"
-        android:id="@+id/mine"/>
-</RadioGroup>
-</RelativeLayout>
+    <Button
+        android:id="@+id/btn_use_in_support_fragment"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/use_in_support_fragment"/>
+
+    <Button
+        android:id="@+id/btn_off_on"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dynamic_off_on"/>
+
+    <Button
+        android:id="@+id/btn_nest_scroll_widget"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nest_scroll_widget"/>
+</LinearLayout>
