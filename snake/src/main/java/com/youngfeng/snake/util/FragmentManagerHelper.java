@@ -48,6 +48,7 @@ public class FragmentManagerHelper {
     }
 
     public View getViewOfLastFragment() {
+        if(null == getLastFragment()) return null;
         return getLastFragment().getView();
     }
 
