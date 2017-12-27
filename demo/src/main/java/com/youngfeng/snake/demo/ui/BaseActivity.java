@@ -207,8 +207,6 @@ public class BaseActivity extends AppCompatActivity {
                 Fragment currentFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
 
                 if (null != currentFragment) {
-                    transaction.hide(currentFragment);
-
                     if(addToBackStack) {
                         transaction.addToBackStack(mCurrentFragmentTag);
                     }
@@ -344,17 +342,8 @@ public class BaseActivity extends AppCompatActivity {
                         .getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
             }
 
-            Fragment lastFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
-
             if (fragmentManager.popBackStackImmediate()) {
                 mCurrentFragmentTag = fragmentTag;
-
-                /**
-                 * 假设A->B->C, B->C时B没有加入回退栈，回退到A将导致C没有正常退出，这里强制隐藏当前页面
-                 */
-                if (null != lastFragment) {
-                    getFragmentManager().beginTransaction().hide(lastFragment).commitAllowingStateLoss();
-                }
 
                 return true;
             }
@@ -375,17 +364,8 @@ public class BaseActivity extends AppCompatActivity {
                         .getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
             }
 
-            android.support.v4.app.Fragment lastFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
-
             if (fragmentManager.popBackStackImmediate()) {
                 mCurrentFragmentTag = fragmentTag;
-
-                /**
-                 * 假设A->B->C, B->C时B没有加入回退栈，回退到A将导致C没有正常退出，这里强制隐藏当前页面
-                 */
-                if (null != lastFragment) {
-                    getSupportFragmentManager().beginTransaction().hide(lastFragment).commitAllowingStateLoss();
-                }
 
                 return true;
             }
