@@ -463,7 +463,7 @@ public class Snake {
         }
     }
 
-    public static void addDragListener(@NonNull Activity activity, SnakeHackLayout.OnDragListener onDragListener) {
+    public static void addDragListener(@NonNull Activity activity, Snake.OnDragListener onDragListener) {
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         if(!(decorView.getChildAt(0) instanceof SnakeHackLayout) || null == onDragListener) return;
 
@@ -471,11 +471,19 @@ public class Snake {
     }
 
 
-    public static void addDragListener(@NonNull android.app.Fragment fragment, SnakeHackLayout.OnDragListener onDragListener) {
+    public static void addDragListener(@NonNull android.app.Fragment fragment, Snake.OnDragListener onDragListener) {
 
     }
 
-    public static void addDragListener(@NonNull android.support.v4.app.Fragment fragment, SnakeHackLayout.OnDragListener onDragListener) {
+    public static void addDragListener(@NonNull android.support.v4.app.Fragment fragment, Snake.OnDragListener onDragListener) {
 
+    }
+
+    public static abstract class OnDragListener {
+        public void onDragStart(View view) {}
+
+        public void onDrag(View view, int left) {}
+
+        public void onRelease(View view, float xVelocity) {}
     }
 }

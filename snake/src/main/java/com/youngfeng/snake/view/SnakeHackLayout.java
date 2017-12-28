@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.util.Utils;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class SnakeHackLayout extends FrameLayout {
     // 使用官方控件，简化拖拽处理
     private ViewDragHelper mViewDragHelper;
     private OnEdgeDragListener onEdgeDragListener;
-    private List<OnDragListener> onDragListeners = new ArrayList<>();
+    private List<Snake.OnDragListener> onDragListeners = new ArrayList<>();
 
     // 释放因子：决定页面滑动释放的力度（值为3，即页面滑动超过父控件宽度的1/3后页面可以滑动关闭）
     private final int DEFALT_RELEASE_FACTOR = 3;
@@ -91,7 +92,7 @@ public class SnakeHackLayout extends FrameLayout {
                     onEdgeDragListener.onDragStart(SnakeHackLayout.this);
                 }
 
-                for(OnDragListener onDragListener: onDragListeners) {
+                for(Snake.OnDragListener onDragListener: onDragListeners) {
                     View childView = null;
                     if(getChildCount() > 0) {
                         childView = getChildAt(0);
@@ -145,7 +146,7 @@ public class SnakeHackLayout extends FrameLayout {
                         onEdgeDragListener.onDrag(SnakeHackLayout.this, changedView, left);
                     }
 
-                    for(OnDragListener onDragListener : onDragListeners) {
+                    for(Snake.OnDragListener onDragListener : onDragListeners) {
                         onDragListener.onDrag(changedView, left);
                     }
                 }
@@ -170,7 +171,7 @@ public class SnakeHackLayout extends FrameLayout {
                         onEdgeDragListener.onRelease(SnakeHackLayout.this, releasedChild, releasedChild.getLeft(), shouldClose, ignoreDragEvent);
                     }
 
-                    for(OnDragListener onDragListener : onDragListeners) {
+                    for(Snake.OnDragListener onDragListener : onDragListeners) {
                         onDragListener.onRelease(releasedChild, xvel);
                     }
                 }
@@ -265,7 +266,7 @@ public class SnakeHackLayout extends FrameLayout {
         this.onEdgeDragListener = onEdgeDragListener;
     }
 
-    public void addOnDragListener(OnDragListener onDragListener) {
+    public void addOnDragListener(Snake.OnDragListener onDragListener) {
         onDragListeners.add(onDragListener);
     }
 
@@ -442,13 +443,5 @@ public class SnakeHackLayout extends FrameLayout {
         public boolean canDragToClose() {
             return true;
         }
-    }
-
-    public static class OnDragListener {
-        public void onDragStart(View view) {}
-
-        public void onDrag(View view, int left) {}
-
-        public void onRelease(View view, float xVelocity) {}
     }
 }
