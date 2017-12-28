@@ -2,7 +2,9 @@ package com.youngfeng.snake;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +22,6 @@ import com.youngfeng.snake.util.ActivityManager;
 import com.youngfeng.snake.util.FragmentManagerHelper;
 import com.youngfeng.snake.util.GlobalActivityLifecycleDelegate;
 import com.youngfeng.snake.util.SoftKeyboardHelper;
-import com.youngfeng.snake.util.TranslucentConversionListener;
 import com.youngfeng.snake.view.SnakeHackLayout;
 
 import java.lang.reflect.Constructor;
@@ -332,25 +333,31 @@ public class Snake {
         // Just return if top window view was SnakeHackLayout.
         if(topWindowView instanceof SnakeHackLayout) return;
 
+        // Set transparent background to avoid flashing.
+        activity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        activity.getWindow().getDecorView().setBackgroundDrawable(null);
+        TypedArray a = activity.getTheme().obtainStyledAttributes(new int[] { android.R.attr.windowBackground});
+        int background = a.getResourceId(0, 0);
+        a.recycle();
+        topWindowView.setBackgroundResource(background);
+
         decorView.removeView(topWindowView);
 
-        final SnakeHackLayout snakeHackLayout = SnakeHackLayout.getLayout(activity, topWindowView, false);
+        final SnakeHackLayout snakeHackLayout = SnakeHackLayout.getLayout(activity, topWindowView, true);
         decorView.addView(snakeHackLayout);
 
         SetDragParameter dragParameter = activity.getClass().getAnnotation(SetDragParameter.class);
         setDragParameter(dragParameter, snakeHackLayout);
 
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            snakeHackLayout.setOnlyListenToFastSwipe(true);
+        }
+
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
             @Override
             public void onDragStart(SnakeHackLayout parent) {
                 SoftKeyboardHelper.hideKeyboard(activity);
-
-                ActivityHelper.setWindowTranslucent(activity, true, new TranslucentConversionListener() {
-                    @Override
-                    public void onTranslucentConversionComplete(boolean drawComplete) {
-                        snakeHackLayout.setAllowDragChildView(drawComplete);
-                    }
-                });
+                ActivityHelper.convertToTranslucent(activity);
             }
 
             @Override
@@ -369,13 +376,7 @@ public class Snake {
 
                     activity.finish();
                 } else {
-                    parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
-                        @Override
-                        public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            ActivityHelper.setWindowTranslucent(activity, false, null);
-                            snakeHackLayout.setAllowDragChildView(false);
-                        }
-                    });
+                    parent.smoothScrollToStart(view);
                 }
             }
 
@@ -460,5 +461,21 @@ public class Snake {
         } catch (Throwable e) {
             e.printStackTrace();
         }
+    }
+
+    public static void addDragListener(@NonNull Activity activity, SnakeHackLayout.OnDragListener onDragListener) {
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        if(!(decorView.getChildAt(0) instanceof SnakeHackLayout) || null == onDragListener) return;
+
+        ((SnakeHackLayout)decorView.getChildAt(0)).addOnDragListener(onDragListener);
+    }
+
+
+    public static void addDragListener(@NonNull android.app.Fragment fragment, SnakeHackLayout.OnDragListener onDragListener) {
+
+    }
+
+    public static void addDragListener(@NonNull android.support.v4.app.Fragment fragment, SnakeHackLayout.OnDragListener onDragListener) {
+
     }
 }

@@ -18,6 +18,9 @@ import android.widget.FrameLayout;
 
 import com.youngfeng.snake.util.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * SnakeHackLayout 用于滑动关闭视图处理
  *
@@ -27,6 +30,7 @@ public class SnakeHackLayout extends FrameLayout {
     // 使用官方控件，简化拖拽处理
     private ViewDragHelper mViewDragHelper;
     private OnEdgeDragListener onEdgeDragListener;
+    private List<OnDragListener> onDragListeners = new ArrayList<>();
 
     // 释放因子：决定页面滑动释放的力度（值为3，即页面滑动超过父控件宽度的1/3后页面可以滑动关闭）
     private final int DEFALT_RELEASE_FACTOR = 3;
@@ -86,6 +90,14 @@ public class SnakeHackLayout extends FrameLayout {
                 if(null != onEdgeDragListener) {
                     onEdgeDragListener.onDragStart(SnakeHackLayout.this);
                 }
+
+                for(OnDragListener onDragListener: onDragListeners) {
+                    View childView = null;
+                    if(getChildCount() > 0) {
+                        childView = getChildAt(0);
+                    }
+                    onDragListener.onDragStart(childView);
+                }
             }
 
             @Override
@@ -128,8 +140,14 @@ public class SnakeHackLayout extends FrameLayout {
                     invalidate();
                 }
 
-                if(null != onEdgeDragListener && needListenForDraging(mViewDragHelper, changedView)) {
-                    onEdgeDragListener.onDrag(SnakeHackLayout.this, changedView, left);
+                if(needListenForDraging(mViewDragHelper, changedView)) {
+                    if(null != onEdgeDragListener) {
+                        onEdgeDragListener.onDrag(SnakeHackLayout.this, changedView, left);
+                    }
+
+                    for(OnDragListener onDragListener : onDragListeners) {
+                        onDragListener.onDrag(changedView, left);
+                    }
                 }
 
                 if(left <= 0 || left >= mXRange) {
@@ -141,14 +159,20 @@ public class SnakeHackLayout extends FrameLayout {
 
             @Override
             public void onViewReleased(View releasedChild, float xvel, float yvel) {
-                if(null != onEdgeDragListener && (mViewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT) || onlyListenToFastSwipe)) {
+                if(mViewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT) || onlyListenToFastSwipe) {
                     boolean shouldClose = xvel > mViewDragHelper.getMinVelocity();
 
                     if(!shouldClose) {
                         shouldClose = releasedChild.getLeft() > mXRange / mReleaseFactor;
                     }
 
-                    onEdgeDragListener.onRelease(SnakeHackLayout.this, releasedChild, releasedChild.getLeft(), shouldClose, ignoreDragEvent);
+                    if(null != onEdgeDragListener) {
+                        onEdgeDragListener.onRelease(SnakeHackLayout.this, releasedChild, releasedChild.getLeft(), shouldClose, ignoreDragEvent);
+                    }
+
+                    for(OnDragListener onDragListener : onDragListeners) {
+                        onDragListener.onRelease(releasedChild, xvel);
+                    }
                 }
             }
         });
@@ -232,8 +256,17 @@ public class SnakeHackLayout extends FrameLayout {
         }
     }
 
+    /**
+     * Just for internal use.
+     *
+     * {@hide}
+     */
     public void setOnEdgeDragListener(OnEdgeDragListener onEdgeDragListener) {
         this.onEdgeDragListener = onEdgeDragListener;
+    }
+
+    public void addOnDragListener(OnDragListener onDragListener) {
+        onDragListeners.add(onDragListener);
     }
 
     /**
@@ -314,6 +347,10 @@ public class SnakeHackLayout extends FrameLayout {
      */
     public void smoothScrollToStart(View view, OnReleaseStateListener onReleaseStateListener) {
         smoothScrollTo(view, (int) mOriginPoint.x, (int) mOriginPoint.y, onReleaseStateListener);
+    }
+
+    public void smoothScrollToStart(View view) {
+        smoothScrollToStart(view, null);
     }
 
     /**
@@ -405,5 +442,13 @@ public class SnakeHackLayout extends FrameLayout {
         public boolean canDragToClose() {
             return true;
         }
+    }
+
+    public static class OnDragListener {
+        public void onDragStart(View view) {}
+
+        public void onDrag(View view, int left) {}
+
+        public void onRelease(View view, float xVelocity) {}
     }
 }

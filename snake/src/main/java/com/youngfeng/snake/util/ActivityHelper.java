@@ -21,6 +21,7 @@ import java.lang.reflect.Proxy;
  */
 public class ActivityHelper {
 
+    @Deprecated
     public static void convertFromTranslucent(Activity activity) {
         try {
             Method method = Activity.class.getDeclaredMethod("convertFromTranslucent");
@@ -31,42 +32,15 @@ public class ActivityHelper {
     }
 
     public static void convertToTranslucent(@NonNull Activity activity, TranslucentConversionListener listener) {
-        if(activity.isFinishing()) return;
+        if (activity.isFinishing()) return;
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             convertToTranslucentAfterLollipop(activity, listener);
-        } else {
-            convertToTranslucentBeforLollipop(activity, listener);
         }
     }
 
-    private static void convertToTranslucentBeforLollipop(@NonNull Activity activity, TranslucentConversionListener conversionListener) {
-        try {
-            Class<?>[] classes = Activity.class.getDeclaredClasses();
-            Class<?> translucentConversionListenerClazz = null;
-            for (Class clazz : classes) {
-                if (clazz.getSimpleName().contains("TranslucentConversionListener")) {
-                    translucentConversionListenerClazz = clazz;
-                }
-            }
-
-            ConversionInvocationHandler invocationHandler = new ConversionInvocationHandler(new WeakReference<TranslucentConversionListener>(conversionListener));
-            Object newProxy = Proxy.newProxyInstance(Activity.class.getClassLoader(), new Class<?>[] { translucentConversionListenerClazz }, invocationHandler);
-
-            Method method = Activity.class.getDeclaredMethod("convertToTranslucent",
-                    translucentConversionListenerClazz);
-            method.setAccessible(true);
-
-            long start = System.currentTimeMillis();
-
-            method.invoke(activity, newProxy);
-
-            long end = System.currentTimeMillis();
-
-            Log.e("Translucent Time", "" + (end - start));
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
+    public static void convertToTranslucent(@NonNull Activity activity) {
+        convertToTranslucent(activity, null);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -81,29 +55,24 @@ public class ActivityHelper {
             for (Class clazz : classes) {
                 if (clazz.getSimpleName().contains("TranslucentConversionListener")) {
                     translucentConversionListenerClazz = clazz;
+                    break;
                 }
             }
 
             ConversionInvocationHandler invocationHandler = new ConversionInvocationHandler(new WeakReference<TranslucentConversionListener>(conversionListener));
-            Object newProxy = Proxy.newProxyInstance(Activity.class.getClassLoader(), new Class<?>[] { translucentConversionListenerClazz }, invocationHandler);
-
-            long start = System.currentTimeMillis();
+            Object newProxy = Proxy.newProxyInstance(Activity.class.getClassLoader(), new Class<?>[]{translucentConversionListenerClazz}, invocationHandler);
 
             Method convertToTranslucent = Activity.class.getDeclaredMethod("convertToTranslucent",
                     translucentConversionListenerClazz, ActivityOptions.class);
             convertToTranslucent.setAccessible(true);
             convertToTranslucent.invoke(activity, newProxy, options);
-
-            long end = System.currentTimeMillis();
-
-            Log.e("Translucent Time", "" + (end - start));
         } catch (Throwable e) {
             e.printStackTrace();
         }
     }
 
     public static int getWindowBackgroundResourceId(@NonNull Activity activity) {
-        TypedArray a = activity.getTheme().obtainStyledAttributes(new int[] {
+        TypedArray a = activity.getTheme().obtainStyledAttributes(new int[]{
                 android.R.attr.windowBackground
         });
         final int backgroundResourceId = a.getResourceId(0, 0);
@@ -113,23 +82,20 @@ public class ActivityHelper {
     }
 
     public static void setWindowTranslucent(@NonNull final Activity activity, boolean translucent, final TranslucentConversionListener translucentConversionListener) {
-        if(translucent) {
-            activity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            activity.getWindow().getDecorView().setBackgroundDrawable(null);
-
+        if (translucent) {
             convertToTranslucent(activity, new TranslucentConversionListener() {
                 @Override
                 public void onTranslucentConversionComplete(boolean drawComplete) {
                     ActivityManager.get().setWindowTranslucent(activity, drawComplete);
 
-                    if(null != translucentConversionListener) {
+                    if (null != translucentConversionListener) {
                         translucentConversionListener.onTranslucentConversionComplete(drawComplete);
                     }
                 }
             });
         } else {
             int resourceId = ActivityManager.get().getBackgroundResourceId(activity);
-            if(resourceId > 0) {
+            if (resourceId > 0) {
                 activity.getWindow().setBackgroundDrawableResource(resourceId);
             }
 
@@ -138,7 +104,17 @@ public class ActivityHelper {
         }
     }
 
-    public static void resetWindowBackground(@NonNull Activity activity) {
-        activity.getWindow().setBackgroundDrawableResource(getWindowBackgroundResourceId(activity));
+    public static boolean isTranslucent(@NonNull Activity activity) {
+        try {
+            TypedArray a = activity.getTheme().obtainStyledAttributes(new int[]{
+                    android.R.attr.windowIsTranslucent
+            });
+            boolean isTranslucent = a.getBoolean(0, false);
+            a.recycle();
+
+            return isTranslucent;
+        } catch (Throwable e) {
+            return false;
+        }
     }
 }

@@ -24,7 +24,7 @@ public class ConversionInvocationHandler implements InvocationHandler {
             Log.e("Conversion >>>>>>", method.getName() + "<===>" + args[0]);
             boolean drawComplete = (boolean) args[0];
 
-            if(null != mConversionListenerRef) {
+            if(null != mConversionListenerRef.get()) {
                 mConversionListenerRef.get().onTranslucentConversionComplete(drawComplete);
             }
         } catch (Throwable e) {
