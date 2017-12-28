@@ -151,6 +151,7 @@ public class SnakeProcessor extends AbstractProcessor {
                                         .superclass(typeName)
                                         .addMethod(method)
                                         .addMethod(buildMethodEnableDragToClose())
+                                        .addMethod(buildMethodAddOnDragListener())
                                         .addField(field)
                                         .build();
 
@@ -187,6 +188,21 @@ public class SnakeProcessor extends AbstractProcessor {
                 .addCode("\tmSnakeLayout.ignoreDragEvent(!enable);\n")
                 .addCode("}\n")
                 .returns(TypeName.VOID)
+                .build();
+    }
+
+    private MethodSpec buildMethodAddOnDragListener() {
+        ClassName onDragListenerClassName = ClassName.get("com.youngfeng.snake", "Snake.OnDragListener");
+        TypeElement onDragListenerTypeElement = mElementUtils.getTypeElement(onDragListenerClassName.toString());
+        ParameterSpec parameter = ParameterSpec.builder(TypeName.get(onDragListenerTypeElement.asType()), "onDragListener").build();
+
+        return MethodSpec.methodBuilder("addOnDragListener")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(parameter)
+                .returns(TypeName.VOID)
+                .addCode("if(null != mSnakeLayout && null != onDragListener) {\n")
+                .addStatement("\tmSnakeLayout.addOnDragListener(onDragListener)")
+                .addCode("}\n")
                 .build();
     }
 

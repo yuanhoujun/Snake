@@ -463,6 +463,12 @@ public class Snake {
         }
     }
 
+    /**
+     * Add OnDragListener for drag event.
+     *
+     * @param activity the current activity.
+     * @param onDragListener onDragListener
+     */
     public static void addDragListener(@NonNull Activity activity, Snake.OnDragListener onDragListener) {
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         if(!(decorView.getChildAt(0) instanceof SnakeHackLayout) || null == onDragListener) return;
@@ -470,13 +476,34 @@ public class Snake {
         ((SnakeHackLayout)decorView.getChildAt(0)).addOnDragListener(onDragListener);
     }
 
-
+    /**
+     * Add OnDragListener for drag event.
+     *
+     * @param fragment the current fragment.
+     * @param onDragListener onDragListener
+     */
     public static void addDragListener(@NonNull android.app.Fragment fragment, Snake.OnDragListener onDragListener) {
-
+        try {
+            Method method = fragment.getClass().getMethod("addOnDragListener", OnDragListener.class);
+            method.invoke(fragment, onDragListener);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Add OnDragListener for drag event.
+     *
+     * @param fragment the current fragment.
+     * @param onDragListener onDragListener
+     */
     public static void addDragListener(@NonNull android.support.v4.app.Fragment fragment, Snake.OnDragListener onDragListener) {
-
+        try {
+            Method method = fragment.getClass().getMethod("addOnDragListener", OnDragListener.class);
+            method.invoke(fragment, onDragListener);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     public static abstract class OnDragListener {
