@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.youngfeng.snake.Snake;
+import com.youngfeng.snake.config.SnakeConfigException;
 import com.youngfeng.snake.util.Utils;
 
 import java.util.ArrayList;
@@ -273,6 +274,8 @@ public class SnakeHackLayout extends FrameLayout {
      * {@hide}
      */
     public void setOnEdgeDragListener(OnEdgeDragListener onEdgeDragListener) {
+        if(null != this.onEdgeDragListener) throw new SnakeConfigException("Don't assign values for onEdgeDragListener");
+
         this.onEdgeDragListener = onEdgeDragListener;
     }
 
