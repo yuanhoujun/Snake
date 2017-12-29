@@ -404,6 +404,7 @@ public class Snake {
                             }
 
                             activity.finish();
+                            activity.overridePendingTransition(0, 0);
                         }
                     });
                 } else {
