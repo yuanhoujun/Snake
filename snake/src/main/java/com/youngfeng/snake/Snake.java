@@ -192,6 +192,10 @@ public class Snake {
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
+                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
+                            if(null != viewOfLastFragment) {
+                                viewOfLastFragment.setLeft(0);
+                            }
                             if (!fragmentManagerHelper.backStackEmpty()) {
                                 fragmentManagerHelper.backToLastFragment();
                             }
@@ -202,8 +206,11 @@ public class Snake {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
                             View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
-                            if(null != viewOfLastFragment && mVisibility >= 0) {
-                                viewOfLastFragment.setVisibility(mVisibility);
+                            if(null != viewOfLastFragment) {
+                                if(mVisibility >= 0) {
+                                    viewOfLastFragment.setVisibility(mVisibility);
+                                }
+                                viewOfLastFragment.setLeft(0);
                             }
                         }
                     });
@@ -252,8 +259,12 @@ public class Snake {
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            if (!fragmentManagerHelper.supportBackStackEmpty()) {
-                                fragmentManagerHelper.backToSupportFragment();
+                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
+                            if(null != viewOfLastFragment) {
+                                viewOfLastFragment.setLeft(0);
+                            }
+                            if (!fragmentManagerHelper.backStackEmpty()) {
+                                fragmentManagerHelper.backToLastFragment();
                             }
                         }
                     });
@@ -261,9 +272,12 @@ public class Snake {
                     parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastSupportFragment();
-                            if(null != viewOfLastFragment && mVisibility >= 0) {
-                                viewOfLastFragment.setVisibility(mVisibility);
+                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
+                            if(null != viewOfLastFragment) {
+                                if(mVisibility >= 0) {
+                                    viewOfLastFragment.setVisibility(mVisibility);
+                                }
+                                viewOfLastFragment.setLeft(0);
                             }
                         }
                     });
@@ -363,6 +377,16 @@ public class Snake {
             }
 
             @Override
+            public void onDrag(SnakeHackLayout parent, View view, int left) {
+                View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(activity);
+                if(null != viewOfLastActivity) {
+                    float ratio = (left * 1.0f) / parent.getWidth();
+
+                    viewOfLastActivity.setLeft((int) ((ratio - 1) * Utils.dp2px(activity, 100f)));
+                }
+            }
+
+            @Override
             public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent) {
                 // Just return if snakeHackLayout set canDragToClose == false
                 if(!parent.canDragToClose()) return;
@@ -371,9 +395,27 @@ public class Snake {
                     // Just return if ignore the drag event
                     if(ignoreDragEvent) return;
 
-                    activity.finish();
+                    parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
+                        @Override
+                        public void onReleaseCompleted(SnakeHackLayout parent, View view) {
+                            View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(activity);
+                            if(null != viewOfLastActivity) {
+                                viewOfLastActivity.setLeft(0);
+                            }
+
+                            activity.finish();
+                        }
+                    });
                 } else {
-                    parent.smoothScrollToStart(view);
+                    parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
+                        @Override
+                        public void onReleaseCompleted(SnakeHackLayout parent, View view) {
+                            View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(activity);
+                            if(null != viewOfLastActivity) {
+                                viewOfLastActivity.setLeft(0);
+                            }
+                        }
+                    });
                 }
             }
 

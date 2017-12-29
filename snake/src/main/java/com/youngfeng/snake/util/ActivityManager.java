@@ -2,6 +2,8 @@ package com.youngfeng.snake.util;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -62,8 +64,8 @@ public class ActivityManager {
     public Activity getLastActivity(@NonNull Activity activity) {
         int index = indexOf(activity);
 
-        if(mActivityStack.size() > index) {
-            return mActivityStack.get(index - 1).activity;
+        if(index >= 0 && mActivityStack.size() > index + 1) {
+            return mActivityStack.get(index + 1).activity;
         }
 
         return null;
@@ -114,5 +116,12 @@ public class ActivityManager {
         if(null != activityInstance) return activityInstance.originBackgroundResourceId;
 
         return -1;
+    }
+
+    public View getViewOfLastActivity(@NonNull Activity activity) {
+        Activity lastActivity = getLastActivity(activity);
+        if(null == lastActivity) return null;
+
+        return ((ViewGroup)lastActivity.getWindow().getDecorView()).getChildAt(0);
     }
 }
