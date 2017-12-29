@@ -28,6 +28,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import com.youngfeng.snake.util.Utils;
+import com.youngfeng.snake.view.SnakeTouchInterceptor;
 
 /**
  * 框架入口，用于集成滑动关闭功能
@@ -336,7 +337,8 @@ public class Snake {
         // Set transparent background to avoid flashing.
         activity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         activity.getWindow().getDecorView().setBackgroundDrawable(null);
-        TypedArray a = activity.getTheme().obtainStyledAttributes(new int[] { android.R.attr.windowBackground});
+
+        TypedArray a = activity.getTheme().obtainStyledAttributes(new int[] { android.R.attr.windowBackground });
         int background = a.getResourceId(0, 0);
         a.recycle();
         topWindowView.setBackgroundResource(background);
@@ -358,11 +360,6 @@ public class Snake {
             public void onDragStart(SnakeHackLayout parent) {
                 SoftKeyboardHelper.hideKeyboard(activity);
                 ActivityHelper.convertToTranslucent(activity);
-            }
-
-            @Override
-            public void onDrag(SnakeHackLayout parent, View view, int left) {
-
             }
 
             @Override
@@ -501,6 +498,52 @@ public class Snake {
         try {
             Method method = fragment.getClass().getMethod("addOnDragListener", OnDragListener.class);
             method.invoke(fragment, onDragListener);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Set custom touch interceptor for activity.
+     *
+     * @param activity the specified activity.
+     * @param interceptor the custom touch interceptor.
+     */
+    public static void setCustomTouchInterceptor(@NonNull Activity activity, SnakeTouchInterceptor interceptor) {
+        if(activity.isFinishing() || null == interceptor) return;
+
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        if(!(decorView.getChildAt(0) instanceof SnakeHackLayout)) return;
+
+        SnakeHackLayout snakeHackLayout = (SnakeHackLayout) decorView.getChildAt(0);
+        snakeHackLayout.setCustomTouchInterceptor(interceptor);
+    }
+
+    /**
+     * Set custom touch interceptor for fragment.
+     *
+     * @param fragment the specified fragment.
+     * @param interceptor the custom touch interceptor.
+     */
+    public static void setCustomTouchInterceptor(@NonNull android.app.Fragment fragment, SnakeTouchInterceptor interceptor) {
+        try {
+            Method method = fragment.getClass().getMethod("setCustomTouchInterceptor", SnakeTouchInterceptor.class);
+            method.invoke(fragment, interceptor);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Set custom touch interceptor for fragment.
+     *
+     * @param fragment the specified fragment.
+     * @param interceptor the custom touch interceptor.
+     */
+    public static void setCustomTouchInterceptor(@NonNull android.support.v4.app.Fragment fragment, SnakeTouchInterceptor interceptor) {
+        try {
+            Method method = fragment.getClass().getMethod("setCustomTouchInterceptor", SnakeTouchInterceptor.class);
+            method.invoke(fragment, interceptor);
         } catch (Throwable e) {
             e.printStackTrace();
         }

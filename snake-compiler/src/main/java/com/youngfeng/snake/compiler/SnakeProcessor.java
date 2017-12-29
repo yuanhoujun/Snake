@@ -152,6 +152,7 @@ public class SnakeProcessor extends AbstractProcessor {
                                         .addMethod(method)
                                         .addMethod(buildMethodEnableDragToClose())
                                         .addMethod(buildMethodAddOnDragListener())
+                                        .addMethod(buildMethodSetCustomTouchInterceptor())
                                         .addField(field)
                                         .build();
 
@@ -202,6 +203,21 @@ public class SnakeProcessor extends AbstractProcessor {
                 .returns(TypeName.VOID)
                 .addCode("if(null != mSnakeLayout && null != onDragListener) {\n")
                 .addStatement("\tmSnakeLayout.addOnDragListener(onDragListener)")
+                .addCode("}\n")
+                .build();
+    }
+
+    private MethodSpec buildMethodSetCustomTouchInterceptor() {
+        ClassName onDragListenerClassName = ClassName.get("com.youngfeng.snake.view", "SnakeTouchInterceptor");
+        TypeElement onDragListenerTypeElement = mElementUtils.getTypeElement(onDragListenerClassName.toString());
+        ParameterSpec parameter = ParameterSpec.builder(TypeName.get(onDragListenerTypeElement.asType()), "interceptor").build();
+
+        return MethodSpec.methodBuilder("setCustomTouchInterceptor")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(parameter)
+                .returns(TypeName.VOID)
+                .addCode("if(null != mSnakeLayout && null != interceptor) {\n")
+                .addStatement("\tmSnakeLayout.setCustomTouchInterceptor(interceptor)")
                 .addCode("}\n")
                 .build();
     }

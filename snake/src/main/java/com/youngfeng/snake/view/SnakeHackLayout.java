@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -60,6 +61,7 @@ public class SnakeHackLayout extends FrameLayout {
     private boolean onlyListenToFastSwipe = false;
     // 设置阴影边缘是否隐藏，默认显示
     private boolean hideShadowOfEdge = false;
+    private SnakeTouchInterceptor mCustomTouchInterceptor;
 
     public SnakeHackLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -218,6 +220,10 @@ public class SnakeHackLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if(null != mCustomTouchInterceptor && mCustomTouchInterceptor.onTouch(event)) {
+            return true;
+        }
+
         getParent().requestDisallowInterceptTouchEvent(true);
         mViewDragHelper.processTouchEvent(event);
         return true;
@@ -225,13 +231,17 @@ public class SnakeHackLayout extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if(null != mCustomTouchInterceptor && mCustomTouchInterceptor.onInterceptTouchEvent(ev)) {
+            return true;
+        }
+
         return mViewDragHelper.shouldInterceptTouchEvent(ev);
     }
 
     @Override
     public void computeScroll() {
         if(mViewDragHelper.continueSettling(true)) {
-            invalidate();
+            ViewCompat.postInvalidateOnAnimation(this);
         }
     }
 
@@ -304,6 +314,16 @@ public class SnakeHackLayout extends FrameLayout {
      */
     public void setOnlyListenToFastSwipe(boolean onlyListenToFastSwipe) {
         this.onlyListenToFastSwipe = onlyListenToFastSwipe;
+    }
+
+    /**
+     * Set custom touch interceptor to resolve draging conflict, you can ignore this method in the
+     * majority of scenarios.
+     *
+     * @param interceptor the touch interceptor
+     */
+    public void setCustomTouchInterceptor(SnakeTouchInterceptor interceptor) {
+        mCustomTouchInterceptor = interceptor;
     }
 
     /**
@@ -413,7 +433,7 @@ public class SnakeHackLayout extends FrameLayout {
          *
          * @param parent 父布局
          */
-        public abstract void onDragStart(SnakeHackLayout parent);
+        public void onDragStart(SnakeHackLayout parent) {}
 
         /**
          * 控件正在拖拽中
@@ -422,7 +442,7 @@ public class SnakeHackLayout extends FrameLayout {
          * @param view 当前拖拽的View
          * @param left 距离容器左侧的距离（单位：像素）
          */
-        public abstract void onDrag(SnakeHackLayout parent, View view, int left);
+        public void onDrag(SnakeHackLayout parent, View view, int left) {}
 
         /**
          * 拖拽过程被释放
@@ -433,7 +453,7 @@ public class SnakeHackLayout extends FrameLayout {
          * @param shouldClose true 需要关闭当前页面 false 需要还原当前页面
          * @param ignoreDragEvent true 忽略拖拽事件 ，false 保持事件追踪（这个标记不影响onRelease回调)
          */
-        public abstract void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent);
+        public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent) {}
 
         /**
          * 设置是否可以拖拽关闭当前页面，默认为true
