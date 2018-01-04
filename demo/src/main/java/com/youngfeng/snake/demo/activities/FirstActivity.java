@@ -28,4 +28,16 @@ public class FirstActivity extends BaseActivity {
     public void goToSecondActivity(View view) {
         start(SecondActivity.class);
     }
+
+    @OnClick(R.id.btn_disable_drag_to_close)
+    public void disableDragToClose(View view) {
+        Snake.enableDragToClose(this, false);
+        toast("滑动关闭功能已禁用");
+    }
+
+    @OnClick(R.id.btn_enable_drag_to_close)
+    public void enableDragToClose(View view) {
+        Snake.enableDragToClose(this, true);
+        toast("滑动关闭功能已开启");
+    }
 }

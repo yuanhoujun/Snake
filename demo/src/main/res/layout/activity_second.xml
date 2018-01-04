@@ -5,10 +5,26 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:background="@android:color/white">
-    <TextView
-        android:layout_width="wrap_content"
+    <ImageView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="40dp"
-        android:text="@string/the_second_activity" />
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/tiger_hugging_man"/>
+
+    <Button
+        android:id="@+id/btn_star_this_repo"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/star_this_repo"/>
+
+    <Button
+        android:id="@+id/btn_follow_the_authors_article"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/follow_the_authors_article"/>
 </LinearLayout>

@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
@@ -410,6 +411,10 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public FragmentManager getFragmentManager() {
         return super.getFragmentManager();
+    }
+
+    public void toast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     protected void onInitView() {}
