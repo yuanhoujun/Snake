@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ff0000">
+    android:gravity="center_horizontal"
+    android:background="@android:color/white">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:text="The first android.app.Fragment..."/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/kong_skull_island"/>
+
 
     <Button
         android:id="@+id/btn_second_fragment"
         style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/the_second_activity"/>
-
-</LinearLayout>
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="bottom"
+        android:text="@string/next"/>
+</FrameLayout>

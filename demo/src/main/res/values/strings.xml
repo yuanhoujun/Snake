@@ -26,7 +26,11 @@
 
     <string name="the_first_activity">The first activity</string>
     <string name="the_second_activity">The second activity</string>
-    <string name="go_to_next_activity">Go to the second activity</string>
+    <string name="next">Next</string>
     <string name="the_second_fragment">The second fragment</string>
     <string name="the_third_fragment">The third fragment</string>
+    <string name="disable_drag_to_close">禁用滑动关闭</string>
+    <string name="enable_drag_to_close">开启滑动关闭</string>
+    <string name="star_this_repo">给这个开源库star</string>
+    <string name="follow_the_authors_article">关注作者简书</string>
 </resources>

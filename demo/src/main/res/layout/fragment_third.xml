@@ -3,12 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#00ff00">
-
-    <TextView
-        android:layout_width="wrap_content"
+    android:gravity="center_horizontal"
+    android:background="@android:color/white">
+    <ImageView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="100dp"
-        android:text="The third android.app.Fragment..."/>
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/tiger_hugging_man"/>
 
+    <Button
+        android:id="@+id/btn_star_this_repo"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/star_this_repo"/>
+
+    <Button
+        android:id="@+id/btn_follow_the_authors_article"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/follow_the_authors_article"/>
 </LinearLayout>
