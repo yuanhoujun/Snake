@@ -430,4 +430,10 @@ public class BaseActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.snake_slide_in_left, R.anim.snake_slide_out_right);
+    }
 }

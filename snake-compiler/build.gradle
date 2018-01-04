@@ -3,10 +3,10 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(":snake-annotations")
-    implementation 'com.google.auto:auto-common:0.8'
+    implementation deps.auto.common
 
-    api 'com.squareup:javapoet:1.9.0'
-    compileOnly "com.google.auto.service:auto-service:1.0-rc3"
+    api deps.javapoet
+    compileOnly deps.auto.service
 }
 
 sourceCompatibility = "1.7"

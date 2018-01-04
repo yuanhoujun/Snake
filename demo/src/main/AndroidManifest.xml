@@ -20,9 +20,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.FirstActivity"/>
+        <activity android:name=".activities.FirstActivity"
+                  android:theme="@style/AppTheme"/>
 
-        <activity android:name=".activities.SecondActivity"/>
+        <activity android:name=".activities.SecondActivity"
+                  android:theme="@style/AppTheme"/>
 
         <activity android:name=".fragments.DragFragmentContainerActivity"/>
         <activity android:name=".support.SupportDragFragmentContainerActivity"/>

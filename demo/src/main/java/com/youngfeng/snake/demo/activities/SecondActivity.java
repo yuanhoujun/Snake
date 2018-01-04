@@ -1,5 +1,6 @@
 package com.youngfeng.snake.demo.activities;
 
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.youngfeng.snake.Snake;
@@ -7,6 +8,7 @@ import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.ui.BaseActivity;
+import com.youngfeng.snake.view.SnakeTouchInterceptor;
 
 import butterknife.OnClick;
 
@@ -23,5 +25,6 @@ public class SecondActivity extends BaseActivity {
     protected void onInitView() {
         super.onInitView();
         Snake.host(this);
+
     }
 }

@@ -1,5 +1,8 @@
 package com.youngfeng.snake.demo.fragments;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.youngfeng.snake.Snake;
@@ -19,21 +22,33 @@ import butterknife.OnClick;
 @BindView(layoutId = R.layout.fragment_second)
 public class SecondFragment extends BaseFragment {
 
-    @OnClick(R.id.btn_next)
-    public void goToNextFragment(View view) {
-        ThirdFragment thirdFragment = Snake.newProxy(ThirdFragment.class);
-        push(thirdFragment);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Snake.addDragListener(this, new Snake.OnDragListener() {
+            @Override
+            public void onDragStart(View view) {
+                super.onDragStart(view);
+                Log.e("FirstFragment", "拖拽开始");
+            }
+
+            @Override
+            public void onDrag(View view, int left) {
+                super.onDrag(view, left);
+                Log.e("FirstFragment", "拖拽中");
+            }
+
+            @Override
+            public void onRelease(View view, float xVelocity) {
+                super.onRelease(view, xVelocity);
+                Log.e("FirstFragment", "拖拽释放: " + view);
+            }
+        });
     }
 
-    @OnClick(R.id.btn_disable_drag_to_close)
-    public void disableDragToClose(View view) {
-        Snake.enableDragToClose(this, false);
-        toast("滑动关闭功能已禁用");
-    }
-
-    @OnClick(R.id.btn_enable_drag_to_close)
-    public void enableDragToClose(View view) {
-        Snake.enableDragToClose(this, true);
-        toast("滑动关闭功能已开启");
+    @OnClick(R.id.btn_third_fragment)
+    public void goToThirdFragment(View view) {
+        push(Snake.newProxy(ThirdFragment.class));
     }
 }

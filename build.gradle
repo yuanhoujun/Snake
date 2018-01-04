@@ -1,5 +1,89 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    ext.versions = [
+            'minSdk': 14,
+            'compileSdk': 26,
+
+            'supportLibrary': '26.0.0',
+            'androidPlugin': '3.0.0',
+            'androidTools': '26.0.0',
+            'kotlin': '1.2.10',
+            'ankoVersion': '0.9',
+            'ankoExtVersion': '0.3.4',
+            'dualcacheVersion': 'v4.0.2',
+            'fastjsonVersion': '1.1.56.android',
+            'smartUIVersion': '0.4.5',
+            'retrofitVersion': '2.3.0',
+            'autoScrollViewPager': '1.0.4',
+            'glideVersion': '4.4.0',
+            'rxAndroidVersion': '2.0.1',
+            'rxlifecycleComponentVersion': '2.0.1',
+            'rxbindingVersion': '2.0.0',
+            'rxlifecycleKotlinVersion': '2.0.1',
+            'loggingInterceptorVersion': '3.7.0',
+            'lifeCycleBinderVersion': '1.0.0',
+            'easyPermissionVersion': '0.3.1',
+            'SmartUIVersion': '0.4.5',
+            'glide': '3.7.0',
+            'eventbus': '3.0.0',
+            'adapterRxJavaVersion': '2.3.0',
+            'javapoet': '1.9.0',
+            'autoService': '1.0-rc4',
+            'autoCommon': '0.9',
+            'butterknife': '8.8.1'
+    ]
+
+    ext.deps = [
+            android: [
+                    support: [
+                            compat: "com.android.support:appcompat-v7:${versions.supportLibrary}",
+                            design: "com.android.support:design:${versions.supportLibrary}",
+                            recyclerView: "com.android.support:recyclerview-v7:${versions.supportLibrary}"
+                    ]
+            ],
+            kotlin: [
+                    stdlib: "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
+                    reflect: "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}",
+                    stdlibJre7: "org.jetbrains.kotlin:kotlin-stdlib-jre7:${versions.kotlin}"
+
+            ],
+            anko: [
+                    common: "org.jetbrains.anko:anko-common:${versions.ankoVersion}",
+                    compat: "org.jetbrains.anko:anko-appcompat-v7:${versions.ankoVersion}",
+                    ext: "com.github.yuanhoujun:AnkoExt:${versions.ankoExtVersion}"
+            ],
+            dualcache: "com.github.yuanhoujun:dualcache:${versions.dualcacheVersion}",
+            retrofit: [
+                    runtime: "com.squareup.retrofit2:retrofit:${versions.retrofitVersion}",
+                    converter: "com.squareup.retrofit2:converter-gson:${versions.retrofitVersion}",
+                    adapter: "com.squareup.retrofit2:adapter-rxjava2:${versions.adapterRxJavaVersion}",
+            ],
+            rx: [
+                    android: "io.reactivex.rxjava2:rxandroid:${versions.rxAndroidVersion}",
+                    rxlifecycleComponent: "com.trello.rxlifecycle2:rxlifecycle-components:${versions.rxlifecycleComponentVersion}",
+                    rxlifecycleKotlin: "com.trello.rxlifecycle2:rxlifecycle-kotlin:${versions.rxlifecycleKotlinVersion}",
+                    binding: "com.jakewharton.rxbinding2:rxbinding:${versions.rxbindingVersion}"
+
+            ],
+            okHttp: [
+                    loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:${versions.loggingInterceptorVersion}"
+            ],
+            auto: [
+                    common: "com.google.auto:auto-common:${versions.autoCommon}",
+                    service: "com.google.auto.service:auto-service:${versions.autoService}"
+            ],
+            eventbus: "org.greenrobot:eventbus:${versions.eventbus}",
+
+            lifeCycleBinder: "com.github.yuanhoujun:Android_life_cycle_binder:${versions.lifeCycleBinderVersion}",
+
+            easyPermission: "pub.devrel:easypermissions:${versions.easyPermissionVersion}",
+            glide: "com.github.bumptech.glide:glide:${versions.glide}",
+            smartUI: "com.github.yuanhoujun:SmartUI:${versions.smartUIVersion}",
+            javapoet: "com.squareup:javapoet:${versions.javapoet}",
+            butterknife: "com.jakewharton:butterknife:${versions.butterknife}",
+            butterknifeCompiler: "com.jakewharton:butterknife-compiler:${versions.butterknife}"
+    ]
+
     repositories {
         jcenter()
         google()
@@ -22,19 +106,6 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-// Define versions in a single place
-ext {
-    // Sdk and tools
-    minSdkVersion = 14
-    targetSdkVersion = 25
-    compileSdkVersion = 26
-    buildToolsVersion = '26.0.2'
-
-    // App dependencies
-    supportLibraryVersion = '26.1.0'
-    lifecycleBinderVersion = '1.0.0'
 }
 
 
