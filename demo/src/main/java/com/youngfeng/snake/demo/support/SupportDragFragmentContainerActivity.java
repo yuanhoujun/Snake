@@ -1,5 +1,7 @@
 package com.youngfeng.snake.demo.support;
 
+import com.youngfeng.snake.Snake;
+import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.ui.FragmentContainerActivity;
 
 /**
@@ -7,11 +9,14 @@ import com.youngfeng.snake.demo.ui.FragmentContainerActivity;
  *
  * @author Scott Smith 2017-12-26 14:37
  */
+@EnableDragToClose()
 public class SupportDragFragmentContainerActivity extends FragmentContainerActivity {
 
     @Override
     protected void onInitView() {
         super.onInitView();
+        Snake.host(this);
+
         supportSwitchTo(FirstSupportFragment.class);
     }
 }

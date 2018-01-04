@@ -32,5 +32,5 @@
         style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/go_to_next_activity"/>
+        android:text="@string/next"/>
 </LinearLayout>

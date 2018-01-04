@@ -24,4 +24,5 @@ public class FirstFragment extends BaseFragment {
         SecondFragment secondFragment = Snake.newProxy(SecondFragment.class);
         push(secondFragment);
     }
+
 }

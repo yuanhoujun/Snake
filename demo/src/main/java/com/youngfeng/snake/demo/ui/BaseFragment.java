@@ -109,4 +109,10 @@ public class BaseFragment extends Fragment {
     public final void pop() {
 
     }
+
+    public void toast(String msg) {
+        if(getActivity() instanceof BaseActivity) {
+            ((BaseActivity)getActivity()).toast(msg);
+        }
+    }
 }
