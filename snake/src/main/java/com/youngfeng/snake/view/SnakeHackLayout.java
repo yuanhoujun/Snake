@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -64,6 +66,9 @@ public class SnakeHackLayout extends FrameLayout {
     // 设置阴影边缘是否隐藏，默认显示
     private boolean hideShadowOfEdge = false;
     private SnakeTouchInterceptor mCustomTouchInterceptor;
+    private int mContentViewLeft;
+    private int mContentViewTop;
+    private boolean isInLayout = false;
 
     public SnakeHackLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -160,6 +165,9 @@ public class SnakeHackLayout extends FrameLayout {
                         onReleaseStateListener.onReleaseCompleted(SnakeHackLayout.this, changedView);
                     }
                 }
+
+                mContentViewLeft = left;
+                mContentViewTop = top;
             }
 
             @Override
@@ -216,8 +224,49 @@ public class SnakeHackLayout extends FrameLayout {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
         mXRange = right - left;
+
+        isInLayout = true;
+
+        if(getChildCount() > 0) {
+            View contentView = getChildAt(0);
+            contentView.layout(mContentViewLeft, mContentViewTop,
+                    mContentViewLeft + contentView.getMeasuredWidth(),
+                    mContentViewTop + contentView.getMeasuredHeight());
+        }
+
+        isInLayout = false;
+    }
+
+    @Override
+    public void requestLayout() {
+        if(!isInLayout) {
+            super.requestLayout();
+        }
+    }
+
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState ss = new SavedState(superState);
+        ss.contentLeft = mContentViewLeft;
+        ss.contentTop = mContentViewTop;
+
+        return ss;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if(!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SavedState savedState = (SavedState) state;
+        mContentViewLeft = savedState.contentLeft;
+        mContentViewTop = savedState.contentTop;
+        requestLayout();
     }
 
     @Override
@@ -480,5 +529,39 @@ public class SnakeHackLayout extends FrameLayout {
         public boolean canDragToClose() {
             return true;
         }
+    }
+
+    public static class SavedState extends BaseSavedState {
+        private int contentLeft;
+        private int contentTop;
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        public SavedState(Parcel in) {
+            super(in);
+
+            this.contentLeft = in.readInt();
+            this.contentTop = in.readInt();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+
+            out.writeInt(this.contentLeft);
+            out.writeInt(this.contentTop);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
 }

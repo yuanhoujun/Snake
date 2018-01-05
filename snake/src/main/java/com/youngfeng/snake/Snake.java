@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -183,7 +182,7 @@ public class Snake {
                         mVisibility = viewOfLastFragment.getVisibility();
                         viewOfLastFragment.setVisibility(View.VISIBLE);
                     }
-                    viewOfLastFragment.setLeft((int) ((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f)));
+                    viewOfLastFragment.setX((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f));
                 }
             }
 
@@ -195,7 +194,7 @@ public class Snake {
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
                             View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
                             if(null != viewOfLastFragment) {
-                                viewOfLastFragment.setLeft(0);
+                                viewOfLastFragment.setX(0f);
                             }
                             if (!fragmentManagerHelper.backStackEmpty()) {
                                 fragmentManagerHelper.backToLastFragment();
@@ -211,7 +210,7 @@ public class Snake {
                                 if(mVisibility >= 0) {
                                     viewOfLastFragment.setVisibility(mVisibility);
                                 }
-                                viewOfLastFragment.setLeft(0);
+                                viewOfLastFragment.setX(0f);
                             }
                         }
                     });
@@ -250,7 +249,7 @@ public class Snake {
                         mVisibility = viewOfLastFragment.getVisibility();
                         viewOfLastFragment.setVisibility(View.VISIBLE);
                     }
-                    viewOfLastFragment.setLeft((int) ((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f)));
+                    viewOfLastFragment.setX((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f));
                 }
             }
 
@@ -262,7 +261,7 @@ public class Snake {
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
                             View viewOfLastFragment = fragmentManagerHelper.getViewOfLastSupportFragment();
                             if(null != viewOfLastFragment) {
-                                viewOfLastFragment.setLeft(0);
+                                viewOfLastFragment.setX(0f);
                             }
                             if (!fragmentManagerHelper.backToSupportFragment()) {
                                 fragmentManagerHelper.backToSupportFragment();
@@ -278,7 +277,7 @@ public class Snake {
                                 if(mVisibility >= 0) {
                                     viewOfLastFragment.setVisibility(mVisibility);
                                 }
-                                viewOfLastFragment.setLeft(0);
+                                viewOfLastFragment.setX(0f);
                             }
                         }
                     });
@@ -383,7 +382,7 @@ public class Snake {
                 if(null != viewOfLastActivity) {
                     float ratio = (left * 1.0f) / parent.getWidth();
 
-                    viewOfLastActivity.setLeft((int) ((ratio - 1) * Utils.dp2px(activity, 100f)));
+                    viewOfLastActivity.setX((ratio - 1) * Utils.dp2px(activity, 100f));
                 }
             }
 
@@ -401,7 +400,7 @@ public class Snake {
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
                             View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(activity);
                             if(null != viewOfLastActivity) {
-                                viewOfLastActivity.setLeft(0);
+                                viewOfLastActivity.setX(0f);
                             }
 
                             activity.finish();
@@ -414,7 +413,7 @@ public class Snake {
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
                             View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(activity);
                             if(null != viewOfLastActivity) {
-                                viewOfLastActivity.setLeft(0);
+                                viewOfLastActivity.setX(0f);
                             }
                             ActivityHelper.convertFromTranslucent(activity);
                         }
