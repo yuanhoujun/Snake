@@ -28,7 +28,9 @@
 
         <activity android:name=".fragments.DragFragmentContainerActivity"/>
         <activity android:name=".support.SupportDragFragmentContainerActivity"/>
-
+        <activity android:name=".mix.DragFragmentContainerMixActivity"/>
+        <activity android:name=".mix.SecondMixActivity" />
+        <activity android:name=".mix.MixActivity" />
     </application>
 
 </manifest>

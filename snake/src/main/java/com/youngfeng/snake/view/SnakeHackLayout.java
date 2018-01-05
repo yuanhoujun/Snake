@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.FrameLayout;
 
 import com.youngfeng.snake.Snake;
@@ -225,7 +226,7 @@ public class SnakeHackLayout extends FrameLayout {
             return true;
         }
 
-        getParent().requestDisallowInterceptTouchEvent(true);
+        requestParentDisallowInterceptTouchEvent(true);
         mViewDragHelper.processTouchEvent(event);
         return true;
     }
@@ -237,6 +238,19 @@ public class SnakeHackLayout extends FrameLayout {
         }
 
         return mViewDragHelper.shouldInterceptTouchEvent(ev);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        requestParentDisallowInterceptTouchEvent(true);
+        return super.dispatchTouchEvent(ev);
+    }
+
+    private void requestParentDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        ViewParent parent = getParent();
+        if(null != parent) {
+            parent.requestDisallowInterceptTouchEvent(disallowIntercept);
+        }
     }
 
     @Override

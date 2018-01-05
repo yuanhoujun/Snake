@@ -81,7 +81,8 @@ buildscript {
             smartUI: "com.github.yuanhoujun:SmartUI:${versions.smartUIVersion}",
             javapoet: "com.squareup:javapoet:${versions.javapoet}",
             butterknife: "com.jakewharton:butterknife:${versions.butterknife}",
-            butterknifeCompiler: "com.jakewharton:butterknife-compiler:${versions.butterknife}"
+            butterknifeCompiler: "com.jakewharton:butterknife-compiler:${versions.butterknife}",
+            autoScrollViewPager: "com.github.yuanhoujun:AutoScrollViewPager:${versions.autoScrollViewPager}"
     ]
 
     repositories {

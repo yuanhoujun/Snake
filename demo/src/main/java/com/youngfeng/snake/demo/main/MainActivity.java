@@ -6,6 +6,7 @@ import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.activities.FirstActivity;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.fragments.DragFragmentContainerActivity;
+import com.youngfeng.snake.demo.mix.MixActivity;
 import com.youngfeng.snake.demo.support.SupportDragFragmentContainerActivity;
 import com.youngfeng.snake.demo.ui.BaseActivity;
 
@@ -34,8 +35,8 @@ public class MainActivity extends BaseActivity {
         start(SupportDragFragmentContainerActivity.class);
     }
 
-    @OnClick(R.id.btn_nest_scroll_widget)
-    public void nestScrollWidget(View view) {
-
+    @OnClick(R.id.btn_mix_use)
+    public void mixUse(View view) {
+        start(MixActivity.class);
     }
 }

@@ -33,4 +33,6 @@
     <string name="enable_drag_to_close">开启滑动关闭</string>
     <string name="star_this_repo">给这个开源库star</string>
     <string name="follow_the_authors_article">关注作者简书</string>
+    <string name="mix_use">混合使用</string>
+    <string name="entry_fragment">进入Fragment</string>
 </resources>

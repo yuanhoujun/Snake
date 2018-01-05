@@ -36,6 +36,12 @@ public class BaseSupportFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        onInitView();
+    }
+
     private void restore(@NonNull Bundle savedInstanceState) {
         boolean isHidden = savedInstanceState.getBoolean(KEY_STATE_HIDDEN);
         if(isHidden) {
@@ -113,4 +119,6 @@ public class BaseSupportFragment extends Fragment {
             ((BaseActivity)getActivity()).toast(msg);
         }
     }
+
+    protected void onInitView() {}
 }

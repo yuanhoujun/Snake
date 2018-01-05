@@ -47,7 +47,7 @@ public class SecondFragment extends BaseFragment {
         });
     }
 
-    @OnClick(R.id.btn_third_fragment)
+    @OnClick(R.id.btn_next)
     public void goToThirdFragment(View view) {
         push(Snake.newProxy(ThirdFragment.class));
     }
