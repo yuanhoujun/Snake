@@ -661,6 +661,56 @@ public class Snake {
         }
     }
 
+    /**
+     * Get enable status of the activity.
+     *
+     * @param activity the specified activity
+     * @return true: enabled false: disabled
+     */
+    public static boolean dragToCloseEnabled(@NonNull Activity activity) {
+        assertActivityDestroyed(activity);
+
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        View topWindowView = decorView.getChildAt(0);
+        if(topWindowView instanceof SnakeHackLayout) {
+            return !((SnakeHackLayout) topWindowView).ignoredDragEvent();
+        }
+
+        return false;
+    }
+
+    /**
+     * Get enable status of the fragment.
+     *
+     * @param fragment the specified fragment
+     * @return true: enabled false: disabled
+     */
+    public static boolean dragToCloseEnabled(@NonNull android.app.Fragment fragment) {
+        View contentView = fragment.getView();
+
+        if(contentView instanceof SnakeHackLayout) {
+            return !((SnakeHackLayout) contentView).ignoredDragEvent();
+        }
+
+        return false;
+    }
+
+    /**
+     * Get enable status of the fragment.
+     *
+     * @param fragment the specified fragment
+     * @return true: enabled false: disabled
+     */
+    public static boolean dragToCloseEnabled(@NonNull android.support.v4.app.Fragment fragment) {
+        View contentView = fragment.getView();
+
+        if(contentView instanceof SnakeHackLayout) {
+            return !((SnakeHackLayout) contentView).ignoredDragEvent();
+        }
+
+        return false;
+    }
+
     public static abstract class OnDragListener {
         public void onDragStart(View view) {}
 

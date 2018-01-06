@@ -35,4 +35,10 @@
     <string name="follow_the_authors_article">关注作者简书</string>
     <string name="mix_use">混合使用</string>
     <string name="entry_fragment">进入Fragment</string>
+    <string name="ph_status_of_enable_drag_to_close">
+        <![CDATA[
+            <font color="#333333">当前滑动关闭功能开启状态：</font>
+            <font color="#ff0000">#status</font>
+        ]]>
+    </string>
 </resources>

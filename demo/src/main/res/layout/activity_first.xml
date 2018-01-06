@@ -13,6 +13,13 @@
         android:scaleType="centerCrop"
         android:src="@mipmap/cat_and_fish"/>
 
+    <TextView
+        android:id="@+id/text_open_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="14dp" />
+
     <Button
         android:id="@+id/btn_disable_drag_to_close"
         style="@style/ButtonStyle"

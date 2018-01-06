@@ -40,6 +40,12 @@ public class BaseFragment extends Fragment implements AnimationController {
         }
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        onInitView();
+    }
+
     private void restore(@NonNull Bundle savedInstanceState) {
         boolean isHidden = savedInstanceState.getBoolean(KEY_STATE_HIDDEN);
         if(isHidden) {
@@ -131,4 +137,6 @@ public class BaseFragment extends Fragment implements AnimationController {
     public boolean animationDisabled() {
         return mDisableAnimation;
     }
+
+    protected void onInitView() {}
 }

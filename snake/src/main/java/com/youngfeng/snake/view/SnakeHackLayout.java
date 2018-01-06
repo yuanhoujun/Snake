@@ -363,6 +363,10 @@ public class SnakeHackLayout extends FrameLayout {
         }
     }
 
+    public boolean ignoredDragEvent() {
+        return ignoreDragEvent;
+    }
+
     /**
      * Just for internal use.
      *
