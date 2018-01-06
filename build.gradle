@@ -4,9 +4,9 @@ buildscript {
             'minSdk': 14,
             'compileSdk': 26,
 
-            'supportLibrary': '26.0.0',
+            'supportLibrary': '26.0.2',
             'androidPlugin': '3.0.0',
-            'androidTools': '26.0.0',
+            'androidTools': '26.0.2',
             'kotlin': '1.2.10',
             'ankoVersion': '0.9',
             'ankoExtVersion': '0.3.4',

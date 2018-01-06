@@ -6,8 +6,8 @@ android {
     buildToolsVersion versions.androidTools
 
     defaultConfig {
-        minSdkVersion deps.minSdk
-        targetSdkVersion deps.compileSdk
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
         versionCode 6
         versionName "0.0.6"
 
