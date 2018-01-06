@@ -393,6 +393,15 @@ public class SnakeHackLayout extends FrameLayout {
     }
 
     /**
+     * 获取是否仅监听快速滑动状态
+     *
+     * @return 监听状态
+     */
+    public boolean onlyListenToFastSwipe() {
+        return onlyListenToFastSwipe;
+    }
+
+    /**
      * 设置阴影边缘是否隐藏
      *
      * @param hideShadowOfEdge true 隐藏， false 显示

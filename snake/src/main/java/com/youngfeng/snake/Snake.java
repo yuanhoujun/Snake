@@ -392,6 +392,8 @@ public class Snake {
 
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
+                if(parent.onlyListenToFastSwipe()) return;
+
                 View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(activity);
                 if(null != viewOfLastActivity) {
                     float ratio = (left * 1.0f) / parent.getWidth();
@@ -408,6 +410,11 @@ public class Snake {
                 if(shouldClose) {
                     // Just return if ignore the drag event
                     if(ignoreDragEvent) return;
+
+                    if(parent.onlyListenToFastSwipe()) {
+                        activity.finish();
+                        return;
+                    }
 
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
