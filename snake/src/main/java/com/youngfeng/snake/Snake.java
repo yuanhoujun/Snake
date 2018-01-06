@@ -1,5 +1,6 @@
 package com.youngfeng.snake;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.app.Application;
 import android.content.res.TypedArray;
@@ -11,7 +12,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 
+import com.youngfeng.snake.animation.AnimationController;
+import com.youngfeng.snake.animation.AnimationFactory;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.annotations.PrimaryConstructor;
 import com.youngfeng.snake.annotations.SetDragParameter;
@@ -196,8 +200,13 @@ public class Snake {
                             if(null != viewOfLastFragment) {
                                 viewOfLastFragment.setX(0f);
                             }
-                            if (!fragmentManagerHelper.backStackEmpty()) {
-                                fragmentManagerHelper.backToLastFragment();
+
+                            android.app.Fragment lastFragment = fragmentManagerHelper.getLastFragment();
+                            disableAnimation(lastFragment, true);
+                            if (fragmentManagerHelper.backToLastFragment()) {
+                                disableAnimation(lastFragment, false);
+                            } else {
+                                disableAnimation(lastFragment, false);
                             }
                         }
                     });
@@ -263,8 +272,13 @@ public class Snake {
                             if(null != viewOfLastFragment) {
                                 viewOfLastFragment.setX(0f);
                             }
-                            if (!fragmentManagerHelper.backToSupportFragment()) {
-                                fragmentManagerHelper.backToSupportFragment();
+
+                            android.support.v4.app.Fragment lastFragment = fragmentManagerHelper.getLastSupportFragment();
+                            disableAnimation(lastFragment, true);
+                            if (fragmentManagerHelper.backToSupportFragment()) {
+                                disableAnimation(lastFragment, false);
+                            } else {
+                                disableAnimation(lastFragment, false);
                             }
                         }
                     });
@@ -590,6 +604,52 @@ public class Snake {
             method.invoke(fragment, interceptor);
         } catch (Throwable e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Wrap fragment animator to simplify use.
+     *
+     * @param superAnimator the result of call super onCreateAnimator
+     * @param animationController the interface of control fragment's animator
+     */
+    public static Animator wrap(@Nullable Animator superAnimator, @NonNull AnimationController animationController) {
+        if(animationController.animationDisabled()) return AnimationFactory.emptyAnimator();
+        return superAnimator;
+    }
+
+    /**
+     * Wrap fragment animation to simplify use.
+     *
+     * @param superAnimation the result of call super onCreateAnimator
+     * @param animationController the interface of control fragment's animation
+     */
+    public static Animation wrap(@Nullable Animation superAnimation, @NonNull AnimationController animationController) {
+        if(animationController.animationDisabled()) return AnimationFactory.emptyAmiation();
+        return superAnimation;
+    }
+
+    /**
+     * Disable fragment's pop animation.
+     *
+     * @param fragment the specified support fragment
+     * @param disable disable or enable animation
+     */
+    public static void disableAnimation(android.support.v4.app.Fragment fragment, boolean disable) {
+        if(fragment instanceof AnimationController) {
+            ((AnimationController) fragment).disableAnimation(disable);
+        }
+    }
+
+    /**
+     * Disable fragment's pop animation.
+     *
+     * @param fragment the specified fragment
+     * @param disable disable or enable animation
+     */
+    public static void disableAnimation(android.app.Fragment fragment, boolean disable) {
+        if(fragment instanceof AnimationController) {
+            ((AnimationController) fragment).disableAnimation(disable);
         }
     }
 
