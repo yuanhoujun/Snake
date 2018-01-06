@@ -183,8 +183,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void push(Class<? extends BaseFragment> fragment, boolean addToBackStack) {
-        push(R.animator.fragment_enter, R.animator.fragment_exit,
-                R.animator.fragment_pop_enter, R.animator.fragment_pop_exit, fragment, addToBackStack);
+        push(R.animator.snake_slide_in_right, R.animator.snake_slide_out_left,
+                R.animator.snake_slide_in_left, R.animator.snake_slide_out_right, fragment, addToBackStack);
     }
 
     public void push(Class<? extends BaseFragment> fragment) {
@@ -208,6 +208,8 @@ public class BaseActivity extends AppCompatActivity {
                 Fragment currentFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
 
                 if (null != currentFragment) {
+                    transaction.hide(currentFragment);
+
                     if(addToBackStack) {
                         transaction.addToBackStack(mCurrentFragmentTag);
                     }
@@ -228,15 +230,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void push(BaseFragment fragment, boolean addToBackStack) {
-        push(R.animator.fragment_enter, R.animator.fragment_exit,
-                R.animator.fragment_pop_enter, R.animator.fragment_pop_exit, fragment, addToBackStack);
+        push(R.animator.snake_slide_in_right, R.animator.snake_slide_out_left,
+                R.animator.snake_slide_in_left, R.animator.snake_slide_out_right, fragment, addToBackStack);
     }
 
     public void push(BaseFragment fragment) {
         push(fragment, true);
     }
-
-
 
     public void supportPush(@AnimRes int enter, @AnimRes int exit, @AnimRes int popEnter,
                             @AnimRes int popExit, @NonNull Class<? extends BaseSupportFragment> fragment, boolean addToBackStack) {
@@ -278,8 +278,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void supportPush(Class<? extends BaseSupportFragment> fragment, boolean addToBackStack) {
-        supportPush(R.anim.fragment_enter, R.anim.fragment_exit,
-                R.anim.fragment_pop_enter, R.anim.fragment_pop_exit, fragment, addToBackStack);
+        supportPush(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left,
+                R.anim.snake_slide_in_left, R.anim.snake_slide_out_right, fragment, addToBackStack);
     }
 
     public void supportPush(Class<? extends BaseSupportFragment> fragment) {
@@ -325,8 +325,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void supportPush(BaseSupportFragment fragment, boolean addToBackStack) {
-        supportPush(R.anim.fragment_enter, R.anim.fragment_exit,
-                R.anim.fragment_pop_enter, R.anim.fragment_pop_exit, fragment, addToBackStack);
+        supportPush(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left,
+                R.anim.snake_slide_in_left, R.anim.snake_slide_out_right, fragment, addToBackStack);
     }
 
     public void supportPush(BaseFragment fragment) {
@@ -380,6 +380,7 @@ public class BaseActivity extends AppCompatActivity {
     public void start(Class<? extends Activity> activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
+        overridePendingTransition(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left);
     }
 
     private boolean isActive(@NonNull BaseFragment fragment) {

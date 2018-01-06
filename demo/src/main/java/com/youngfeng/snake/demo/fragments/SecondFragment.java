@@ -22,33 +22,9 @@ import butterknife.OnClick;
 @BindView(layoutId = R.layout.fragment_second)
 public class SecondFragment extends BaseFragment {
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        Snake.addDragListener(this, new Snake.OnDragListener() {
-            @Override
-            public void onDragStart(View view) {
-                super.onDragStart(view);
-                Log.e("FirstFragment", "拖拽开始");
-            }
-
-            @Override
-            public void onDrag(View view, int left) {
-                super.onDrag(view, left);
-                Log.e("FirstFragment", "拖拽中");
-            }
-
-            @Override
-            public void onRelease(View view, float xVelocity) {
-                super.onRelease(view, xVelocity);
-                Log.e("FirstFragment", "拖拽释放: " + view);
-            }
-        });
-    }
-
     @OnClick(R.id.btn_next)
     public void goToThirdFragment(View view) {
         push(Snake.newProxy(ThirdFragment.class));
+//        push(new ThirdFragment());
     }
 }

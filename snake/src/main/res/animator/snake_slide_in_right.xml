@@ -3,7 +3,7 @@
     <objectAnimator
         android:duration="250"
         android:propertyName="fractionX"
-        android:valueFrom="1"
-        android:valueTo="0"
+        android:valueFrom="1f"
+        android:valueTo="0f"
         android:valueType="floatType" />
 </set>

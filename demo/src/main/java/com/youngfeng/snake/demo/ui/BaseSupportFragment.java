@@ -1,5 +1,6 @@
 package com.youngfeng.snake.demo.ui;
 
+import android.animation.Animator;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.LinearLayout;
 
+import com.youngfeng.snake.Snake;
+import com.youngfeng.snake.animation.AnimationController;
+import com.youngfeng.snake.animation.AnimationFactory;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.ui.widget.TranslateLinearLayout;
@@ -22,10 +27,11 @@ import butterknife.ButterKnife;
  *
  * @author Scott Smith 2017-12-24 10:29
  */
-public class BaseSupportFragment extends Fragment {
+public class BaseSupportFragment extends Fragment implements AnimationController {
     private Toolbar mToolbar;
     private TranslateLinearLayout mContentView;
     private final String KEY_STATE_HIDDEN = "com.youngfeng:fragment.state.hidden";
+    private boolean mDisableAnimation = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +90,29 @@ public class BaseSupportFragment extends Fragment {
                 ButterKnife.bind(this, mContentView);
             }
         }
+    }
+
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        return Snake.wrap(super.onCreateAnimator(transit, enter, nextAnim), this);
+    }
+
+    //    @Override
+//    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+//        if(mDisableAnimation) {
+//            return AnimationFactory.emptyAnimator();
+//        }
+//        return super.onCreateAnimator(transit, enter, nextAnim);
+//    }
+
+    @Override
+    public void disableAnimation(boolean disable) {
+        mDisableAnimation = disable;
+    }
+
+    @Override
+    public boolean animationDisabled() {
+        return mDisableAnimation;
     }
 
     protected @Nullable Toolbar toolbar() {

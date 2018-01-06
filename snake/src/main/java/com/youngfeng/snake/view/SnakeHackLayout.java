@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
 import com.youngfeng.snake.Snake;
@@ -69,6 +70,8 @@ public class SnakeHackLayout extends FrameLayout {
     private int mContentViewLeft;
     private int mContentViewTop;
     private boolean isInLayout = false;
+    private float fractionX = 0f;
+    private ViewTreeObserver.OnPreDrawListener mPreDrawListener = null;
 
     public SnakeHackLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -307,6 +310,35 @@ public class SnakeHackLayout extends FrameLayout {
         if(mViewDragHelper.continueSettling(true)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
+    }
+
+    public void setFractionX(final float fractionX) {
+        this.fractionX = fractionX;
+
+        if(null == mPreDrawListener) {
+            mPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    getViewTreeObserver().removeOnPreDrawListener(mPreDrawListener);
+                    setTranslateX(fractionX);
+                    return true;
+                }
+            };
+            getViewTreeObserver().addOnPreDrawListener(mPreDrawListener);
+        }
+
+        setTranslateX(fractionX);
+    }
+
+    private void setTranslateX(float fractionX) {
+        int width = getWidth();
+        if(width <= 0f) return;
+
+        setTranslationX(width * fractionX);
+    }
+
+    public float getFractionX() {
+        return fractionX;
     }
 
     /**

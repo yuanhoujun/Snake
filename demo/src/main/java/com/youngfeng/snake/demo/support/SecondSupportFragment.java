@@ -23,6 +23,8 @@ public class SecondSupportFragment extends BaseSupportFragment {
     public void goToNextFragment(View view) {
         ThirdSupportFragment thirdFragment = Snake.newProxySupport(ThirdSupportFragment.class);
         push(thirdFragment);
+
+//        disableAnimation(true);
     }
 
     @OnClick(R.id.btn_disable_drag_to_close)

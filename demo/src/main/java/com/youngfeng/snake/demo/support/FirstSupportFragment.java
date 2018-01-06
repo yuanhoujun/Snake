@@ -1,12 +1,17 @@
 package com.youngfeng.snake.demo.support;
 
+import android.animation.Animator;
 import android.view.View;
 
 import com.youngfeng.snake.Snake;
+import com.youngfeng.snake.animation.AnimationFactory;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.ui.BaseSupportFragment;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import butterknife.OnClick;
 
@@ -19,8 +24,14 @@ import butterknife.OnClick;
 @BindView(layoutId = R.layout.fragment_first_support)
 public class FirstSupportFragment extends BaseSupportFragment {
 
+    @Override
+    protected void onInitView() {
+        super.onInitView();
+    }
+
     @OnClick(R.id.btn_second_fragment)
     public void goToSecondFragment(View view) {
         push(Snake.newProxySupport(SecondSupportFragment.class));
     }
+
 }

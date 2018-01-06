@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.MainActivity">
+        <activity android:name=".main.MainActivity" android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,16 +21,18 @@
         </activity>
 
         <activity android:name=".activities.FirstActivity"
-                  android:theme="@style/AppTheme"/>
+                  android:theme="@style/AppTheme"
+                  android:configChanges="orientation|screenSize"/>
 
         <activity android:name=".activities.SecondActivity"
-                  android:theme="@style/AppTheme"/>
+                  android:theme="@style/AppTheme"
+                  android:configChanges="orientation|screenSize"/>
 
-        <activity android:name=".fragments.DragFragmentContainerActivity"/>
-        <activity android:name=".support.SupportDragFragmentContainerActivity"/>
-        <activity android:name=".mix.DragFragmentContainerMixActivity"/>
-        <activity android:name=".mix.SecondMixActivity" />
-        <activity android:name=".mix.MixActivity" />
+        <activity android:name=".fragments.DragFragmentContainerActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".support.SupportDragFragmentContainerActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".mix.DragFragmentContainerMixActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".mix.SecondMixActivity" android:configChanges="orientation|screenSize" />
+        <activity android:name=".mix.MixActivity" android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>

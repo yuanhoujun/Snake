@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
@@ -36,28 +37,30 @@ public class TranslateLinearLayout extends LinearLayout {
 
     public void setFractionX(final float fractionX) {
         this.fractionX = fractionX;
-//
-//        if(null == mPreDrawListener) {
-//            mPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-//                @Override
-//                public boolean onPreDraw() {
-//                    getViewTreeObserver().removeOnPreDrawListener(mPreDrawListener);
-//                    setTranslateX(fractionX);
-//                    return true;
-//                }
-//            };
-//            getViewTreeObserver().addOnPreDrawListener(mPreDrawListener);
-//        }
-//
-//        setTranslateX(fractionX);
+
+        if(null == mPreDrawListener) {
+            mPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    getViewTreeObserver().removeOnPreDrawListener(mPreDrawListener);
+                    setTranslateX(fractionX);
+                    return true;
+                }
+            };
+            getViewTreeObserver().addOnPreDrawListener(mPreDrawListener);
+        }
+
+        setTranslateX(fractionX);
     }
 
-//    private void setTranslateX(float fractionX) {
-//        int width = getWidth();
-//        if(width <= 0f) return;
-//
-//        setTranslationX(width * fractionX);
-//    }
+    private void setTranslateX(float fractionX) {
+        int width = getWidth();
+        if(width <= 0f) return;
+
+        setTranslationX(width * fractionX);
+
+        Log.e("TranslateX", fractionX + ">>>>>>>>>>");
+    }
 
     public float getFractionX() {
         return fractionX;

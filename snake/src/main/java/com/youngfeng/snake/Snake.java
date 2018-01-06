@@ -413,6 +413,7 @@ public class Snake {
 
                     if(parent.onlyListenToFastSwipe()) {
                         activity.finish();
+                        activity.overridePendingTransition(R.anim.snake_slide_in_left, R.anim.snake_slide_out_right);
                         return;
                     }
 

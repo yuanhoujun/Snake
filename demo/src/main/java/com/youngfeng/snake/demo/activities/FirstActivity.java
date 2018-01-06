@@ -25,32 +25,6 @@ public class FirstActivity extends BaseActivity {
     @Override
     protected void onInitView() {
         Snake.host(this);
-
-        Log.e("isTranslucent", "This is translucent: " + ActivityHelper.isTranslucent(this) + "");
-
-        Snake.addDragListener(this, new Snake.OnDragListener() {
-            @Override
-            public void onDragStart(View view) {
-                super.onDragStart(view);
-
-                Log.e("DragListener", "拖拽开始 <<<");
-            }
-
-            @Override
-            public void onDrag(View view, int left) {
-                super.onDrag(view, left);
-
-                Log.e("DragListener", "拖拽中 <<< " + left);
-            }
-
-            @Override
-            public void onRelease(View view, float xVelocity) {
-                super.onRelease(view, xVelocity);
-
-                Log.e("DragListener", "拖拽释放 <<< " + xVelocity + "@@@" + view);
-            }
-        });
-
     }
 
     @OnClick(R.id.btn_second_activity)

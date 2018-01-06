@@ -1,5 +1,6 @@
 package com.youngfeng.snake.demo.ui;
 
+import android.animation.Animator;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.youngfeng.snake.Snake;
+import com.youngfeng.snake.animation.AnimationController;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.ui.widget.TranslateLinearLayout;
@@ -22,10 +25,11 @@ import butterknife.ButterKnife;
  *
  * @author Scott Smith 2017-12-24 10:29
  */
-public class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment implements AnimationController {
     private Toolbar mToolbar;
     private TranslateLinearLayout mContentView;
     private final String KEY_STATE_HIDDEN = "com.youngfeng:fragment.state.hidden";
+    private boolean mDisableAnimation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,11 +56,15 @@ public class BaseFragment extends Fragment {
         mContentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         mContentView.setOrientation(LinearLayout.VERTICAL);
-        mContentView.setBackgroundColor(Color.RED);
         addToolbarToContentView();
         bindViewToContentView(inflater, container);
 
         return mContentView;
+    }
+
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        return Snake.wrap(super.onCreateAnimator(transit, enter, nextAnim), this);
     }
 
     private void addToolbarToContentView() {
@@ -87,8 +95,7 @@ public class BaseFragment extends Fragment {
     public final void push(Class<? extends BaseFragment> fragment, boolean addToBackStack) {
         if(!(getActivity() instanceof BaseActivity) || getActivity().isFinishing()) return;
 
-        ((BaseActivity) getActivity()).push(R.animator.fragment_enter, R.animator.fragment_exit,
-                R.animator.fragment_pop_enter, R.animator.fragment_pop_exit, fragment, addToBackStack);
+        ((BaseActivity) getActivity()).push(fragment, addToBackStack);
     }
 
     public final void push(Class<? extends BaseFragment> fragment) {
@@ -98,8 +105,7 @@ public class BaseFragment extends Fragment {
     public final void push(BaseFragment fragment, boolean addToBackStack) {
         if(!(getActivity() instanceof BaseActivity) || getActivity().isFinishing()) return;
 
-        ((BaseActivity) getActivity()).push(R.animator.fragment_enter, R.animator.fragment_exit,
-                R.animator.fragment_pop_enter, R.animator.fragment_pop_exit, fragment, addToBackStack);
+        ((BaseActivity) getActivity()).push(fragment, addToBackStack);
     }
 
     public final void push(BaseFragment fragment) {
@@ -114,5 +120,15 @@ public class BaseFragment extends Fragment {
         if(getActivity() instanceof BaseActivity) {
             ((BaseActivity)getActivity()).toast(msg);
         }
+    }
+
+    @Override
+    public void disableAnimation(boolean disable) {
+        mDisableAnimation = disable;
+    }
+
+    @Override
+    public boolean animationDisabled() {
+        return mDisableAnimation;
     }
 }
