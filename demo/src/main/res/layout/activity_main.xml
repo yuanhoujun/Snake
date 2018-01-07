@@ -6,6 +6,14 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/text_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="18dp"
+        android:gravity="center"/>
+
     <Button
         android:id="@+id/btn_use_in_activity"
         style="@style/ButtonStyle"
@@ -34,5 +42,24 @@
         android:layout_height="wrap_content"
         android:text="@string/mix_use"/>
 
+    <Button
+        android:id="@+id/btn_check_update"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/check_update"/>
 
+    <Button
+        android:id="@+id/btn_share_to_wechat"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/share_to_wechat"/>
+
+    <Button
+        android:id="@+id/btn_gratitude"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/thanks_to"/>
 </LinearLayout>

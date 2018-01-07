@@ -14,11 +14,12 @@
         android:layout_marginTop="20dp"
         app:scrollFactor="3.0"/>
 
-    <Button
-        android:id="@+id/btn_next_fragment"
-        style="@style/ButtonStyle"
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/entry_fragment"/>
+        android:layout_margin="10dp"
+        android:hint="@string/test_softkeyboard"
+        android:textSize="14dp"
+        android:textColor="#333333"/>
 
 </LinearLayout>

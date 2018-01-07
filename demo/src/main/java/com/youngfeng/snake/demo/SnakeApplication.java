@@ -2,6 +2,7 @@ package com.youngfeng.snake.demo;
 
 import android.app.Application;
 
+import com.tencent.bugly.Bugly;
 import com.youngfeng.snake.Snake;
 
 /**
@@ -15,5 +16,6 @@ public class SnakeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Snake.init(this);
+        Bugly.init(this, Constant.BUGLY_APP_ID, BuildConfig.DEBUG);
     }
 }

@@ -48,7 +48,7 @@ public class SecondMixFragment extends BaseSupportFragment {
             @Override
             public void onDragStart(View view) {
                 super.onDragStart(view);
-//                mViewPager.stopAutoScroll();
+                mViewPager.stopAutoScroll();
             }
 
             @Override
@@ -59,15 +59,8 @@ public class SecondMixFragment extends BaseSupportFragment {
             @Override
             public void onRelease(View view, float xVelocity) {
                 super.onRelease(view, xVelocity);
-//                mViewPager.autoScroll();
+                mViewPager.autoScroll();
             }
         });
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mViewPager.requestLayout();
-            }
-        }, 5000);
     }
 }

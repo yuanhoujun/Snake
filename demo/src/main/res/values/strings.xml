@@ -41,4 +41,15 @@
             <font color="#ff0000">#status</font>
         ]]>
     </string>
+    <string name="check_update">检查更新</string>
+    <string name="share_to_wechat">分享到微信</string>
+    <string name="thanks_to">鸣谢</string>
+    <string name="test_softkeyboard">软键盘测试</string>
+    <string name="demo_drag_to_close">滑动关闭Demo</string>
+    <string name="ph_version">
+        <![CDATA[
+            <font color="#333333">当前版本：</font>
+            <font color="#ff0000">#version</font>
+        ]]>
+    </string>
 </resources>

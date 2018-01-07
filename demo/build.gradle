@@ -8,8 +8,8 @@ android {
         applicationId "com.youngfeng.snake"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.compileSdk
-        versionCode 1
-        versionName "1.0"
+        versionCode 100
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -32,4 +32,5 @@ dependencies {
     implementation project(":snake-annotations")
     annotationProcessor project(":snake-compiler")
     implementation deps.autoScrollViewPager
+    implementation deps.crashreportUpgrade
 }

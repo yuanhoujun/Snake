@@ -30,7 +30,8 @@ buildscript {
             'javapoet': '1.9.0',
             'autoService': '1.0-rc4',
             'autoCommon': '0.9',
-            'butterknife': '8.8.1'
+            'butterknife': '8.8.1',
+            'crashreportUpgrade': '1.3.4'
     ]
 
     ext.deps = [
@@ -82,7 +83,8 @@ buildscript {
             javapoet: "com.squareup:javapoet:${versions.javapoet}",
             butterknife: "com.jakewharton:butterknife:${versions.butterknife}",
             butterknifeCompiler: "com.jakewharton:butterknife-compiler:${versions.butterknife}",
-            autoScrollViewPager: "com.github.yuanhoujun:AutoScrollViewPager:${versions.autoScrollViewPager}"
+            autoScrollViewPager: "com.github.yuanhoujun:AutoScrollViewPager:${versions.autoScrollViewPager}",
+            crashreportUpgrade: "com.tencent.bugly:crashreport_upgrade:${versions.crashreportUpgrade}"
     ]
 
     repositories {
