@@ -12,6 +12,7 @@ import com.youngfeng.snake.demo.activities.FirstActivity;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.fragments.DragFragmentContainerActivity;
 import com.youngfeng.snake.demo.mix.MixActivity;
+import com.youngfeng.snake.demo.other.StarGuideActivity;
 import com.youngfeng.snake.demo.support.SupportDragFragmentContainerActivity;
 import com.youngfeng.snake.demo.ui.BaseActivity;
 
@@ -71,6 +72,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.btn_share_to_wechat)
     public void shareToWechat() {
 
+    }
+
+    @OnClick(R.id.btn_cheer_for_the_author)
+    public void cheerFor() {
+        start(StarGuideActivity.class);
     }
 
     @Override

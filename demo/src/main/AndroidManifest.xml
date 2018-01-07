@@ -39,6 +39,8 @@
         <activity android:name=".mix.DragFragmentContainerMixActivity" android:configChanges="orientation|screenSize"/>
         <activity android:name=".mix.SecondMixActivity" android:configChanges="orientation|screenSize" />
         <activity android:name=".mix.MixActivity" android:configChanges="orientation|screenSize" />
+        <activity android:name=".other.StarGuideActivity" android:configChanges="orientation|screenSize" />
+        <activity android:name=".other.ImageBrowserActivity" android:configChanges="orientation|screenSize" />
 
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"

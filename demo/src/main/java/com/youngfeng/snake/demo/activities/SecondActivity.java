@@ -8,6 +8,7 @@ import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.ui.BaseActivity;
+import com.youngfeng.snake.demo.utils.Util;
 import com.youngfeng.snake.view.SnakeTouchInterceptor;
 
 import butterknife.OnClick;
@@ -25,6 +26,15 @@ public class SecondActivity extends BaseActivity {
     protected void onInitView() {
         super.onInitView();
         Snake.host(this);
+    }
 
+    @OnClick(R.id.btn_star_this_repo)
+    public void starRepo() {
+        Util.openGitRepo(this);
+    }
+
+    @OnClick(R.id.btn_follow_the_authors_article)
+    public void openAuthorsJianshu() {
+        Util.openJianshu(this);
     }
 }

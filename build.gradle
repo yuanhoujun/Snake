@@ -31,7 +31,9 @@ buildscript {
             'autoService': '1.0-rc4',
             'autoCommon': '0.9',
             'butterknife': '8.8.1',
-            'crashreportUpgrade': '1.3.4'
+            'crashreportUpgrade': '1.3.4',
+            'photoView': '2.0.0',
+            'circleImageView': '2.2.0'
     ]
 
     ext.deps = [
@@ -84,7 +86,9 @@ buildscript {
             butterknife: "com.jakewharton:butterknife:${versions.butterknife}",
             butterknifeCompiler: "com.jakewharton:butterknife-compiler:${versions.butterknife}",
             autoScrollViewPager: "com.github.yuanhoujun:AutoScrollViewPager:${versions.autoScrollViewPager}",
-            crashreportUpgrade: "com.tencent.bugly:crashreport_upgrade:${versions.crashreportUpgrade}"
+            crashreportUpgrade: "com.tencent.bugly:crashreport_upgrade:${versions.crashreportUpgrade}",
+            photoView: "com.github.chrisbanes:PhotoView:${versions.photoView}",
+            circleImageView: "de.hdodenhof:circleimageview:${versions.circleImageView}"
     ]
 
     repositories {

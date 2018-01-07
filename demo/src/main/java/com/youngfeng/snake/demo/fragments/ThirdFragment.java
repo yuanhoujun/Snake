@@ -4,6 +4,9 @@ import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.ui.BaseFragment;
+import com.youngfeng.snake.demo.utils.Util;
+
+import butterknife.OnClick;
 
 /**
  * The third fragment.
@@ -13,4 +16,14 @@ import com.youngfeng.snake.demo.ui.BaseFragment;
 @EnableDragToClose()
 @BindView(layoutId = R.layout.fragment_third)
 public class ThirdFragment extends BaseFragment {
+
+    @OnClick(R.id.btn_star_this_repo)
+    public void starRepo() {
+        Util.openGitRepo(getActivity());
+    }
+
+    @OnClick(R.id.btn_follow_the_authors_article)
+    public void openAuthorsJianshu() {
+        Util.openJianshu(getActivity());
+    }
 }
