@@ -15,6 +15,8 @@ public class DragFragmentContainerMixActivity extends FragmentContainerActivity 
     @Override
     protected void onInitView() {
         super.onInitView();
+        setToolbarVisible(false);
+
         Snake.host(this);
         supportSwitchTo(FirstMixFragment.class);
     }

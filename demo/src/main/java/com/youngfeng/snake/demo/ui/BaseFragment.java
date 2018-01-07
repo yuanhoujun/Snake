@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.animation.AnimationController;
@@ -43,7 +44,15 @@ public class BaseFragment extends Fragment implements AnimationController {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        autoUpdateTitle();
         onInitView();
+    }
+
+    public void autoUpdateTitle() {
+        if(needAutoUpdateTitle()) {
+            setTitle(getClass().getSimpleName().replace("_SnakeProxy", ""));
+        }
     }
 
     private void restore(@NonNull Bundle savedInstanceState) {
@@ -52,6 +61,17 @@ public class BaseFragment extends Fragment implements AnimationController {
             getFragmentManager().beginTransaction().hide(this).commitAllowingStateLoss();
         } else {
             getFragmentManager().beginTransaction().show(this).commitAllowingStateLoss();
+        }
+    }
+
+    public void setTitle(int titleId) {
+        setTitle(getString(titleId));
+    }
+
+    public void setTitle(CharSequence title) {
+        if(null != mToolbar) {
+            TextView titleView = mToolbar.findViewById(R.id.text_title);
+            titleView.setText(title);
         }
     }
 
@@ -79,6 +99,13 @@ public class BaseFragment extends Fragment implements AnimationController {
         if(null != mToolbar && null != mContentView) {
             mContentView.removeView(mToolbar);
             mContentView.addView(mToolbar, 0);
+
+            mToolbar.findViewById(R.id.text_return_back).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().onBackPressed();
+                }
+            });
         }
     }
 
@@ -94,8 +121,22 @@ public class BaseFragment extends Fragment implements AnimationController {
         }
     }
 
-    protected @Nullable Toolbar toolbar() {
-        return null;
+    public void setToolbarVisible(boolean visible) {
+        if(null != mToolbar) {
+            mToolbar.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    public void setReturnBackVisible(boolean visible) {
+        if(null != mToolbar) {
+            TextView returnBackView = mToolbar.findViewById(R.id.text_return_back);
+            returnBackView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    public @Nullable Toolbar toolbar() {
+        return (Toolbar) LayoutInflater.from(getActivity())
+                .inflate(R.layout.default_toolbar, mContentView, false);
     }
 
     public final void push(Class<? extends BaseFragment> fragment, boolean addToBackStack) {
@@ -136,6 +177,10 @@ public class BaseFragment extends Fragment implements AnimationController {
     @Override
     public boolean animationDisabled() {
         return mDisableAnimation;
+    }
+
+    protected boolean needAutoUpdateTitle() {
+        return true;
     }
 
     protected void onInitView() {}

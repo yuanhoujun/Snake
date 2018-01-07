@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youngfeng.snake.demo.R;
@@ -44,6 +45,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         prepare();
         processAnotations();
+        autoUpdateTitle();
 
         onInitView();
     }
@@ -57,6 +59,12 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(mContentView);
 
         trackFragmentBackStack();
+    }
+
+    public void autoUpdateTitle() {
+        if(needAutoUpdateTitle()) {
+            setTitle(getClass().getSimpleName());
+        }
     }
 
     private void trackFragmentBackStack() {
@@ -102,6 +110,13 @@ public class BaseActivity extends AppCompatActivity {
             }
 
             mContentView.addView(mToolbar, 0, layoutParams);
+
+            mToolbar.findViewById(R.id.text_return_back).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
         }
     }
 
@@ -112,11 +127,32 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public void setTitle(int titleId) {
-        super.setTitle(titleId);
+        setTitle(getString(titleId));
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        if(null != mToolbar) {
+            TextView titleView = mToolbar.findViewById(R.id.text_title);
+            titleView.setText(title);
+        }
+    }
+
+    public void setToolbarVisible(boolean visible) {
+        if(null != mToolbar) {
+            mToolbar.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    public void setReturnBackVisible(boolean visible) {
+        if(null != mToolbar) {
+            TextView returnBackView = mToolbar.findViewById(R.id.text_return_back);
+            returnBackView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
     }
 
     public @Nullable Toolbar toolbar() {
-        return null;
+        return (Toolbar) getLayoutInflater().inflate(R.layout.default_toolbar, mContentView, false);
     }
 
     @Override
@@ -419,6 +455,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void onInitView() {}
+
+    protected boolean needAutoUpdateTitle() {
+        return true;
+    }
 
     @Override
     public void onBackPressed() {

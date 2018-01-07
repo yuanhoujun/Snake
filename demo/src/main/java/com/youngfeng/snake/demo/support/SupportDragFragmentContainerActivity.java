@@ -15,8 +15,9 @@ public class SupportDragFragmentContainerActivity extends FragmentContainerActiv
     @Override
     protected void onInitView() {
         super.onInitView();
-        Snake.host(this);
+        setToolbarVisible(false);
 
+        Snake.host(this);
         supportSwitchTo(FirstSupportFragment.class);
     }
 }

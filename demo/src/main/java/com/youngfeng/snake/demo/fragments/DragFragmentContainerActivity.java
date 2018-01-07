@@ -15,6 +15,8 @@ public class DragFragmentContainerActivity extends FragmentContainerActivity {
     @Override
     protected void onInitView() {
         super.onInitView();
+        setToolbarVisible(false);
+
         Snake.host(this);
         switchTo(FirstFragment.class);
     }

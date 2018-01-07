@@ -20,6 +20,12 @@ import butterknife.OnClick;
 @BindView(layoutId = R.layout.activity_main)
 public class MainActivity extends BaseActivity {
 
+    @Override
+    protected void onInitView() {
+        super.onInitView();
+        setReturnBackVisible(false);
+    }
+
     @OnClick(R.id.btn_use_in_activity)
     public void useInActivity(View view) {
         start(FirstActivity.class);

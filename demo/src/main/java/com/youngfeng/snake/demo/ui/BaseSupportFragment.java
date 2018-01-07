@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.animation.AnimationController;
@@ -45,7 +46,15 @@ public class BaseSupportFragment extends Fragment implements AnimationController
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        autoUpdateTitle();
         onInitView();
+    }
+
+    public void autoUpdateTitle() {
+        if(needAutoUpdateTitle()) {
+            setTitle(getClass().getSimpleName().replace("_SnakeProxy", ""));
+        }
     }
 
     private void restore(@NonNull Bundle savedInstanceState) {
@@ -54,6 +63,17 @@ public class BaseSupportFragment extends Fragment implements AnimationController
             getFragmentManager().beginTransaction().hide(this).commitAllowingStateLoss();
         } else {
             getFragmentManager().beginTransaction().show(this).commitAllowingStateLoss();
+        }
+    }
+
+    public void setTitle(int titleId) {
+        setTitle(getString(titleId));
+    }
+
+    public void setTitle(CharSequence title) {
+        if(null != mToolbar) {
+            TextView titleView = mToolbar.findViewById(R.id.text_title);
+            titleView.setText(title);
         }
     }
 
@@ -77,6 +97,13 @@ public class BaseSupportFragment extends Fragment implements AnimationController
         if(null != mToolbar && null != mContentView) {
             mContentView.removeView(mToolbar);
             mContentView.addView(mToolbar, 0);
+
+            mToolbar.findViewById(R.id.text_return_back).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().onBackPressed();
+                }
+            });
         }
     }
 
@@ -116,7 +143,8 @@ public class BaseSupportFragment extends Fragment implements AnimationController
     }
 
     protected @Nullable Toolbar toolbar() {
-        return null;
+        return (Toolbar) LayoutInflater.from(getActivity())
+                .inflate(R.layout.default_toolbar, mContentView, false);
     }
 
     public final void push(Class<? extends BaseSupportFragment> fragment, boolean addToBackStack) {
@@ -150,4 +178,8 @@ public class BaseSupportFragment extends Fragment implements AnimationController
     }
 
     protected void onInitView() {}
+
+    protected boolean needAutoUpdateTitle() {
+        return true;
+    }
 }
