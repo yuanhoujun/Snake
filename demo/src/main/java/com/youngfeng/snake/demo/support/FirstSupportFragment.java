@@ -1,17 +1,12 @@
 package com.youngfeng.snake.demo.support;
 
-import android.animation.Animator;
 import android.view.View;
 
 import com.youngfeng.snake.Snake;
-import com.youngfeng.snake.animation.AnimationFactory;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.ui.BaseSupportFragment;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import butterknife.OnClick;
 
