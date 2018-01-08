@@ -5,7 +5,7 @@ package com.youngfeng.snake.animation;
  *
  * @author Scott Smith 2018-01-05 22:05
  */
-public interface AnimationController {
+public interface SnakeAnimationController {
     /**
      * Disable animation
      *

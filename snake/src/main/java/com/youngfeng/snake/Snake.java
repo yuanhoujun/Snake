@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 
-import com.youngfeng.snake.animation.AnimationController;
+import com.youngfeng.snake.animation.SnakeAnimationController;
 import com.youngfeng.snake.animation.AnimationFactory;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.annotations.PrimaryConstructor;
@@ -629,7 +629,7 @@ public class Snake {
      * @param superAnimator the result of call super onCreateAnimator
      * @param animationController the interface of control fragment's animator
      */
-    public static Animator wrap(@Nullable Animator superAnimator, @NonNull AnimationController animationController) {
+    public static Animator wrap(@Nullable Animator superAnimator, @NonNull SnakeAnimationController animationController) {
         if(animationController.animationDisabled()) return AnimationFactory.emptyAnimator();
         return superAnimator;
     }
@@ -640,7 +640,7 @@ public class Snake {
      * @param superAnimation the result of call super onCreateAnimator
      * @param animationController the interface of control fragment's animation
      */
-    public static Animation wrap(@Nullable Animation superAnimation, @NonNull AnimationController animationController) {
+    public static Animation wrap(@Nullable Animation superAnimation, @NonNull SnakeAnimationController animationController) {
         if(animationController.animationDisabled()) return AnimationFactory.emptyAmiation();
         return superAnimation;
     }
@@ -652,8 +652,8 @@ public class Snake {
      * @param disable disable or enable animation
      */
     public static void disableAnimation(android.support.v4.app.Fragment fragment, boolean disable) {
-        if(fragment instanceof AnimationController) {
-            ((AnimationController) fragment).disableAnimation(disable);
+        if(fragment instanceof SnakeAnimationController) {
+            ((SnakeAnimationController) fragment).disableAnimation(disable);
         }
     }
 
@@ -664,8 +664,8 @@ public class Snake {
      * @param disable disable or enable animation
      */
     public static void disableAnimation(android.app.Fragment fragment, boolean disable) {
-        if(fragment instanceof AnimationController) {
-            ((AnimationController) fragment).disableAnimation(disable);
+        if(fragment instanceof SnakeAnimationController) {
+            ((SnakeAnimationController) fragment).disableAnimation(disable);
         }
     }
 
