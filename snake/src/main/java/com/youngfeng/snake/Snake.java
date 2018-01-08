@@ -506,7 +506,11 @@ public class Snake {
             Method method = fragment.getClass().getMethod("enableDragToClose", Boolean.class);
             method.invoke(fragment, enable);
         } catch (Throwable e) {
-            e.printStackTrace();
+            if(e instanceof NoSuchMethodException) {
+                throw new SnakeConfigException("Plase use Snake.newProxy create a Fragment instance");
+            } else {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -522,7 +526,11 @@ public class Snake {
             Method method = fragment.getClass().getMethod("enableDragToClose", Boolean.class);
             method.invoke(fragment, enable);
         } catch (Throwable e) {
-            e.printStackTrace();
+            if(e instanceof NoSuchMethodException) {
+                throw new SnakeConfigException("Plase use Snake.newProxySupport create a Fragment instance");
+            } else {
+                e.printStackTrace();
+            }
         }
     }
 
