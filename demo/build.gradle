@@ -5,15 +5,34 @@ android {
     buildToolsVersion versions.androidTools
 
     defaultConfig {
-        applicationId "com.youngfeng.snake"
+        applicationId "com.youngfeng.snake.demo"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.compileSdk
         versionCode 100
         versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        Properties properties = new Properties()
+        InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+        properties.load(inputStream)
+
+        def alias = properties.getProperty("sign.alias")
+        def keyPasswd = properties.getProperty("sign.keyPasswd")
+        def storePasswd = properties.getProperty("sign.storePasswd")
+
+        release {
+            keyAlias alias
+            keyPassword keyPasswd
+            storePassword storePasswd
+            storeFile file('keystore/keystore.jks')
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
