@@ -110,6 +110,21 @@ allprojects {
     repositories {
         jcenter()
         maven { url 'https://jitpack.io' }
+
+        maven {
+            credentials {
+                Properties properties = new Properties()
+                InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+                properties.load(inputStream)
+
+                def uname = properties.getProperty("maven.username")
+                def passwd = properties.getProperty("maven.passwd")
+
+                username uname
+                password passwd
+            }
+            url 'https://dl.bintray.com/ouyangfeng2016/android'
+        }
         google()
     }
 }
