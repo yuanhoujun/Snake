@@ -1,5 +1,6 @@
 package com.youngfeng.snake.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -272,9 +273,10 @@ public class SnakeHackLayout extends FrameLayout {
         requestLayout();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(null != mCustomTouchInterceptor && mCustomTouchInterceptor.onTouch(event)) {
+        if(null != mCustomTouchInterceptor && mCustomTouchInterceptor.onTouchEvent(event)) {
             return true;
         }
 
@@ -368,9 +370,9 @@ public class SnakeHackLayout extends FrameLayout {
     }
 
     /**
-     * Just for internal use.
+     * Just for internal use, don't call directly please.
      *
-     * {@hide}
+     * @param onEdgeDragListener the OnEdgeDragListener
      */
     public void setOnEdgeDragListener(OnEdgeDragListener onEdgeDragListener) {
         if(null != this.onEdgeDragListener) throw new SnakeConfigException("Don't assign values for onEdgeDragListener");
@@ -385,7 +387,7 @@ public class SnakeHackLayout extends FrameLayout {
     /**
      * 设置滑动监听最小检测速度
      *
-     * @param minVelocity
+     * @param minVelocity the minimum velocity.
      */
     public void setMinVelocity(int minVelocity) {
         mViewDragHelper.setMinVelocity(minVelocity);
@@ -462,6 +464,7 @@ public class SnakeHackLayout extends FrameLayout {
      * @param view 移动的目标子视图
      * @param x 水平坐标
      * @param y 垂直坐标
+     * @param onReleaseStateListener the OnReleaseStateListener
      */
     public void smoothScrollTo(View view, int x, int y, final OnReleaseStateListener onReleaseStateListener) {
         if(null != view) {
@@ -476,6 +479,7 @@ public class SnakeHackLayout extends FrameLayout {
      * 平滑移动View到起始位置
      *
      * @param view 移动的目标子视图
+     * @param onReleaseStateListener the OnReleaseStateListener
      */
     public void smoothScrollToStart(View view, OnReleaseStateListener onReleaseStateListener) {
         smoothScrollTo(view, (int) mOriginPoint.x, (int) mOriginPoint.y, onReleaseStateListener);
@@ -489,6 +493,7 @@ public class SnakeHackLayout extends FrameLayout {
      * 平滑移动View到最后位置
      *
      * @param view 移动的目标子视图
+     * @param onReleaseStateListener the OnReleaseStateListener
      */
     public void smoothScrollToLeave(View view, OnReleaseStateListener onReleaseStateListener) {
         smoothScrollTo(view, mXRange, (int) mOriginPoint.y, onReleaseStateListener);

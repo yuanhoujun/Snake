@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: "../gradle/bintray_push.gradle"
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -8,12 +8,26 @@ android {
     defaultConfig {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.compileSdk
-        versionCode 6
-        versionName "0.0.6"
+        versionCode 10
+        versionName "0.1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
+
+    lintOptions {
+        abortOnError false
+        textReport true
+        textOutput 'stdout'
+
+        checkReleaseBuilds false
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -22,9 +36,19 @@ android {
     }
 }
 
+publish {
+    repoName = 'android'
+    userOrg = 'ouyangfeng2016'
+    groupId = 'com.youngfeng.android'
+    artifactId = 'snake'
+    publishVersion = versions.snake
+    desc = 'Android轻松集成滑动关闭功能'
+    website = 'https://github.com/yuanhoujun/Android_Slide_To_Close'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     api deps.android.support.compat
-    implementation project(":snake-annotations")
+    api project(":snake-annotations")
 }

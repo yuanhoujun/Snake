@@ -1,5 +1,6 @@
 package com.youngfeng.snake.config;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.graphics.Color;
 import android.util.Xml;
@@ -18,6 +19,7 @@ import java.io.InputStream;
  */
 public class SnakeConfigReader {
     private Application mApplication;
+    @SuppressLint("StaticFieldLeak")
     private static SnakeConfigReader instance;
     private SnakeConfig mSnakeConfig = new SnakeConfig();
 

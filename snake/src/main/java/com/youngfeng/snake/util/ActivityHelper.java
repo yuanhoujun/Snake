@@ -1,5 +1,6 @@
 package com.youngfeng.snake.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.res.TypedArray;
@@ -21,9 +22,9 @@ import java.lang.reflect.Proxy;
  */
 public class ActivityHelper {
 
-    @Deprecated
     public static void convertFromTranslucent(Activity activity) {
         try {
+            @SuppressLint("PrivateApi")
             Method method = Activity.class.getDeclaredMethod("convertFromTranslucent");
             method.setAccessible(true);
             method.invoke(activity);
@@ -46,6 +47,7 @@ public class ActivityHelper {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private static void convertToTranslucentAfterLollipop(@NonNull Activity activity, TranslucentConversionListener conversionListener) {
         try {
+            @SuppressLint("PrivateApi")
             Method getActivityOptions = Activity.class.getDeclaredMethod("getActivityOptions");
             getActivityOptions.setAccessible(true);
             Object options = getActivityOptions.invoke(activity);
@@ -62,6 +64,7 @@ public class ActivityHelper {
             ConversionInvocationHandler invocationHandler = new ConversionInvocationHandler(new WeakReference<TranslucentConversionListener>(conversionListener));
             Object newProxy = Proxy.newProxyInstance(Activity.class.getClassLoader(), new Class<?>[]{translucentConversionListenerClazz}, invocationHandler);
 
+            @SuppressLint("PrivateApi")
             Method convertToTranslucent = Activity.class.getDeclaredMethod("convertToTranslucent",
                     translucentConversionListenerClazz, ActivityOptions.class);
             convertToTranslucent.setAccessible(true);

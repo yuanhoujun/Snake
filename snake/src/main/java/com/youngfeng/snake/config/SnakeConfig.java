@@ -32,12 +32,12 @@ public class SnakeConfig {
     public boolean hideShadowOfEdge = false;
 
     /**
-     * The start color of the edge shadows, direction: left -> right .
+     * The start color of the edge shadows, direction: left to right .
      */
     public @ColorInt int shadowStartColor = Color.parseColor("#00000000");
 
     /**
-     * The end color of the edge shadows, direction: left -> right .
+     * The end color of the edge shadows, direction: left to right .
      */
     public @ColorInt int shadowEndColor = Color.parseColor("#50000000");
 

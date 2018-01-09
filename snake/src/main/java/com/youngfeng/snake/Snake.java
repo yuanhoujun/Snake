@@ -1,6 +1,7 @@
 package com.youngfeng.snake;
 
 import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.res.TypedArray;
@@ -69,6 +70,7 @@ public class Snake {
      *
      * @param fragment specified fragment class
      * @param args specified constructor parameters
+     * @param <T> the child classes of android.app.fragment.
      *
      * @return fragment proxy object
      */
@@ -112,6 +114,7 @@ public class Snake {
      *
      * @param fragment specified support fragment class
      * @param args specified constructor parameters
+     * @param <T> the child classes of android.support.v4.app.fragment.
      *
      * @return support fragment proxy object
      */
@@ -176,6 +179,7 @@ public class Snake {
                SoftKeyboardHelper.hideKeyboard(fragment);
             }
 
+            @SuppressLint("WrongConstant")
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
                 View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
@@ -212,6 +216,7 @@ public class Snake {
                     });
                 } else {
                     parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
+                        @SuppressLint("WrongConstant")
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
                             View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
@@ -248,6 +253,7 @@ public class Snake {
                 SoftKeyboardHelper.hideKeyboard(fragment);
             }
 
+            @SuppressLint("WrongConstant")
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
                 View viewOfLastFragment = fragmentManagerHelper.getViewOfLastSupportFragment();
@@ -284,6 +290,7 @@ public class Snake {
                     });
                 } else {
                     parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
+                        @SuppressLint("WrongConstant")
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
                             View viewOfLastFragment = fragmentManagerHelper.getViewOfLastSupportFragment();
@@ -628,6 +635,8 @@ public class Snake {
      *
      * @param superAnimator the result of call super onCreateAnimator
      * @param animationController the interface of control fragment's animator
+     *
+     * @return the fragment animator
      */
     public static Animator wrap(@Nullable Animator superAnimator, @NonNull SnakeAnimationController animationController) {
         if(animationController.animationDisabled()) return AnimationFactory.emptyAnimator();
@@ -639,6 +648,8 @@ public class Snake {
      *
      * @param superAnimation the result of call super onCreateAnimator
      * @param animationController the interface of control fragment's animation
+     *
+     * @return the fragment animation
      */
     public static Animation wrap(@Nullable Animation superAnimation, @NonNull SnakeAnimationController animationController) {
         if(animationController.animationDisabled()) return AnimationFactory.emptyAmiation();

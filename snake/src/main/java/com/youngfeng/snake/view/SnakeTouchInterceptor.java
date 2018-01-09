@@ -12,6 +12,8 @@ public interface SnakeTouchInterceptor {
      * Like view#onInterceptTouchEvent
      *
      * @param event motion event
+     *
+     * @return the same to {@link android.view.ViewGroup#onInterceptHoverEvent(MotionEvent)}
      */
     boolean onInterceptTouchEvent(MotionEvent event);
 
@@ -19,6 +21,8 @@ public interface SnakeTouchInterceptor {
      * Like view#onTouch
      *
      * @param event motion event
+     *
+     * @return the same to {@link android.view.View#onTouchEvent(MotionEvent)}
      */
-    boolean onTouch(MotionEvent event);
+    boolean onTouchEvent(MotionEvent event);
 }

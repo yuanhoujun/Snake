@@ -1,4 +1,8 @@
 apply plugin: 'java-library'
+apply plugin: 'com.novoda.bintray-release'
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -9,5 +13,14 @@ dependencies {
     compileOnly deps.auto.service
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+publish {
+    repoName = 'android'
+    userOrg = 'ouyangfeng2016'
+    groupId = 'com.youngfeng.android'
+    artifactId = 'snake-compiler'
+    publishVersion = versions.snake
+    desc = 'Android轻松集成滑动关闭功能'
+    website = 'https://github.com/yuanhoujun/Android_Slide_To_Close'
+}
+
+
