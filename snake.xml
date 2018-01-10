@@ -6,12 +6,12 @@
         <!-- 设置为true，将监听当前页面所有位置往右快速滑动手势 -->
         <only_listen_to_fast_swipe>false</only_listen_to_fast_swipe>
         <!-- 快速滑动最低检测速度，不建议修改。过高会影响灵敏度，过低会导致误判 -->
-        <min_velocity></min_velocity>
+        <min_velocity>2000</min_velocity>
         <!-- 设置为true，滑动时左侧边缘阴影将被隐藏, 这个变量的默认值也不建议修改 -->
         <hide_shadow_of_edge>false</hide_shadow_of_edge>
         <!-- 阴影边缘渐变色起始颜色 -->
-        <shadow_start_color></shadow_start_color>
+        <shadow_start_color>#00000000</shadow_start_color>
         <!-- 阴影边缘渐变色结束颜色 -->
-        <shadow_end_color></shadow_end_color>
+        <shadow_end_color>#50000000</shadow_end_color>
     </config>
 </snake>
