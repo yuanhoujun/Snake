@@ -16,6 +16,10 @@ Snake
 * 配置灵活，可以满足各种业务需求
 * 适配SDK Version >= 14以上所有机型，无副作用
 
+## Demo下载体验
+
+![下载二维码](https://www.pgyer.com/app/qrcode/Wd3H)
+
 ## 使用方法
 1）添加依赖
 ```
