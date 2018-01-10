@@ -21,6 +21,7 @@
     <string name="use_in_activity">在Activity中使用</string>
     <string name="use_in_fragment">在android.app.Fragment中使用</string>
     <string name="use_in_support_fragment">在android.support.v4.app.Fragment中使用</string>
+    <string name="use_in_webview">在WebView中使用</string>
     <string name="dynamic_off_on">随时开启/关闭</string>
     <string name="nest_scroll_widget">嵌套滑动控件</string>
 

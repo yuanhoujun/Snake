@@ -41,6 +41,13 @@
             android:text="@string/use_in_support_fragment" />
 
         <Button
+            android:id="@+id/btn_use_in_webview"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/use_in_webview" />
+
+        <Button
             android:id="@+id/btn_mix_use"
             style="@style/ButtonStyle"
             android:layout_width="match_parent"
@@ -68,11 +75,5 @@
             android:layout_height="wrap_content"
             android:text="@string/cheer_for_the_author" />
 
-        <Button
-            android:id="@+id/btn_gratitude"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/thanks_to" />
     </LinearLayout>
 </ScrollView>

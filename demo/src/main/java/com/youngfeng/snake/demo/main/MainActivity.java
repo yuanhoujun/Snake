@@ -59,6 +59,11 @@ public class MainActivity extends BaseActivity {
         start(SupportDragFragmentContainerActivity.class);
     }
 
+    @OnClick(R.id.btn_use_in_webview)
+    public void useInWebView() {
+        toast("正在开发中，敬请期待!!!");
+    }
+
     @OnClick(R.id.btn_mix_use)
     public void mixUse(View view) {
         start(MixActivity.class);
