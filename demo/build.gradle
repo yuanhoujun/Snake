@@ -51,11 +51,8 @@ dependencies {
     api deps.butterknife
     annotationProcessor deps.butterknifeCompiler
 
-//    implementation 'com.youngfeng.android:snake:0.1.0'
-//    annotationProcessor 'com.youngfeng.android:snake-compiler:0.1.0'
-
-    implementation project(":snake")
-    annotationProcessor project(":snake-compiler")
+    implementation 'com.youngfeng.android:snake:0.1.0'
+    annotationProcessor 'com.youngfeng.android:snake-compiler:0.1.0'
 
     implementation(deps.autoScrollViewPager) {
         exclude group: 'com.android.support' , module: 'recyclerview-v7'
