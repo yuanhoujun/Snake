@@ -190,4 +190,5 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 4）遇到问题请先查看[Wiki](https://github.com/yuanhoujun/Android_Slide_To_Close/wiki)，看是否有你想要的答案。如果没有，请使用xxx联系我，给我发送消息。如果发现问题，请给我推送issue，非常欢迎你帮我发现问题。
 
 ## 联系我
-如果你在使用过程中，有任何不能解决的问题，请使用[![Join the chat at https://gitter.im/Android_Slide_To_Close/Lobby](https://badges.gitter.im/Android_Slide_To_Close/Lobby.svg)](https://gitter.im/Android_Slide_To_Close/Lobbyr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+如果你在使用过程中，有任何不能解决的问题，请来Gitter IM讨论
+[![Join the chat at https://gitter.im/Android_Slide_To_Close/Lobby](https://badges.gitter.im/Android_Slide_To_Close/Lobby.svg)](https://gitter.im/Android_Slide_To_Close/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
