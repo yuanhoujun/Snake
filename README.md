@@ -5,7 +5,7 @@ Snake
 <img src="https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/snake_logo.png" width=400px, height=400px/>
 
 
-如果你使用的**Snake**版本低于0.1.0, 请[点这里查看老版本文档](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/master/README_OLD.md)
+如果你使用的**Snake**版本低于0.1.0, 请 [点这里查看老版本文档](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/master/README_OLD.md)
 
 ## 最新版本
 模块|snake|snake-compiler|snake-annotations
@@ -67,11 +67,9 @@ protected void onCreate(@Nullable Bundle savedInstanceState) {
 @EnableDragToClose()
 public class FirstFragment extends Fragment {
 ```
-* 在跳转至当前**Fragment**时，如果你的 **Fragment** 类继承自 **android.app.Fragment** ，则使用
-**Snake.newProxy(xx.class)** 创建 **Fragment** 实例。而如果你的 **Fragment** 类继承自 **android.support.v4.app.Fragment** 
-则使用 **Snake.newProxySupport(xx.class)** 创建 **Fragment** 实例。
+* 在跳转至当前 **Fragment** 时，如果你的 **Fragment** 类继承自 **android.app.Fragment** ，则使用 **Snake.newProxy(xx.class)** 创建  **Fragment** 实例。而如果你的 **Fragment** 类继承自 **android.support.v4.app.Fragment** ，则使用  **Snake.newProxySupport(xx.class)** 创建 **Fragment** 实例。
 
-*注意：**Fragment**无需使用**host**接口对其进行托管，**Snake**将自动完成对其进行托管*
+**注意：**Fragment**无需使用**host**接口对其进行托管，**Snake**将自动完成对其进行托管**
 
 ## 标记主构造方法
 在**Fragment**中，可能不存在默认构造方法。或者使用了多个构造方法，这个时候你可以使用**PrimaryConstructor**指定
