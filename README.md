@@ -1,7 +1,9 @@
 Snake
 =====
 
-![](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/snake_logo.png)
+
+<img src="https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/snake_logo.png" width=400px, height=400px/>
+
 
 如果你使用的**Snake**版本低于0.1.0, 请[点这里查看老版本文档](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/master/README_OLD.md)
 
