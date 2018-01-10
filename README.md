@@ -1,22 +1,22 @@
-# Snake
+Snake
 =====
 
 ![](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/snake_logo.png)
 
 如果你使用的**Snake**版本低于0.1.0, 请[点这里查看老版本文档](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/master/README_OLD.md)
 
-#### 最新版本
+## 最新版本
 模块|snake|snake-compiler|snake-annotations
 ---|---|---|---
 最新版本|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake/_latestVersion)|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-compiler/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-compiler/_latestVersion)|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-annotations/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-annotations/_latestVersion)
 
-#### 特性介绍
+## 特性介绍
 * 同时支持**Activity**，**Fragment**，**WebView**
 * 使用简单，无侵入性
 * 配置灵活，可以满足各种业务需求
 * 适配SDK Version >= 14以上所有机型，无副作用
 
-#### 使用方法
+## 使用方法
 1）添加依赖
 ```
 dependencies {
@@ -68,7 +68,7 @@ public class FirstFragment extends Fragment {
 
 *注意：**Fragment**无需使用**host**接口对其进行托管，**Snake**将自动完成对其进行托管*
 
-#### 标记主构造方法
+## 标记主构造方法
 在**Fragment**中，可能不存在默认构造方法。或者使用了多个构造方法，这个时候你可以使用**PrimaryConstructor**指定
 主构造方法。
 ```
@@ -88,7 +88,7 @@ public class FirstFragment extends Fragment {
 ```
 **Snake.newProxySupport**接口同理
 
-#### 滑动参数配置
+## 滑动参数配置
 通常情况下，完成上面的步骤，你已经可以正常使用滑动关闭功能了。可是，有些同学可能希望对滑动样式进行定制化。别担心，
 **Snake**提供了两种方式对滑动参数进行配置。
 
@@ -113,7 +113,7 @@ public class FirstFragment extends Fragment {
     </config>
 </snake>
 ```
-修改模板参数，复制当前xml文件，放到主工程目录的**assets**下面即可，名称必须依然是**snake.xml，不能修改！
+修改模板参数，复制当前xml文件，放到主工程目录的**assets**下面即可，名称必须依然是**snake.xml**，不能修改！
 
 * 单页面参数配置
 如果你只希望对单个页面应用滑动参数配置，可以使用**@SetDragParameter**对其进行配置：
@@ -123,14 +123,17 @@ public class FirstFragment extends Fragment {
 public class FirstActivity extends Activity
 ```
 
-#### 其它接口介绍
+## 其它接口介绍
 `Snake.enableDragToClose()`：如果你希望动态开启或关闭【滑动关闭】特性，可以使用该接口
+
 `Snake.addDragListener()`：如果你希望在滑动过程中进行一些额外的处理，可以使用该接口监听整个滑动过程。
+
 `Snake.setCustomTouchInterceptor`：如果你在使用过程中，出现了一些滑动冲突问题，你可以通过使用该接口自定义拦截器解决。
 注意：大多数情况下你不需要理会该接口，如果确定是需要解决这种滑动冲突问题，可以使用该接口。
+
 `Snake.dragToCloseEnabled()`：如果你需要知道滑动关闭功能在当前页面是否处于开启状态，可以使用该接口。
 
-#### 动画处理
+## 动画处理
 至此，你已经成功集成了滑动关闭功能，并且也知道了如何配置滑动关闭参数。可是，你会发现，如果使用系统返回键，Activity的
 动画表现和滑动关闭不一致，有些不协调。另外，**Fragment**似乎在滑动关闭后还会再播放一次动画，看起来很奇怪。
 
@@ -175,7 +178,7 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 
 **注意：在重写的`onCreateAnimator`或`onCreateAnimation`接口中，请使用`Snake.wrap`接口对父类实现进行包裹。否则，将导致设置无效，具体实现可以参照Demo实现**
 
-#### Best Practice
+## Best Practice
 1）Activity的启动是一个耗时的过程，为了体验效果更佳，推荐使用全**Fragment**设计，或者说**Activity+多Fragment**设计。
 另外，由于Android系统的兼容性问题，在SDK版本低于21的机型中，Activity的关闭将使用快速右滑手势，只有在高于21的机型中，
 才能使用联动拖拽的方式进行滑动关闭。
@@ -186,4 +189,5 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 
 4）遇到问题请先查看[Wiki](https://github.com/yuanhoujun/Android_Slide_To_Close/wiki)，看是否有你想要的答案。如果没有，请使用xxx联系我，给我发送消息。如果发现问题，请给我推送issue，非常欢迎你帮我发现问题。
 
-
+## 联系我
+如果你在使用过程中，有任何不能解决的问题，请使用[![Join the chat at https://gitter.im/Android_Slide_To_Close/Lobby](https://badges.gitter.im/Android_Slide_To_Close/Lobby.svg)](https://gitter.im/Android_Slide_To_Close/Lobbyr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
