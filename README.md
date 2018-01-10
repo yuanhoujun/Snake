@@ -19,8 +19,7 @@ Snake
 * 适配SDK Version >= 14以上所有机型，无副作用
 
 ## Demo下载体验
-
-![下载二维码](https://www.pgyer.com/app/qrcode/Wd3H)
+![扫描图中二维码下载](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/demo_snapshot.jpg)
 
 ## 使用方法
 1）添加依赖
