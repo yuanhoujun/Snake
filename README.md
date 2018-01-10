@@ -192,7 +192,7 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 
 3）不推荐对滑动样式进行自定义设置，默认样式在UI体现上已经比较漂亮，繁琐的设计反而会干扰你的理解。
 
-4）遇到问题请先查看[Wiki](https://github.com/yuanhoujun/Android_Slide_To_Close/wiki)，看是否有你想要的答案。如果没有，请使用xxx联系我，给我发送消息。如果发现问题，请给我推送issue，非常欢迎你帮我发现问题。
+4）遇到问题请先查看[Wiki](https://github.com/yuanhoujun/Android_Slide_To_Close/wiki)，看是否有你想要的答案。如果没有，请使用**Gitter**联系我，给我发送消息。如果发现问题，请给我推送issue，非常欢迎你帮我发现问题。
 
 ## 联系我
 如果你在使用过程中，有任何不能解决的问题，请来Gitter IM讨论
