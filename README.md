@@ -1,12 +1,14 @@
+# Snake
+=====
 
-```
-    Snake，只专注于Android平台滑动关闭功能实现。
-```
+![](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/snake_logo.png)
 
-如果你使用的**Snake**版本低于0.1.0, 请[点这里查看老版本文档]()
+如果你使用的**Snake**版本低于0.1.0, 请[点这里查看老版本文档](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/master/README_OLD.md)
 
 #### 最新版本
-
+模块|snake|snake-compiler|snake-annotations
+---|---|---|---
+最新版本|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake/_latestVersion)|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-compiler/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-compiler/_latestVersion)|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-annotations/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-annotations/_latestVersion)
 
 #### 特性介绍
 * 同时支持**Activity**，**Fragment**，**WebView**
@@ -16,19 +18,27 @@
 
 #### 使用方法
 1）添加依赖
+```
+dependencies {
+    // Gradle高版本这里可以使用implementation代替compile
+    // x.x.x代表上方表格中对应模块最新版本
+    compile 'com.youngfeng.android:snake:x.x.x'
+    annotationProcessor 'com.youngfeng.android:snake-compiler:x.x.x'
+}
+```
 
 2）在**Application**中对**Snake**进行初始化
 ```
-    public class SnakeApplication extends Application {
-    
-        @Override
-        public void onCreate() {
-            super.onCreate();
-            
-            // 对Snake进行初始化
-            Snake.init(this);
-        }
+public class SnakeApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        
+        // 对Snake进行初始化
+        Snake.init(this);
     }
+}
 ```
 
 3）在**Activity**中使用
@@ -174,6 +184,6 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 
 3）不推荐对滑动样式进行自定义设置，默认样式在UI体现上已经比较漂亮，繁琐的设计反而会干扰你的理解。
 
-4）遇到问题请先查看Wiki，看是否有你想要的答案。如果没有，请使用xxx联系我，给我发送消息。如果发现问题，请给我推送issue，非常欢迎你帮我发现问题。
+4）遇到问题请先查看[Wiki](https://github.com/yuanhoujun/Android_Slide_To_Close/wiki)，看是否有你想要的答案。如果没有，请使用xxx联系我，给我发送消息。如果发现问题，请给我推送issue，非常欢迎你帮我发现问题。
 
 
