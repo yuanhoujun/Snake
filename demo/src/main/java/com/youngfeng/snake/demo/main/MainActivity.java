@@ -13,6 +13,7 @@ import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.fragments.DragFragmentContainerActivity;
 import com.youngfeng.snake.demo.mix.MixActivity;
 import com.youngfeng.snake.demo.other.StarGuideActivity;
+import com.youngfeng.snake.demo.other.WebBrowserActivity;
 import com.youngfeng.snake.demo.support.SupportDragFragmentContainerActivity;
 import com.youngfeng.snake.demo.ui.BaseActivity;
 
@@ -61,7 +62,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_use_in_webview)
     public void useInWebView() {
-        toast("正在开发中，敬请期待!!!");
+        start(WebBrowserActivity.class);
     }
 
     @OnClick(R.id.btn_mix_use)
