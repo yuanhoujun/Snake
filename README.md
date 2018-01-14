@@ -195,3 +195,13 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 ## 联系我
 如果你在使用过程中，有任何不能解决的问题，请来Gitter IM讨论
 [![Join the chat at https://gitter.im/Android_Slide_To_Close/Lobby](https://badges.gitter.im/Android_Slide_To_Close/Lobby.svg)](https://gitter.im/Android_Slide_To_Close/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+**关注欧阳锋工作室，学更多编程知识**
+
+![欧阳锋工作室](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/%E6%AC%A7%E9%98%B3%E9%94%8B%E5%B7%A5%E4%BD%9C%E5%AE%A4.jpg)
+
+**相关文章** 
+
+* [将滑动关闭进行到底](https://www.jianshu.com/p/7cf6864c9bde)
+
+PS: 如果你在产品中使用了**Snake**, 请来信告诉我！邮件地址：**626306805@qq.com**
