@@ -39,4 +39,9 @@ public @interface SetDragParameter {
      * 阴影边缘结束颜色（阴影边缘隐藏后，该设置失效）
      */
     String shadowEndColor() default "#50000000";
+
+    /**
+     * 开启快速上滑返回桌面功能，默认为false
+     */
+    boolean enableSwipeUpToHome() default false;
 }

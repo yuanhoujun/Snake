@@ -114,6 +114,13 @@ public class SnakeConfigReader {
                         }
                         break;
                     }
+                    case SnakeConfig.TAG_ENABLE_SWIPE_UP_TO_HOME: {
+                        if(!"true".equals(tagValue) && !"false".equals(tagValue)) {
+                            throw new SnakeConfigException("The tag " + name + " only allows the use of boolean values. eg: true or false, current value: " + tagValue);
+                        }
+                        mSnakeConfig.enableSwipeUpToHome = Boolean.parseBoolean(tagValue);
+                        break;
+                    }
                 }
                 parser.require(XmlPullParser.END_TAG, null, name);
              }
@@ -158,5 +165,9 @@ public class SnakeConfigReader {
 
     public int shadowEndColor() {
         return mSnakeConfig.shadowEndColor;
+    }
+
+    public boolean swipeUpToHomeEnabled() {
+        return mSnakeConfig.enableSwipeUpToHome;
     }
 }

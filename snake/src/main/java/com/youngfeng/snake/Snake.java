@@ -324,6 +324,7 @@ public class Snake {
             snakeHackLayout.hideShadowOfEdge(dragParameter.hideShadowOfEdge());
             snakeHackLayout.setMinVelocity(dragParameter.minVelocity());
             snakeHackLayout.setOnlyListenToFastSwipe(dragParameter.onlyListenToFastSwipe());
+            snakeHackLayout.enableSwipeUpToHome(dragParameter.enableSwipeUpToHome());
 
             if(!dragParameter.hideShadowOfEdge()) {
                 try {
@@ -348,6 +349,7 @@ public class Snake {
             snakeHackLayout.setOnlyListenToFastSwipe(SnakeConfigReader.get().onlyListenToFastSwipe());
             snakeHackLayout.setShadowStartColor(SnakeConfigReader.get().shadowStartColor());
             snakeHackLayout.setShadowEndColor(SnakeConfigReader.get().shadowEndColor());
+            snakeHackLayout.enableSwipeUpToHome(SnakeConfigReader.get().swipeUpToHomeEnabled());
         }
     }
 
