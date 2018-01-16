@@ -24,6 +24,7 @@ import android.widget.FrameLayout;
 
 import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.config.SnakeConfigException;
+import com.youngfeng.snake.util.SwipeUpGestureDispatcher;
 import com.youngfeng.snake.util.Utils;
 
 import java.util.ArrayList;
@@ -72,7 +73,10 @@ public class SnakeHackLayout extends FrameLayout {
     private int mContentViewTop;
     private boolean isInLayout = false;
     private float fractionX = 0f;
+    private boolean mSwipeUpToHomeEnabled = false;
+
     private ViewTreeObserver.OnPreDrawListener mPreDrawListener = null;
+    private SwipeUpGestureDispatcher mGestureDetector;
 
     public SnakeHackLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -80,8 +84,7 @@ public class SnakeHackLayout extends FrameLayout {
     }
 
     public SnakeHackLayout(@NonNull Context context) {
-        super(context);
-        init(context);
+        this(context, null);
     }
 
     private void init(final Context context) {
@@ -196,6 +199,15 @@ public class SnakeHackLayout extends FrameLayout {
         mViewDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
 
         mShadowDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,new int[] {mShadowStartColor, mShadowEndColor});
+
+        mGestureDetector = SwipeUpGestureDispatcher.create(this,
+                (int) mViewDragHelper.getMinVelocity(), mViewDragHelper.getEdgeSize(),
+                new SwipeUpGestureDispatcher.OnSwipeUpListener() {
+            @Override
+            public void onSwipeUp(float velocityY, boolean isEdgeBottomTouched) {
+                if(isEdgeBottomTouched) Utils.backToHome(getContext());
+            }
+        });
     }
 
     // Only listen for left edge was touched and the child view has left edge when finger leave
@@ -297,6 +309,11 @@ public class SnakeHackLayout extends FrameLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         requestParentDisallowInterceptTouchEvent(true);
+
+        if(mSwipeUpToHomeEnabled) {
+            mGestureDetector.dispatch(ev);
+        }
+
         return super.dispatchTouchEvent(ev);
     }
 
@@ -391,6 +408,7 @@ public class SnakeHackLayout extends FrameLayout {
      */
     public void setMinVelocity(int minVelocity) {
         mViewDragHelper.setMinVelocity(minVelocity);
+        mGestureDetector.setMinVelocity(minVelocity);
     }
 
     /**
@@ -428,6 +446,24 @@ public class SnakeHackLayout extends FrameLayout {
      */
     public void setCustomTouchInterceptor(SnakeTouchInterceptor interceptor) {
         mCustomTouchInterceptor = interceptor;
+    }
+
+    /**
+     * Eanble swipe up to home function.
+     *
+     * @param enable true: enable false: disable
+     */
+    public void enableSwipeUpToHome(boolean enable) {
+        mSwipeUpToHomeEnabled = enable;
+    }
+
+    /**
+     * Get swipe up to home open state.
+     *
+     * @return the state of swipe up to home
+     */
+    public boolean swipeUpToHomeEnabled() {
+        return mSwipeUpToHomeEnabled;
     }
 
     /**

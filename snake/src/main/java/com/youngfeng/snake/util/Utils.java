@@ -1,6 +1,7 @@
 package com.youngfeng.snake.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 
@@ -22,8 +23,17 @@ public class Utils {
         return Color.argb(alpha,red,green,blue);
     }
 
-    // 获取屏幕宽度
-    public static int screenWidth(Context context) {
-        return context.getResources().getDisplayMetrics().widthPixels;
+    /**
+     * Return back to home.
+     */
+    public static void backToHome(Context context) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
