@@ -153,6 +153,7 @@ public class SnakeProcessor extends AbstractProcessor {
                                         .addMethod(buildMethodEnableDragToClose())
                                         .addMethod(buildMethodAddOnDragListener())
                                         .addMethod(buildMethodSetCustomTouchInterceptor())
+                                        .addMethod(buildMethodEnableSwipeUpToHome())
                                         .addField(field)
                                         .build();
 
@@ -171,7 +172,6 @@ public class SnakeProcessor extends AbstractProcessor {
 
         ClassName snakeConfigExceptionClass = ClassName.get("com.youngfeng.snake.config", "SnakeConfigException");
         TypeElement snakeConfigExceptionTypeElement = mElementUtils.getTypeElement(snakeConfigExceptionClass.toString());
-
 
         return MethodSpec.methodBuilder("enableDragToClose")
                 .addModifiers(Modifier.PUBLIC)
@@ -219,6 +219,19 @@ public class SnakeProcessor extends AbstractProcessor {
                 .addCode("if(null != mSnakeLayout && null != interceptor) {\n")
                 .addStatement("\tmSnakeLayout.setCustomTouchInterceptor(interceptor)")
                 .addCode("}\n")
+                .build();
+    }
+
+    private MethodSpec buildMethodEnableSwipeUpToHome() {
+        ParameterSpec parameter = ParameterSpec.builder(Boolean.class, "enable").build();
+
+        return MethodSpec.methodBuilder("enableSwipeUpToHome")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(parameter)
+                .addCode("if(null != mSnakeLayout) { \n")
+                .addCode("\tmSnakeLayout.enableSwipeUpToHome(enable);\n")
+                .addCode("}\n")
+                .returns(TypeName.VOID)
                 .build();
     }
 

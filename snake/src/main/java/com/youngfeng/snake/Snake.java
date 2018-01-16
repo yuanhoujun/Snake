@@ -498,8 +498,9 @@ public class Snake {
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         View topWindowView = decorView.getChildAt(0);
 
-        // Do nothing if top window view is not SnakeHackLayout.
-        if(!(topWindowView instanceof SnakeHackLayout)) return;
+        if(!(topWindowView instanceof SnakeHackLayout)) {
+            throw new SnakeConfigException("Add Snake.host(this) to onCreate method first.");
+        }
 
         ((SnakeHackLayout) topWindowView).ignoreDragEvent(!enable);
     }
@@ -727,6 +728,124 @@ public class Snake {
 
         if(contentView instanceof SnakeHackLayout) {
             return !((SnakeHackLayout) contentView).ignoredDragEvent();
+        }
+
+        return false;
+    }
+
+    /**
+     * Enable or disable swipe up to home for the specified activity.
+     *
+     * @param activity the specified activity
+     * @param enable true: enable, false: disable
+     */
+    public static void enableSwipeUpToHome(@NonNull Activity activity, boolean enable) {
+        if(activity.isFinishing()) return;
+
+        if(enable) {
+            EnableDragToClose enableDragToClose = activity.getClass().getAnnotation(EnableDragToClose.class);
+            if (null == enableDragToClose || !enableDragToClose.value()) {
+                throw new SnakeConfigException("If you want to dynamically turn the swipe up to home feature on or off, add the EnableDragToClose annotation to "
+                        + activity.getClass().getName() + " and set true.");
+            }
+        }
+
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        View topWindowView = decorView.getChildAt(0);
+
+        if(!(topWindowView instanceof SnakeHackLayout)) {
+            throw new SnakeConfigException("Add Snake.host(this) to onCreate method first.");
+        }
+
+        ((SnakeHackLayout) topWindowView).enableSwipeUpToHome(enable);
+    }
+
+    /**
+     * Enable or disable swipe up to home for the specified fragment.
+     *
+     * @param fragment the specified fragment
+     * @param enable true: enable, false: disable
+     */
+    public static void enableSwipeUpToHome(@NonNull android.app.Fragment fragment, boolean enable) {
+        try {
+            Method method = fragment.getClass().getMethod("enableSwipeUpToHome", Boolean.class);
+            method.invoke(fragment, enable);
+        } catch (Throwable e) {
+            if(e instanceof NoSuchMethodException) {
+                throw new SnakeConfigException("Plase use Snake.newProxy create a Fragment instance");
+            } else {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Enable or disable swipe up to home for the specified support fragment.
+     *
+     * @param fragment the specified support fragment
+     * @param enable true: enable, false: disable
+     */
+    public static void enableSwipeUpToHome(@NonNull android.support.v4.app.Fragment fragment, boolean enable) {
+        try {
+            Method method = fragment.getClass().getMethod("enableSwipeUpToHome", Boolean.class);
+            method.invoke(fragment, enable);
+        } catch (Throwable e) {
+            if(e instanceof NoSuchMethodException) {
+                throw new SnakeConfigException("Plase use Snake.newProxySupport create a Fragment instance");
+            } else {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Get enable state of the swipe up to home feature.
+     *
+     * @param activity the specified activity
+     *
+     * @return true: enable, false: disable
+     */
+    public static boolean swipeUpToHomeEnabled(@NonNull Activity activity) {
+        assertActivityDestroyed(activity);
+
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        View topWindowView = decorView.getChildAt(0);
+        if(topWindowView instanceof SnakeHackLayout) {
+            return ((SnakeHackLayout) topWindowView).swipeUpToHomeEnabled();
+        }
+
+        return false;
+    }
+
+    /**
+     * Get enable state of the swipe up to home feature.
+     *
+     * @param fragment the specified fragment
+     *
+     * @return true: enable, false: disable
+     */
+    public static boolean swipeUpToHomeEnabled(@NonNull android.app.Fragment fragment) {
+        View contentView = fragment.getView();
+
+        if(contentView instanceof SnakeHackLayout) {
+            return ((SnakeHackLayout) contentView).swipeUpToHomeEnabled();
+        }
+
+        return false;
+    }
+
+    /**
+     * Get enable state of the swipe up to home feature.
+     *
+     * @param fragment the specified fragment
+     *
+     * @return true: enable, false: disable
+     */
+    public static boolean swipeUpToHomeEnabled(@NonNull android.support.v4.app.Fragment fragment) {
+        View contentView = fragment.getView();
+
+        if(contentView instanceof SnakeHackLayout) {
+            return ((SnakeHackLayout) contentView).swipeUpToHomeEnabled();
         }
 
         return false;
