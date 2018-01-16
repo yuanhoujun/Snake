@@ -26,6 +26,7 @@ import com.youngfeng.snake.util.ActivityHelper;
 import com.youngfeng.snake.util.ActivityManager;
 import com.youngfeng.snake.util.FragmentManagerHelper;
 import com.youngfeng.snake.util.GlobalActivityLifecycleDelegate;
+import com.youngfeng.snake.util.Logger;
 import com.youngfeng.snake.util.SoftKeyboardHelper;
 import com.youngfeng.snake.view.SnakeHackLayout;
 
@@ -53,11 +54,13 @@ public class Snake {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 ActivityManager.get().put(activity);
+                Logger.d(activity.getClass() + " onCreate completed...");
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
                 ActivityManager.get().remove(activity);
+                Logger.d(activity.getClass() + " destoryed completed...");
             }
         });
         SnakeConfigReader.get().init(application);
@@ -849,6 +852,11 @@ public class Snake {
         }
 
         return false;
+    }
+
+    /** Control whether debug logging is enabled. */
+    public static void setDebug(boolean debug) {
+        Logger.debug = debug;
     }
 
     public static abstract class OnDragListener {

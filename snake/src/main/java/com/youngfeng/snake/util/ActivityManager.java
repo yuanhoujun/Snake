@@ -83,41 +83,6 @@ public class ActivityManager {
         return mActivityStack.size() > 0 && indexOf(activity) >= mActivityStack.size() - 1;
     }
 
-    public void setWindowTranslucent(@NonNull Activity activity, boolean translucent) {
-        int index = indexOf(activity);
-        if(index >= 0) {
-            ActivityInstance activityInstance = mActivityStack.remove(index);
-            activityInstance.isTranlucent = translucent;
-            mActivityStack.add(index, activityInstance);
-        }
-    }
-
-    public ActivityInstance getActivityInstance(int index) {
-        if(index < 0 || mActivityStack.isEmpty()) return null;
-
-        return mActivityStack.get(index);
-    }
-
-    public boolean isTranslucent(@NonNull Activity activity) {
-        ActivityInstance activityInstance = getActivityInstance(indexOf(activity));
-        if(null != activityInstance) return activityInstance.isTranlucent;
-        return false;
-    }
-
-    public ActivityInstance convertToActivityInstance(@NonNull Activity activity) {
-        int index = indexOf(activity);
-        if(index >= 0) return mActivityStack.get(index);
-
-        return null;
-    }
-
-    public int getBackgroundResourceId(@NonNull Activity activity) {
-        ActivityInstance activityInstance = convertToActivityInstance(activity);
-        if(null != activityInstance) return activityInstance.originBackgroundResourceId;
-
-        return -1;
-    }
-
     public View getViewOfLastActivity(@NonNull Activity activity) {
         Activity lastActivity = getLastActivity(activity);
         if(null == lastActivity) return null;

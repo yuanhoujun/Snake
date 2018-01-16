@@ -16,8 +16,8 @@ public class ActivityInstance {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Activity) {
-            return obj.equals(this);
+        if(obj instanceof ActivityInstance) {
+            return ((ActivityInstance) obj).activity == activity;
         }
         return super.equals(obj);
     }

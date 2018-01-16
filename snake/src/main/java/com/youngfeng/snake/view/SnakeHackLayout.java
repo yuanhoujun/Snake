@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
@@ -24,6 +23,7 @@ import android.widget.FrameLayout;
 
 import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.config.SnakeConfigException;
+import com.youngfeng.snake.util.Logger;
 import com.youngfeng.snake.util.SwipeUpGestureDispatcher;
 import com.youngfeng.snake.util.Utils;
 
@@ -227,7 +227,7 @@ public class SnakeHackLayout extends FrameLayout {
     }
 
     private void printLog(String text) {
-        Log.e("SnakeHackLayout", text);
+        Logger.d(text);
     }
 
     @Override
