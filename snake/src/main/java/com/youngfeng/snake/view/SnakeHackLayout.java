@@ -75,7 +75,7 @@ public class SnakeHackLayout extends FrameLayout {
     private boolean mSwipeUpToHomeEnabled = false;
 
     private ViewTreeObserver.OnPreDrawListener mPreDrawListener = null;
-    private SwipeUpGestureDispatcher mGestureDetector;
+    private SwipeUpGestureDispatcher mSwipeUpGestureDispatcher;
     private DragInterceptor mDragInterceptor;
     private int mInterceptScene = -1;
 
@@ -205,7 +205,7 @@ public class SnakeHackLayout extends FrameLayout {
 
         mShadowDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,new int[] {mShadowStartColor, mShadowEndColor});
 
-        mGestureDetector = SwipeUpGestureDispatcher.create(this,
+        mSwipeUpGestureDispatcher = SwipeUpGestureDispatcher.create(this,
                 (int) mViewDragHelper.getMinVelocity(), mViewDragHelper.getEdgeSize(),
                 new SwipeUpGestureDispatcher.OnSwipeUpListener() {
             @Override
@@ -312,7 +312,7 @@ public class SnakeHackLayout extends FrameLayout {
         requestParentDisallowInterceptTouchEvent(true);
 
         if(mSwipeUpToHomeEnabled) {
-            mGestureDetector.dispatch(ev);
+            mSwipeUpGestureDispatcher.dispatch(ev);
         }
 
         return super.dispatchTouchEvent(ev);
@@ -413,7 +413,7 @@ public class SnakeHackLayout extends FrameLayout {
      */
     public void setMinVelocity(int minVelocity) {
         mViewDragHelper.setMinVelocity(minVelocity);
-        mGestureDetector.setMinVelocity(minVelocity);
+        mSwipeUpGestureDispatcher.setMinVelocity(minVelocity);
     }
 
     /**
