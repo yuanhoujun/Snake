@@ -63,9 +63,13 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
 
             @Override
             public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, int interceptScene) {
-                Logger.d("ActivityDragInterceptor: onRelease -> shouldClose = " + shouldClose + ", interceptScene = " + interceptScene);
+                Logger.d("ActivityDragInterceptor: onRelease -> shouldClose = " + shouldClose
+                        + ", interceptScene = " + interceptScene + "，left = " + left);
 
-                if(INTERCEPT_SCENE_ROOT_ACTIVITY == interceptScene || parent.ignoredDragEvent()) return;
+                if(INTERCEPT_SCENE_ROOT_ACTIVITY == interceptScene || parent.ignoredDragEvent()) {
+                    parent.smoothScrollToStart(view);
+                    return;
+                }
 
                 if(parent.onlyListenToFastSwipe() || INTERCEPT_SCENE_TRANSLUCENT_CONVERSION == interceptScene
                         || left <= 0) {
@@ -75,10 +79,11 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
                         mActivity.finish();
                         mActivity.overridePendingTransition(R.anim.snake_slide_in_left, R.anim.snake_slide_out_right);
                     } else {
+                        parent.smoothScrollToStart(view);
                         if(!parent.onlyListenToFastSwipe()) {
                             convertFromTranslucent(mActivity);
+                            isTranslucent = false;
                         }
-                        isTranslucent = false;
                     }
                     return;
                 }
@@ -120,8 +125,6 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
     private void convertToTranslucent(Activity activity, TranslucentConversionListener listener) {
         if(needConvertToTranslucent(activity)) {
             ActivityHelper.convertToTranslucent(activity, listener);
-        } else {
-            isTranslucent = true;
         }
     }
 
