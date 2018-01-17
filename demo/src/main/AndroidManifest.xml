@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.youngfeng.snake.demo">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,7 +18,10 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".main.MainActivity" android:configChanges="orientation|screenSize">
+        <activity
+            android:name=".main.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,27 +29,56 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.FirstActivity"
-                  android:theme="@style/AppTheme"
-                  android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".activities.FirstActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="fullSensor"/>
 
-        <activity android:name=".activities.SecondActivity"
-                  android:theme="@style/AppTheme"
-                  android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".activities.SecondActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="fullSensor"/>
 
-        <activity android:name=".fragments.DragFragmentContainerActivity" android:configChanges="orientation|screenSize"/>
-        <activity android:name=".support.SupportDragFragmentContainerActivity" android:configChanges="orientation|screenSize"/>
-        <activity android:name=".mix.DragFragmentContainerMixActivity" android:configChanges="orientation|screenSize"/>
-        <activity android:name=".mix.SecondMixActivity" android:configChanges="orientation|screenSize" />
-        <activity android:name=".mix.MixActivity" android:configChanges="orientation|screenSize" />
-        <activity android:name=".other.StarGuideActivity" android:configChanges="orientation|screenSize" />
-        <activity android:name=".other.ImageBrowserActivity" android:configChanges="orientation|screenSize" />
-        <activity android:name=".other.WebBrowserActivity" android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".fragments.DragFragmentContainerActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor"/>
+        <activity
+            android:name=".support.SupportDragFragmentContainerActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor"/>
+        <activity
+            android:name=".mix.DragFragmentContainerMixActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor"/>
+        <activity
+            android:name=".mix.SecondMixActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor"/>
+        <activity
+            android:name=".mix.MixActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor"/>
+        <activity
+            android:name=".other.StarGuideActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor"/>
+        <activity
+            android:name=".other.ImageBrowserActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor"/>
+        <activity
+            android:name=".other.WebBrowserActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor"/>
 
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
-            android:theme="@android:style/Theme.Translucent" />
+            android:theme="@android:style/Theme.Translucent"
+            android:screenOrientation="fullSensor"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -55,7 +87,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 
