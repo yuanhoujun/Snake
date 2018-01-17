@@ -82,7 +82,6 @@ public class BaseSupportFragment extends Fragment implements SnakeAnimationContr
         mContentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         mContentView.setOrientation(LinearLayout.VERTICAL);
-        mContentView.setBackgroundColor(Color.RED);
         addToolbarToContentView();
         bindViewToContentView(inflater, container);
 

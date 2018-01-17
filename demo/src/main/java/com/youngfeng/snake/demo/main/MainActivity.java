@@ -68,6 +68,7 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.btn_use_in_webview)
     public void useInWebView() {
         start(WebBrowserActivity.class);
+        toast("快速左滑前进，快速右滑返回前一页");
     }
 
     @OnClick(R.id.btn_mix_use)
