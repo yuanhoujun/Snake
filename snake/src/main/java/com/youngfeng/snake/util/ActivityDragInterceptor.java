@@ -34,12 +34,16 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
             public void onDragStart(SnakeHackLayout parent) {
                 SoftKeyboardHelper.hideKeyboard(mActivity);
 
-                convertToTranslucent(mActivity, new TranslucentConversionListener() {
-                    @Override
-                    public void onTranslucentConversionComplete(boolean drawComplete) {
-                        isTranslucent = true;
-                    }
-                });
+                if(!parent.onlyListenToFastSwipe()) {
+                    convertToTranslucent(mActivity, new TranslucentConversionListener() {
+                        @Override
+                        public void onTranslucentConversionComplete(boolean drawComplete) {
+                            isTranslucent = true;
+                        }
+                    });
+                } else {
+                    isTranslucent = true;
+                }
                 Logger.d("ActivityDragInterceptor: onDragStart...");
             }
 
@@ -71,7 +75,9 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
                         mActivity.finish();
                         mActivity.overridePendingTransition(R.anim.snake_slide_in_left, R.anim.snake_slide_out_right);
                     } else {
-                        convertFromTranslucent(mActivity);
+                        if(!parent.onlyListenToFastSwipe()) {
+                            convertFromTranslucent(mActivity);
+                        }
                         isTranslucent = false;
                     }
                     return;

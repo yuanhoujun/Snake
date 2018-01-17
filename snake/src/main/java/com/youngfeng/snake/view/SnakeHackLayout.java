@@ -135,7 +135,7 @@ public class SnakeHackLayout extends FrameLayout {
 
                 if(left < mOriginPoint.x) left = (int) mOriginPoint.x;
                 left = mViewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT) ? left : (int) child.getX();
-                left = mAllowDragChildView && !onlyListenToFastSwipe ? left : (int) mOriginPoint.x;
+                left = mAllowDragChildView && !onlyListenToFastSwipe ? left : (int) mOriginPoint.x + 1;
                 // 取巧做法，往右平移一个像素，使onRelease方法被调用
                 left = mInterceptScene < 0 ? left : (int)mOriginPoint.x + 1 ;
 
