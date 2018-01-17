@@ -23,7 +23,6 @@ import android.widget.FrameLayout;
 
 import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.config.SnakeConfigException;
-import com.youngfeng.snake.util.Logger;
 import com.youngfeng.snake.util.SwipeUpGestureDispatcher;
 import com.youngfeng.snake.util.Utils;
 
@@ -77,6 +76,8 @@ public class SnakeHackLayout extends FrameLayout {
 
     private ViewTreeObserver.OnPreDrawListener mPreDrawListener = null;
     private SwipeUpGestureDispatcher mGestureDetector;
+    private DragInterceptor mDragInterceptor;
+    private int mInterceptScene = -1;
 
     public SnakeHackLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -91,18 +92,16 @@ public class SnakeHackLayout extends FrameLayout {
         mViewDragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
-                if(null == onEdgeDragListener) {
-                    return !ignoreDragEvent && mViewDragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE;
+                if(null != mDragInterceptor) {
+                    mInterceptScene = mDragInterceptor.intercept(SnakeHackLayout.this, child, pointerId);
                 }
-                return onEdgeDragListener.canDragToClose()
-                        && !ignoreDragEvent
-                        && mViewDragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE;
+
+                return !ignoreDragEvent && mViewDragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE;
             }
 
             @Override
             public void onEdgeTouched(int edgeFlags, int pointerId) {
                 if(ignoreDragEvent) return;
-                if(null != onEdgeDragListener && !onEdgeDragListener.canDragToClose()) return;
 
                 if(null != onEdgeDragListener) {
                     onEdgeDragListener.onDragStart(SnakeHackLayout.this);
@@ -129,9 +128,15 @@ public class SnakeHackLayout extends FrameLayout {
 
             @Override
             public int clampViewPositionHorizontal(View child, int left, int dx) {
+                if(null != mDragInterceptor) {
+                    mInterceptScene = mDragInterceptor.intercept(SnakeHackLayout.this, child, 0);
+                }
+
                 if(left < mOriginPoint.x) left = (int) mOriginPoint.x;
                 left = mViewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT) ? left : (int) child.getX();
                 left = mAllowDragChildView && !onlyListenToFastSwipe ? left : (int) mOriginPoint.x;
+                // 取巧做法，往右平移一个像素，使onRelease方法被调用
+                left = mInterceptScene < 0 ? left : (int)mOriginPoint.x + 1 ;
 
                 return left;
             }
@@ -187,7 +192,7 @@ public class SnakeHackLayout extends FrameLayout {
                     }
 
                     if(null != onEdgeDragListener) {
-                        onEdgeDragListener.onRelease(SnakeHackLayout.this, releasedChild, releasedChild.getLeft(), shouldClose, ignoreDragEvent);
+                        onEdgeDragListener.onRelease(SnakeHackLayout.this, releasedChild, releasedChild.getLeft(), shouldClose, mInterceptScene);
                     }
 
                     for(Snake.OnDragListener onDragListener : onDragListeners) {
@@ -224,10 +229,6 @@ public class SnakeHackLayout extends FrameLayout {
         snakeHackLayout.addView(contentView);
 
         return snakeHackLayout;
-    }
-
-    private void printLog(String text) {
-        Logger.d(text);
     }
 
     @Override
@@ -401,6 +402,10 @@ public class SnakeHackLayout extends FrameLayout {
         onDragListeners.add(onDragListener);
     }
 
+    public void setDragInterceptor(DragInterceptor dragInterceptor) {
+        mDragInterceptor = dragInterceptor;
+    }
+
     /**
      * 设置滑动监听最小检测速度
      *
@@ -484,14 +489,8 @@ public class SnakeHackLayout extends FrameLayout {
         this.hideShadowOfEdge = hideShadowOfEdge;
     }
 
-    /**
-     * 动态设置是否可以滑动关闭当前页面
-     *
-     * @return true yes , false no
-     */
-    public boolean canDragToClose() {
-        if(null == onEdgeDragListener) return false;
-        return onEdgeDragListener.canDragToClose();
+    public void resetUI() {
+        mViewDragHelper.abort();
     }
 
     /**
@@ -603,17 +602,24 @@ public class SnakeHackLayout extends FrameLayout {
          * @param view 当前释放的View
          * @param left 距离容器左侧的距离（单位：像素）
          * @param shouldClose true 需要关闭当前页面 false 需要还原当前页面
-         * @param ignoreDragEvent true 忽略拖拽事件 ，false 保持事件追踪（这个标记不影响onRelease回调)
          */
-        public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent) {}
+        public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, int interceptScene) {}
+    }
 
+    /**
+     * 拖拽拦截器，允许自定义拦截设置，可以在某些情况下开启拖拽，某些情况下禁用，但手势依然可以监听到
+     */
+    public static abstract class DragInterceptor {
         /**
-         * 设置是否可以拖拽关闭当前页面，默认为true
+         * 自定义拖拽拦截设置，返回负数表示不拦截，即允许拖拽。自定义正数用于标记拦截场景
          *
-         * @return true 可以拖拽关闭 false 将导致拖拽关闭功能失效
+         * @param parent 父布局
+         * @param view 当前拖拽的View
+         * @param pointerId 触摸点ID
+         * @return 自定义拦截场景值
          */
-        public boolean canDragToClose() {
-            return true;
+        public int intercept(SnakeHackLayout parent, View view, int pointerId) {
+            return -1;
         }
     }
 

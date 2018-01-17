@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,7 +23,7 @@ import com.youngfeng.snake.annotations.PrimaryConstructor;
 import com.youngfeng.snake.annotations.SetDragParameter;
 import com.youngfeng.snake.config.SnakeConfigException;
 import com.youngfeng.snake.config.SnakeConfigReader;
-import com.youngfeng.snake.util.ActivityHelper;
+import com.youngfeng.snake.util.ActivityDragInterceptor;
 import com.youngfeng.snake.util.ActivityManager;
 import com.youngfeng.snake.util.FragmentManagerHelper;
 import com.youngfeng.snake.util.GlobalActivityLifecycleDelegate;
@@ -42,6 +43,7 @@ import com.youngfeng.snake.view.SnakeTouchInterceptor;
  * @author Scott Smith 2017-12-11 12:17
  */
 public class Snake {
+    private static Application mContext;
 
     /**
      * Initializes snake with default configurations, it will find configuration file in asset/snake.xml,
@@ -64,6 +66,7 @@ public class Snake {
             }
         });
         SnakeConfigReader.get().init(application);
+        mContext = application;
     }
 
     /**
@@ -198,7 +201,7 @@ public class Snake {
             }
 
             @Override
-            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent) {
+            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, int interceptScene) {
                 if(shouldClose) {
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
@@ -272,7 +275,7 @@ public class Snake {
             }
 
             @Override
-            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent) {
+            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, int interceptScene) {
                 if(shouldClose) {
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
@@ -395,75 +398,7 @@ public class Snake {
             snakeHackLayout.setOnlyListenToFastSwipe(true);
         }
 
-        snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
-            @Override
-            public void onDragStart(SnakeHackLayout parent) {
-                SoftKeyboardHelper.hideKeyboard(activity);
-                ActivityHelper.convertToTranslucent(activity);
-            }
-
-            @Override
-            public void onDrag(SnakeHackLayout parent, View view, int left) {
-                if(parent.onlyListenToFastSwipe()) return;
-
-                View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(activity);
-                if(null != viewOfLastActivity) {
-                    float ratio = (left * 1.0f) / parent.getWidth();
-
-                    viewOfLastActivity.setX((ratio - 1) * Utils.dp2px(activity, 100f));
-                }
-            }
-
-            @Override
-            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, boolean ignoreDragEvent) {
-                // Just return if snakeHackLayout set canDragToClose == false
-                if(!parent.canDragToClose()) return;
-
-                if(shouldClose) {
-                    // Just return if ignore the drag event
-                    if(ignoreDragEvent) return;
-
-                    if(parent.onlyListenToFastSwipe()) {
-                        activity.finish();
-                        activity.overridePendingTransition(R.anim.snake_slide_in_left, R.anim.snake_slide_out_right);
-                        return;
-                    }
-
-                    parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
-                        @Override
-                        public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(activity);
-                            if(null != viewOfLastActivity) {
-                                viewOfLastActivity.setX(0f);
-                            }
-
-                            activity.finish();
-                            activity.overridePendingTransition(0, 0);
-                        }
-                    });
-                } else {
-                    parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
-                        @Override
-                        public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(activity);
-                            if(null != viewOfLastActivity) {
-                                viewOfLastActivity.setX(0f);
-                            }
-                            ActivityHelper.convertFromTranslucent(activity);
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public boolean canDragToClose() {
-                if(ActivityManager.get().isRootActivity(activity) && !SnakeConfigReader.get().enableForRootActivity()) {
-                    return false;
-                }
-
-                return true;
-            }
-        });
+        ActivityDragInterceptor.get(activity).attachToLayout(snakeHackLayout);
     }
 
     private static void assertActivityDestroyed(Activity activity) {
@@ -857,6 +792,10 @@ public class Snake {
     /** Control whether debug logging is enabled. */
     public static void setDebug(boolean debug) {
         Logger.debug = debug;
+    }
+
+    public static Context getContext() {
+        return mContext;
     }
 
     public static abstract class OnDragListener {

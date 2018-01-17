@@ -1,7 +1,5 @@
 package com.youngfeng.snake.util;
 
-import android.util.Log;
-
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -19,9 +17,8 @@ public class ConversionInvocationHandler implements InvocationHandler {
     }
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    public Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {
         try {
-            Log.e("Conversion >>>>>>", method.getName() + "<===>" + args[0]);
             boolean drawComplete = (boolean) args[0];
 
             if(null != mConversionListenerRef.get()) {

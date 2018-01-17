@@ -34,6 +34,10 @@ public class ActivityHelper {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             convertToTranslucentAfterLollipop(activity, listener);
+        } else {
+            if(null != listener) {
+                listener.onTranslucentConversionComplete(true);
+            }
         }
     }
 
@@ -65,7 +69,10 @@ public class ActivityHelper {
             Method convertToTranslucent = Activity.class.getDeclaredMethod("convertToTranslucent",
                     translucentConversionListenerClazz, ActivityOptions.class);
             convertToTranslucent.setAccessible(true);
+            long start = System.currentTimeMillis();
             convertToTranslucent.invoke(activity, newProxy, options);
+            long end = System.currentTimeMillis();
+            Logger.d("convertToTranslucentAfterLollipop, time = " + (end - start));
         } catch (Throwable e) {
             e.printStackTrace();
         }
