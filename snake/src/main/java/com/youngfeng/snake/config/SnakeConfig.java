@@ -46,6 +46,11 @@ public class SnakeConfig {
      */
     public boolean enableSwipeUpToHome = false;
 
+    /**
+     * set whether allow page linkage, default true.
+     */
+    public boolean allowPageLinkage = true;
+
     public static final String TAG_ENABLE_FOR_ROOT_ACTIVITY = "enable_for_root_activity";
     public static final String TAG_ONLY_LISTEN_TO_FAST_SWIPE = "only_listen_to_fast_swipe";
     public static final String TAG_MIN_VELOCITY = "min_velocity";
@@ -53,4 +58,5 @@ public class SnakeConfig {
     public static final String TAG_SHADOW_START_COLOR = "shadow_start_color";
     public static final String TAG_SHADOW_END_COLOR = "shadow_end_color";
     public static final String TAG_ENABLE_SWIPE_UP_TO_HOME = "enable_swipe_up_to_home";
+    public static final String TAG_ALLOW_PAGE_LINKAGE = "allow_page_linkage";
 }

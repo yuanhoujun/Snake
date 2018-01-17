@@ -189,14 +189,17 @@ public class Snake {
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
                 View viewOfLastFragment = fragmentManagerHelper.getViewOfLastFragment();
-                if(null != viewOfLastFragment) {
-                    float ratio = (left * 1.0f) / parent.getWidth();
-
-                    if(View.VISIBLE != viewOfLastFragment.getVisibility()) {
+                if (null != viewOfLastFragment) {
+                    if (View.VISIBLE != viewOfLastFragment.getVisibility()) {
                         mVisibility = viewOfLastFragment.getVisibility();
                         viewOfLastFragment.setVisibility(View.VISIBLE);
+                        viewOfLastFragment.setX(0f);
                     }
-                    viewOfLastFragment.setX((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f));
+
+                    if(parent.getUIConfig().allowPageLinkage) {
+                        float ratio = (left * 1.0f) / parent.getWidth();
+                        viewOfLastFragment.setX((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f));
+                    }
                 }
             }
 
@@ -263,14 +266,17 @@ public class Snake {
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
                 View viewOfLastFragment = fragmentManagerHelper.getViewOfLastSupportFragment();
-                if(null != viewOfLastFragment) {
-                    float ratio = (left * 1.0f) / parent.getWidth();
-
-                    if(View.VISIBLE != viewOfLastFragment.getVisibility()) {
+                if (null != viewOfLastFragment) {
+                    if (View.VISIBLE != viewOfLastFragment.getVisibility()) {
                         mVisibility = viewOfLastFragment.getVisibility();
                         viewOfLastFragment.setVisibility(View.VISIBLE);
+                        viewOfLastFragment.setX(0f);
                     }
-                    viewOfLastFragment.setX((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f));
+
+                    if(parent.getUIConfig().allowPageLinkage) {
+                        float ratio = (left * 1.0f) / parent.getWidth();
+                        viewOfLastFragment.setX((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f));
+                    }
                 }
             }
 
@@ -331,6 +337,7 @@ public class Snake {
             snakeHackLayout.setMinVelocity(dragParameter.minVelocity());
             snakeHackLayout.setOnlyListenToFastSwipe(dragParameter.onlyListenToFastSwipe());
             snakeHackLayout.enableSwipeUpToHome(dragParameter.enableSwipeUpToHome());
+            snakeHackLayout.setAllowPageLinkageOfUIConfig(dragParameter.allowPageLinkage());
 
             if(!dragParameter.hideShadowOfEdge()) {
                 try {
@@ -356,6 +363,7 @@ public class Snake {
             snakeHackLayout.setShadowStartColor(SnakeConfigReader.get().shadowStartColor());
             snakeHackLayout.setShadowEndColor(SnakeConfigReader.get().shadowEndColor());
             snakeHackLayout.enableSwipeUpToHome(SnakeConfigReader.get().swipeUpToHomeEnabled());
+            snakeHackLayout.setAllowPageLinkageOfUIConfig(SnakeConfigReader.get().allowPageLinkage());
         }
     }
 

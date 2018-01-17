@@ -47,7 +47,7 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
             public void onDrag(SnakeHackLayout parent, View view, int left) {
                 Logger.d("ActivityDragInterceptor: onDrag: left = " + left);
 
-                if(parent.onlyListenToFastSwipe()) return;
+                if(parent.onlyListenToFastSwipe() || !parent.getUIConfig().allowPageLinkage) return;
 
                 View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(mActivity);
                 if(null != viewOfLastActivity && left > 0) {

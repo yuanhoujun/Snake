@@ -44,4 +44,9 @@ public @interface SetDragParameter {
      * 开启快速上滑返回桌面功能，默认为false
      */
     boolean enableSwipeUpToHome() default false;
+
+    /**
+     * 是否允许页面联动，默认为true
+     */
+    boolean allowPageLinkage() default true;
 }

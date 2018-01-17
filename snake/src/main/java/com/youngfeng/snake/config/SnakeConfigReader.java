@@ -121,6 +121,13 @@ public class SnakeConfigReader {
                         mSnakeConfig.enableSwipeUpToHome = Boolean.parseBoolean(tagValue);
                         break;
                     }
+                    case SnakeConfig.TAG_ALLOW_PAGE_LINKAGE: {
+                        if(!"true".equals(tagValue) && !"false".equals(tagValue)) {
+                            throw new SnakeConfigException("The tag " + name + " only allows the use of boolean values. eg: true or false, current value: " + tagValue);
+                        }
+                        mSnakeConfig.allowPageLinkage = Boolean.parseBoolean(tagValue);
+                        break;
+                    }
                 }
                 parser.require(XmlPullParser.END_TAG, null, name);
              }
@@ -167,7 +174,7 @@ public class SnakeConfigReader {
         return mSnakeConfig.shadowEndColor;
     }
 
-    public boolean swipeUpToHomeEnabled() {
-        return mSnakeConfig.enableSwipeUpToHome;
-    }
+    public boolean swipeUpToHomeEnabled() { return mSnakeConfig.enableSwipeUpToHome; }
+
+    public boolean allowPageLinkage() { return mSnakeConfig.allowPageLinkage; }
 }

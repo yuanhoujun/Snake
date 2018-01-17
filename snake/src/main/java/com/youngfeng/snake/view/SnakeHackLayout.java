@@ -78,6 +78,7 @@ public class SnakeHackLayout extends FrameLayout {
     private SwipeUpGestureDispatcher mSwipeUpGestureDispatcher;
     private DragInterceptor mDragInterceptor;
     private int mInterceptScene = -1;
+    private SnakeUIConfig mUIConfig = SnakeUIConfig.get();
 
     public SnakeHackLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -385,6 +386,24 @@ public class SnakeHackLayout extends FrameLayout {
 
     public boolean ignoredDragEvent() {
         return ignoreDragEvent;
+    }
+
+    /**
+     * Get snake ui config info.
+     *
+     * @return the ui config info
+     */
+    public SnakeUIConfig getUIConfig() {
+        return mUIConfig;
+    }
+
+    /**
+     * Set whether allow page link age in the ui config.
+     *
+     * @param allow true: allow, false: disallow
+     */
+    public void setAllowPageLinkageOfUIConfig(boolean allow) {
+        mUIConfig.allowPageLinkage = allow;
     }
 
     /**
