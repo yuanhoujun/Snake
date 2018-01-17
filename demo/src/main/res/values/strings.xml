@@ -57,4 +57,7 @@
     <string name="snake_tips">如果你喜欢这个开源库，别忘了按照下图步骤给作者star哦，您的鼓励永远是我最大的动力！</string>
     <string name="copy_repo_url">1) Copy版本库地址</string>
     <string name="open_in_pc">2）使用电脑浏览器打开，按照下图操作</string>
+    <string name="tip_grant_permissions">为了正常使用该应用，请在设置中开启【存储卡】权限</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
 </resources>

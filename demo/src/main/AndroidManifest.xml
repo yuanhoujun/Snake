@@ -19,9 +19,9 @@
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
         <activity
-            android:name=".main.MainActivity"
+            android:name=".activities.SplashActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="fullUser">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,52 +33,56 @@
             android:name=".activities.FirstActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
 
         <activity
             android:name=".activities.SecondActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
 
         <activity
             android:name=".fragments.DragFragmentContainerActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
         <activity
             android:name=".support.SupportDragFragmentContainerActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
         <activity
             android:name=".mix.DragFragmentContainerMixActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
         <activity
             android:name=".mix.SecondMixActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
         <activity
             android:name=".mix.MixActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
         <activity
             android:name=".other.StarGuideActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
         <activity
             android:name=".other.ImageBrowserActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
         <activity
             android:name=".other.WebBrowserActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
+        <activity
+            android:name=".main.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullUser"/>
 
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullUser"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -64,4 +64,5 @@ dependencies {
     implementation deps.crashreportUpgrade
     implementation deps.photoView
     implementation deps.circleImageView
+    implementation deps.easyPermission
 }
