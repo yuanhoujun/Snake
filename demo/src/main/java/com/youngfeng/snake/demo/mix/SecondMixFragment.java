@@ -56,13 +56,8 @@ public class SecondMixFragment extends BaseSupportFragment {
             }
 
             @Override
-            public void onDrag(View view, int left) {
-                super.onDrag(view, left);
-            }
-
-            @Override
-            public void onRelease(View view, float xVelocity) {
-                super.onRelease(view, xVelocity);
+            public void onBackToStartCompleted(View view) {
+                super.onBackToStartCompleted(view);
                 mViewPager.autoScroll();
             }
         });
