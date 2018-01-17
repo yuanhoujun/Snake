@@ -15,5 +15,7 @@
         <shadow_end_color>#50000000</shadow_end_color>
         <!-- 类似iPhone X, 从底部边缘快速上滑回到桌面 (实验性功能，默认关闭） -->
         <enable_swipe_up_to_home>false</enable_swipe_up_to_home>
+        <!-- 是否允许页面联动，默认为true -->
+        <allow_page_linkage>true</allow_page_linkage>
     </config>
 </snake>
