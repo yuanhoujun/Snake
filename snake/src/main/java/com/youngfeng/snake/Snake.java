@@ -809,8 +809,10 @@ public class Snake {
     public static abstract class OnDragListener {
         public void onDragStart(View view) {}
 
-        public void onDrag(View view, int left) {}
+        public void onDrag(View view, int left, boolean isSetlling) {}
 
         public void onRelease(View view, float xVelocity) {}
+
+        public void onBackToStartCompleted(View view) {}
     }
 }

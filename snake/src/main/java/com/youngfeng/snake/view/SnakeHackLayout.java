@@ -169,13 +169,19 @@ public class SnakeHackLayout extends FrameLayout {
                     }
 
                     for(Snake.OnDragListener onDragListener : onDragListeners) {
-                        onDragListener.onDrag(changedView, left);
+                        onDragListener.onDrag(changedView, left, isSettling);
                     }
                 }
 
                 if(left <= 0 || left >= mXRange) {
                     if (null != onReleaseStateListener && isSettling) {
                         onReleaseStateListener.onReleaseCompleted(SnakeHackLayout.this, changedView);
+                    }
+                }
+
+                if(left <= 0 && isSettling) {
+                    for(Snake.OnDragListener onDragListener : onDragListeners) {
+                        onDragListener.onBackToStartCompleted(changedView);
                     }
                 }
 
