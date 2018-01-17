@@ -53,6 +53,8 @@ public class SecondFragment extends BaseFragment {
         } else {
             toast("滑动关闭功能已禁用，无需重复调用");
         }
+
+        Snake.enableSwipeUpToHome(this, false);
     }
 
     @OnClick(R.id.btn_enable_drag_to_close)
@@ -64,5 +66,7 @@ public class SecondFragment extends BaseFragment {
         } else {
             toast("滑动关闭功能已开启，无需重复调用");
         }
+
+        Snake.enableSwipeUpToHome(this, true);
     }
 }

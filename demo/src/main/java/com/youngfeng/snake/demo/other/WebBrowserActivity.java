@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.webkit.WebViewClient;
 
+import com.youngfeng.snake.Snake;
+import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.Constant;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
@@ -15,6 +17,7 @@ import com.youngfeng.snake.view.SnakeWebView;
  *
  * @author Scott Smith 2018-01-05 16:01
  */
+@EnableDragToClose
 @BindView(layoutId = R.layout.activity_web_browser)
 public class WebBrowserActivity extends BaseActivity {
     @butterknife.BindView(R.id.webView) SnakeWebView mWebView;
@@ -22,11 +25,11 @@ public class WebBrowserActivity extends BaseActivity {
     @Override
     protected void onInitView() {
         super.onInitView();
+        Snake.host(this);
 
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.loadUrl(Constant.URL_JIANSHU);
 
-        mWebView.setDragMode(SnakeWebView.DragMode.RIGHT);
         mWebView.setOnDragListener(new SnakeWebView.OnDragListener() {
             @Override
             public void onFling(float velocityX, SnakeWebView.DragMode mode) {

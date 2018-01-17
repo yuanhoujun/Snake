@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
+import com.youngfeng.snake.Snake;
+import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.activities.FirstActivity;
 import com.youngfeng.snake.demo.annotations.BindView;
@@ -24,6 +26,7 @@ import butterknife.OnClick;
  *
  * @author Scott Smith 2017-12-24 16:23
  */
+@EnableDragToClose()
 @BindView(layoutId = R.layout.activity_main)
 public class MainActivity extends BaseActivity {
     @butterknife.BindView(R.id.text_version) TextView mTextVersion;
@@ -31,6 +34,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onInitView() {
         super.onInitView();
+        Snake.host(this);
+
         setTitle(R.string.demo_drag_to_close);
         setReturnBackVisible(false);
         setVersion();

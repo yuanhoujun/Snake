@@ -15,6 +15,7 @@ public class SnakeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Snake.setDebug(BuildConfig.DEBUG);
         Snake.init(this);
         Bugly.init(this, Constant.BUGLY_APP_ID, BuildConfig.DEBUG);
     }
