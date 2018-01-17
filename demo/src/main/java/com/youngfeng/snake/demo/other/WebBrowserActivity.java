@@ -27,6 +27,8 @@ public class WebBrowserActivity extends BaseActivity {
         super.onInitView();
         Snake.host(this);
 
+        mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.loadUrl(Constant.URL_JIANSHU);
 
