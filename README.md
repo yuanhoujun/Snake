@@ -227,12 +227,18 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 
 PS: 如果你在产品中使用了**Snake**, 请来信告诉我！邮件地址：**626306805@qq.com**
 
-**关注欧阳锋工作室，学更多编程知识**
+License
+==
+   Copyright 2018 Ouyangfeng Office
 
-![欧阳锋工作室](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/%E6%AC%A7%E9%98%B3%E9%94%8B%E5%B7%A5%E4%BD%9C%E5%AE%A4.jpg)
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
 
-**相关文章** 
+       http://www.apache.org/licenses/LICENSE-2.0
 
-* [将滑动关闭进行到底](https://www.jianshu.com/p/7cf6864c9bde)
-
-PS: 如果你在产品中使用了**Snake**, 请来信告诉我！邮件地址：**626306805@qq.com**
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
