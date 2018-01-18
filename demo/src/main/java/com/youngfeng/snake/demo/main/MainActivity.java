@@ -3,6 +3,7 @@ package com.youngfeng.snake.demo.main;
 import android.content.pm.PackageManager;
 import android.text.Html;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.tencent.bugly.Bugly;
@@ -30,6 +31,7 @@ import butterknife.OnClick;
 @BindView(layoutId = R.layout.activity_main)
 public class MainActivity extends BaseActivity {
     @butterknife.BindView(R.id.text_version) TextView mTextVersion;
+    @butterknife.BindView(R.id.btn_enable_swipe_up_to_home) Button mEnableSwipeUpToHomeBtn;
 
     @Override
     protected void onInitView() {
@@ -39,6 +41,7 @@ public class MainActivity extends BaseActivity {
         setTitle(R.string.demo_drag_to_close);
         setReturnBackVisible(false);
         setVersion();
+        updateSwipeUpEnableStatus();
     }
 
     private void setVersion() {
@@ -48,6 +51,11 @@ public class MainActivity extends BaseActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateSwipeUpEnableStatus() {
+        String onOrOff = Snake.swipeUpToHomeEnabled(this) ? "ON" : "OFF";
+        mEnableSwipeUpToHomeBtn.setText(getString(R.string.enable_swipe_up_to_home) + "(" + onOrOff + ")");
     }
 
     @OnClick(R.id.btn_use_in_activity)
@@ -93,7 +101,8 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_enable_swipe_up_to_home)
     public void swipeUpToHome() {
-        Snake.enableSwipeUpToHome(this, true);
+        Snake.enableSwipeUpToHome(this, !Snake.swipeUpToHomeEnabled(this));
+        updateSwipeUpEnableStatus();
     }
 
     @Override
