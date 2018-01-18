@@ -23,6 +23,7 @@ import android.widget.FrameLayout;
 
 import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.config.SnakeConfigException;
+import com.youngfeng.snake.util.Logger;
 import com.youngfeng.snake.util.SwipeUpGestureDispatcher;
 import com.youngfeng.snake.util.Utils;
 
@@ -219,6 +220,7 @@ public class SnakeHackLayout extends FrameLayout {
                 new SwipeUpGestureDispatcher.OnSwipeUpListener() {
             @Override
             public void onSwipeUp(float velocityY, boolean isEdgeBottomTouched) {
+                Logger.d("onSwipeUp: velocityY = " + velocityY + ", isEdgeBottomTouched = " + isEdgeBottomTouched);
                 if(isEdgeBottomTouched) Utils.backToHome(getContext());
             }
         });

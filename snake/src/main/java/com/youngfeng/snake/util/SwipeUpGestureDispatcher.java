@@ -1,5 +1,6 @@
 package com.youngfeng.snake.util;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -105,7 +106,14 @@ public class SwipeUpGestureDispatcher {
     }
 
     private boolean isEdgeBottomTouched(float y) {
-        return y > mTargetView.getBottom() - mEdgeSize;
+        Context context = mTargetView.getContext();
+        int navigationBarHeight = 0;
+
+        if(Utils.navigationBarVisible(context)) {
+            navigationBarHeight = Utils.getNavigationHeight(context);
+        }
+
+        return y > mTargetView.getBottom() - mEdgeSize - navigationBarHeight;
     }
 
     public void setMinVelocity(int minVelocity) {
