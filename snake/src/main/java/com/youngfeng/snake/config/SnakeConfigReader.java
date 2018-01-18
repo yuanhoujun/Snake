@@ -43,7 +43,7 @@ public class SnakeConfigReader {
                 readSnakeConfigIn(inputStream);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            // ignore this exception.
         }
     }
 
