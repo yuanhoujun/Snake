@@ -91,6 +91,11 @@ public class MainActivity extends BaseActivity {
         start(StarGuideActivity.class);
     }
 
+    @OnClick(R.id.btn_enable_swipe_up_to_home)
+    public void swipeUpToHome() {
+        Snake.enableSwipeUpToHome(this, true);
+    }
+
     @Override
     protected boolean needAutoUpdateTitle() {
         return false;

@@ -78,5 +78,13 @@
             android:layout_height="wrap_content"
             android:text="@string/cheer_for_the_author" />
 
+
+        <Button
+            android:id="@+id/btn_enable_swipe_up_to_home"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/enable_swipe_up_to_home" />
+
     </LinearLayout>
 </ScrollView>
