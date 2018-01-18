@@ -21,6 +21,9 @@ Snake
 ## Demo下载体验
 ![扫描图中二维码下载](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/demo_snapshot.jpg)
 
+## 更新日志
+* [版本 **0.2.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.2.0.md)
+
 ## 使用方法
 1）添加依赖
 ```
@@ -113,6 +116,10 @@ public class FirstFragment extends Fragment {
         <shadow_start_color>#00000000</shadow_start_color>
         <!-- 阴影边缘渐变色结束颜色 -->
         <shadow_end_color>#50000000</shadow_end_color>
+        <!-- 类似iPhone X, 从底部边缘快速上滑回到桌面 (实验性功能，默认关闭） -->
+        <enable_swipe_up_to_home>false</enable_swipe_up_to_home>
+        <!-- 是否允许页面联动，默认为true -->
+        <allow_page_linkage>true</allow_page_linkage>
     </config>
 </snake>
 ```
@@ -135,6 +142,8 @@ public class FirstActivity extends Activity
 注意：大多数情况下你不需要理会该接口，如果确定是需要解决这种滑动冲突问题，可以使用该接口。
 
 `Snake.dragToCloseEnabled()`：如果你需要知道滑动关闭功能在当前页面是否处于开启状态，可以使用该接口。
+`Snake.enableSwipeToHome()`: 如果希望在某个页面开启上滑退出功能，可以使用该接口
+`Snake.swipeUpToHomeEnabled()`: 获取当前页面上滑退出功能开启状态
 
 ## 动画处理
 至此，你已经成功集成了滑动关闭功能，并且也知道了如何配置滑动关闭参数。可是，你会发现，如果使用系统返回键，Activity的
@@ -181,6 +190,9 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 
 **注意：在重写的`onCreateAnimator`或`onCreateAnimation`接口中，请使用`Snake.wrap`接口对父类实现进行包裹。否则，将导致设置无效，具体实现可以参照Demo实现**
 
+## WebView滑动控制
+如果希望`WebView`也开启滑动控制功能，修改你的`WebView`类为`SnakeWebView`即可。目前，暂时只支持快速向左轻扫前进，快速向右轻扫回退。
+
 ## Best Practice
 1）Activity的启动是一个耗时的过程，为了体验效果更佳，推荐使用全**Fragment**设计，或者说**Activity+多Fragment**设计。
 另外，由于Android系统的兼容性问题，在SDK版本低于21的机型中，Activity的关闭将使用快速右滑手势，只有在高于21的机型中，
@@ -191,6 +203,11 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 3）不推荐对滑动样式进行自定义设置，默认样式在UI体现上已经比较漂亮，繁琐的设计反而会干扰你的理解。
 
 4）遇到问题请先查看[Wiki](https://github.com/yuanhoujun/Android_Slide_To_Close/wiki)，看是否有你想要的答案。如果没有，请使用**Gitter**联系我，给我发送消息。如果发现问题，请给我推送issue，非常欢迎你帮我发现问题。
+
+5) 虽然不设置窗体透明属性也可以使用，但依然推荐手动设置窗体透明，获得更好体验。具体做法，复制下面样式到你的`style.xml`主题配置中:
+```
+<item name="android:windowIsTranslucent">true</item>
+```
 
 ## 联系我
 如果你在使用过程中，有任何不能解决的问题，请来Gitter IM讨论
