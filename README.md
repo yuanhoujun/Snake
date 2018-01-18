@@ -226,3 +226,19 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 * [Snake版本再升级，支持类iPhone X上滑退出到桌面功能](https://www.jianshu.com/p/71c27a671500)
 
 PS: 如果你在产品中使用了**Snake**, 请来信告诉我！邮件地址：**626306805@qq.com**
+
+License
+==
+   Copyright 2018 Ouyangfeng Office
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
