@@ -3,6 +3,7 @@
 * 增加`SnakeWebView`, 提供对 **WebView** 的滑动手势控制。目前，暂时只支持轻扫手势。
 * 增加类似iPhone X快速上滑回退到桌面功能（实验性功能）
 * `Snake.onDragListener`接口细化
+* 新增`allow_page_linkage`参数配置是否开启页面联动（默认开启）
 * 快速滑动页面闪动问题修复
 
 **注意：如果你在`0.1.0`版本中使用了`Snake.addOnDragListener`接口并且重写了`onDrag`方法，为了兼容，需要手动添加一个参数`boolean settling`.**

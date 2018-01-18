@@ -142,8 +142,10 @@ public class FirstActivity extends Activity
 注意：大多数情况下你不需要理会该接口，如果确定是需要解决这种滑动冲突问题，可以使用该接口。
 
 `Snake.dragToCloseEnabled()`：如果你需要知道滑动关闭功能在当前页面是否处于开启状态，可以使用该接口。
-`Snake.enableSwipeToHome()`: 如果希望在某个页面开启上滑退出功能，可以使用该接口
-`Snake.swipeUpToHomeEnabled()`: 获取当前页面上滑退出功能开启状态
+
+`Snake.enableSwipeToHome()`: 如果希望在某个页面开启上滑退出到桌面功能，可以使用该接口
+
+`Snake.swipeUpToHomeEnabled()`: 获取当前页面上滑退出到桌面功能开启状态
 
 ## 动画处理
 至此，你已经成功集成了滑动关闭功能，并且也知道了如何配置滑动关闭参数。可是，你会发现，如果使用系统返回键，Activity的
@@ -205,6 +207,7 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 4）遇到问题请先查看[Wiki](https://github.com/yuanhoujun/Android_Slide_To_Close/wiki)，看是否有你想要的答案。如果没有，请使用**Gitter**联系我，给我发送消息。如果发现问题，请给我推送issue，非常欢迎你帮我发现问题。
 
 5) 虽然不设置窗体透明属性也可以使用，但依然推荐手动设置窗体透明，获得更好体验。具体做法，复制下面样式到你的`style.xml`主题配置中:
+
 ```
 <item name="android:windowIsTranslucent">true</item>
 ```
