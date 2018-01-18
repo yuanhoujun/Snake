@@ -226,3 +226,13 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 * [Snake版本再升级，支持类iPhone X上滑退出到桌面功能](https://www.jianshu.com/p/71c27a671500)
 
 PS: 如果你在产品中使用了**Snake**, 请来信告诉我！邮件地址：**626306805@qq.com**
+
+**关注欧阳锋工作室，学更多编程知识**
+
+![欧阳锋工作室](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/%E6%AC%A7%E9%98%B3%E9%94%8B%E5%B7%A5%E4%BD%9C%E5%AE%A4.jpg)
+
+**相关文章** 
+
+* [将滑动关闭进行到底](https://www.jianshu.com/p/7cf6864c9bde)
+
+PS: 如果你在产品中使用了**Snake**, 请来信告诉我！邮件地址：**626306805@qq.com**
