@@ -38,6 +38,12 @@ buildscript {
             'bintrayRelease': '0.8.0'
     ]
 
+    ext.snakeVersions = [
+            'snake': '0.2.0',
+            'snakeAnnotations': '0.2.0',
+            'snakeCompiler': '0.2.0'
+    ]
+
     ext.deps = [
             android: [
                     support: [
