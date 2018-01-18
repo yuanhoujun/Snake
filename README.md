@@ -206,7 +206,7 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 
 4）遇到问题请先查看[Wiki](https://github.com/yuanhoujun/Android_Slide_To_Close/wiki)，看是否有你想要的答案。如果没有，请使用**Gitter**联系我，给我发送消息。如果发现问题，请给我推送issue，非常欢迎你帮我发现问题。
 
-5) 虽然不设置窗体透明属性也可以使用，但依然推荐手动设置窗体透明，获得更好体验。具体做法，复制下面样式到你的`style.xml`主题配置中:
+5）虽然不设置窗体透明属性也可以使用，但依然推荐手动设置窗体透明，以获得更好体验。具体做法，复制下面属性设置到你的`style.xml`文件主题配置中:
 
 ```
 <item name="android:windowIsTranslucent">true</item>
