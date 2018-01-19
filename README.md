@@ -19,7 +19,9 @@ Snake
 * 适配SDK Version >= 14以上所有机型，无副作用
 
 ## Demo下载体验
-![扫描图中二维码下载](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/demo_snapshot.jpg)
+![扫描图中二维码下载](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/demo_snapshot.jpg)
+
+扫描上方二维码或 [直接点这里下载](https://www.pgyer.com/Wd3H)
 
 ## 更新日志
 * [版本 **0.2.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.2.0.md)
