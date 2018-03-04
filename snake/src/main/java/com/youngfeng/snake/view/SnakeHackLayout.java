@@ -237,7 +237,10 @@ public class SnakeHackLayout extends FrameLayout {
         SnakeHackLayout snakeHackLayout = new SnakeHackLayout(context);
         snakeHackLayout.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         snakeHackLayout.setAllowDragChildView(allowDragChildView);
-        snakeHackLayout.addView(contentView);
+
+        if (null != contentView) {
+            snakeHackLayout.addView(contentView);
+        }
 
         return snakeHackLayout;
     }

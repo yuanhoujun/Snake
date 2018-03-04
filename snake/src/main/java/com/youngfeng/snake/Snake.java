@@ -21,6 +21,7 @@ import com.youngfeng.snake.animation.AnimationFactory;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.annotations.PrimaryConstructor;
 import com.youngfeng.snake.annotations.SetDragParameter;
+import com.youngfeng.snake.app.Fragment;
 import com.youngfeng.snake.config.SnakeConfigException;
 import com.youngfeng.snake.config.SnakeConfigReader;
 import com.youngfeng.snake.util.ActivityDragInterceptor;
@@ -84,7 +85,12 @@ public class Snake {
         checkAnnotationNotEmpty(fragment);
 
         try {
-            Class<?> snakeProxyClass = Class.forName(fragment.getName() + "_SnakeProxy");
+            String className = fragment.getName() + "_SnakeProxy";
+            if(fragment.isAssignableFrom(com.youngfeng.snake.app.Fragment.class)) {
+                className = fragment.getName();
+            }
+            Class<?> snakeProxyClass = Class.forName(className);
+
             Constructor<?>[] constructors = snakeProxyClass.getConstructors();
 
             Constructor<?> primaryConstructor = null;
@@ -128,7 +134,11 @@ public class Snake {
         checkAnnotationNotEmpty(fragment);
 
         try {
-            Class<?> snakeProxyClass = Class.forName(fragment.getName() + "_SnakeProxy");
+            String className = fragment.getName() + "_SnakeProxy";
+            if(fragment.isAssignableFrom(com.youngfeng.snake.support.v4.app.Fragment.class)) {
+                className = fragment.getName();
+            }
+            Class<?> snakeProxyClass = Class.forName(className);
             Constructor<?>[] constructors = snakeProxyClass.getConstructors();
 
             Constructor<?> primaryConstructor = null;
@@ -458,14 +468,18 @@ public class Snake {
      * @param enable true: turn on, false: turn off
      */
     public static void enableDragToClose(@NonNull android.app.Fragment fragment, boolean enable) {
-        try {
-            Method method = fragment.getClass().getMethod("enableDragToClose", Boolean.class);
-            method.invoke(fragment, enable);
-        } catch (Throwable e) {
-            if(e instanceof NoSuchMethodException) {
-                throw new SnakeConfigException("Plase use Snake.newProxy create a Fragment instance");
-            } else {
-                e.printStackTrace();
+        if(fragment instanceof com.youngfeng.snake.app.Fragment) {
+            ((Fragment) fragment).enableDragToClose(enable);
+        } else {
+            try {
+                Method method = fragment.getClass().getMethod("enableDragToClose", Boolean.class);
+                method.invoke(fragment, enable);
+            } catch (Throwable e) {
+                if (e instanceof NoSuchMethodException) {
+                    throw new SnakeConfigException("Plase use Snake.newProxy create a Fragment instance");
+                } else {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -478,14 +492,18 @@ public class Snake {
      * @param enable true: turn on, false: turn off
      */
     public static void enableDragToClose(@NonNull android.support.v4.app.Fragment fragment, boolean enable) {
-        try {
-            Method method = fragment.getClass().getMethod("enableDragToClose", Boolean.class);
-            method.invoke(fragment, enable);
-        } catch (Throwable e) {
-            if(e instanceof NoSuchMethodException) {
-                throw new SnakeConfigException("Plase use Snake.newProxySupport create a Fragment instance");
-            } else {
-                e.printStackTrace();
+        if(fragment instanceof com.youngfeng.snake.support.v4.app.Fragment) {
+            ((com.youngfeng.snake.support.v4.app.Fragment) fragment).enableDragToClose(enable);
+        } else {
+            try {
+                Method method = fragment.getClass().getMethod("enableDragToClose", Boolean.class);
+                method.invoke(fragment, enable);
+            } catch (Throwable e) {
+                if (e instanceof NoSuchMethodException) {
+                    throw new SnakeConfigException("Plase use Snake.newProxySupport create a Fragment instance");
+                } else {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -510,11 +528,15 @@ public class Snake {
      * @param onDragListener onDragListener
      */
     public static void addDragListener(@NonNull android.app.Fragment fragment, Snake.OnDragListener onDragListener) {
-        try {
-            Method method = fragment.getClass().getMethod("addOnDragListener", OnDragListener.class);
-            method.invoke(fragment, onDragListener);
-        } catch (Throwable e) {
-            e.printStackTrace();
+        if(fragment instanceof com.youngfeng.snake.app.Fragment) {
+            ((Fragment) fragment).addOnDragListener(onDragListener);
+        } else {
+            try {
+                Method method = fragment.getClass().getMethod("addOnDragListener", OnDragListener.class);
+                method.invoke(fragment, onDragListener);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -525,11 +547,15 @@ public class Snake {
      * @param onDragListener onDragListener
      */
     public static void addDragListener(@NonNull android.support.v4.app.Fragment fragment, Snake.OnDragListener onDragListener) {
-        try {
-            Method method = fragment.getClass().getMethod("addOnDragListener", OnDragListener.class);
-            method.invoke(fragment, onDragListener);
-        } catch (Throwable e) {
-            e.printStackTrace();
+        if(fragment instanceof com.youngfeng.snake.support.v4.app.Fragment) {
+            ((com.youngfeng.snake.support.v4.app.Fragment) fragment).addOnDragListener(onDragListener);
+        } else {
+            try {
+                Method method = fragment.getClass().getMethod("addOnDragListener", OnDragListener.class);
+                method.invoke(fragment, onDragListener);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -556,11 +582,15 @@ public class Snake {
      * @param interceptor the custom touch interceptor.
      */
     public static void setCustomTouchInterceptor(@NonNull android.app.Fragment fragment, SnakeTouchInterceptor interceptor) {
-        try {
-            Method method = fragment.getClass().getMethod("setCustomTouchInterceptor", SnakeTouchInterceptor.class);
-            method.invoke(fragment, interceptor);
-        } catch (Throwable e) {
-            e.printStackTrace();
+        if(fragment instanceof com.youngfeng.snake.app.Fragment) {
+            ((Fragment) fragment).setCustomTouchInterceptor(interceptor);
+        } else {
+            try {
+                Method method = fragment.getClass().getMethod("setCustomTouchInterceptor", SnakeTouchInterceptor.class);
+                method.invoke(fragment, interceptor);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -571,11 +601,15 @@ public class Snake {
      * @param interceptor the custom touch interceptor.
      */
     public static void setCustomTouchInterceptor(@NonNull android.support.v4.app.Fragment fragment, SnakeTouchInterceptor interceptor) {
-        try {
-            Method method = fragment.getClass().getMethod("setCustomTouchInterceptor", SnakeTouchInterceptor.class);
-            method.invoke(fragment, interceptor);
-        } catch (Throwable e) {
-            e.printStackTrace();
+        if(fragment instanceof com.youngfeng.snake.support.v4.app.Fragment) {
+            ((com.youngfeng.snake.support.v4.app.Fragment) fragment).setCustomTouchInterceptor(interceptor);
+        } else {
+            try {
+                Method method = fragment.getClass().getMethod("setCustomTouchInterceptor", SnakeTouchInterceptor.class);
+                method.invoke(fragment, interceptor);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -713,14 +747,18 @@ public class Snake {
      * @param enable true: enable, false: disable
      */
     public static void enableSwipeUpToHome(@NonNull android.app.Fragment fragment, boolean enable) {
-        try {
-            Method method = fragment.getClass().getMethod("enableSwipeUpToHome", Boolean.class);
-            method.invoke(fragment, enable);
-        } catch (Throwable e) {
-            if(e instanceof NoSuchMethodException) {
-                throw new SnakeConfigException("Plase use Snake.newProxy create a Fragment instance");
-            } else {
-                e.printStackTrace();
+        if(fragment instanceof com.youngfeng.snake.app.Fragment) {
+            ((Fragment) fragment).enableSwipeUpToHome(enable);
+        } else {
+            try {
+                Method method = fragment.getClass().getMethod("enableSwipeUpToHome", Boolean.class);
+                method.invoke(fragment, enable);
+            } catch (Throwable e) {
+                if (e instanceof NoSuchMethodException) {
+                    throw new SnakeConfigException("Plase use Snake.newProxy create a Fragment instance");
+                } else {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -732,14 +770,18 @@ public class Snake {
      * @param enable true: enable, false: disable
      */
     public static void enableSwipeUpToHome(@NonNull android.support.v4.app.Fragment fragment, boolean enable) {
-        try {
-            Method method = fragment.getClass().getMethod("enableSwipeUpToHome", Boolean.class);
-            method.invoke(fragment, enable);
-        } catch (Throwable e) {
-            if(e instanceof NoSuchMethodException) {
-                throw new SnakeConfigException("Plase use Snake.newProxySupport create a Fragment instance");
-            } else {
-                e.printStackTrace();
+        if(fragment instanceof com.youngfeng.snake.support.v4.app.Fragment) {
+            ((com.youngfeng.snake.support.v4.app.Fragment) fragment).enableSwipeUpToHome(enable);
+        } else {
+            try {
+                Method method = fragment.getClass().getMethod("enableSwipeUpToHome", Boolean.class);
+                method.invoke(fragment, enable);
+            } catch (Throwable e) {
+                if (e instanceof NoSuchMethodException) {
+                    throw new SnakeConfigException("Plase use Snake.newProxySupport create a Fragment instance");
+                } else {
+                    e.printStackTrace();
+                }
             }
         }
     }
