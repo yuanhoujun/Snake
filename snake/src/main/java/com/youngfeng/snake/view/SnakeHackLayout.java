@@ -245,7 +245,11 @@ public class SnakeHackLayout extends FrameLayout {
         return snakeHackLayout;
     }
 
-    @Override
+    public static SnakeHackLayout getLayout(Context context) {
+        return getLayout(context, null, true);
+    }
+
+        @Override
     public void addView(View child) {
         if(getChildCount() > 0) {
             throw new IllegalStateException("SnakeHackLayout can host only one direct child. ");

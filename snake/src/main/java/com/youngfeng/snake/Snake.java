@@ -86,7 +86,7 @@ public class Snake {
 
         try {
             String className = fragment.getName() + "_SnakeProxy";
-            if(fragment.isAssignableFrom(com.youngfeng.snake.app.Fragment.class)) {
+            if(com.youngfeng.snake.app.Fragment.class.isAssignableFrom(fragment)) {
                 className = fragment.getName();
             }
             Class<?> snakeProxyClass = Class.forName(className);
@@ -135,7 +135,7 @@ public class Snake {
 
         try {
             String className = fragment.getName() + "_SnakeProxy";
-            if(fragment.isAssignableFrom(com.youngfeng.snake.support.v4.app.Fragment.class)) {
+            if(com.youngfeng.snake.support.v4.app.Fragment.class.isAssignableFrom(fragment)) {
                 className = fragment.getName();
             }
             Class<?> snakeProxyClass = Class.forName(className);

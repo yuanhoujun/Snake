@@ -13,6 +13,8 @@ import com.youngfeng.snake.config.SnakeConfigException;
 import com.youngfeng.snake.view.SnakeHackLayout;
 import com.youngfeng.snake.view.SnakeTouchInterceptor;
 
+import java.lang.reflect.Field;
+
 /**
  * Fragment
  *
@@ -33,13 +35,24 @@ public class Fragment extends android.app.Fragment implements SnakeAnimationCont
         EnableDragToClose enableDragToClose = getClass().getAnnotation(EnableDragToClose.class);
         if(null != enableDragToClose && !enableDragToClose.value()) return;
 
-        mSnakeLayout = SnakeHackLayout.getLayout(getActivity(), view, true);
-        Snake.openDragToCloseForFragment(mSnakeLayout, this);
+        mSnakeLayout = SnakeHackLayout.getLayout(getActivity());
 
         if(view.getParent() instanceof ViewGroup) {
-            ((ViewGroup) view.getParent()).removeView(view);
-            ((ViewGroup) view.getParent()).addView(mSnakeLayout);
+            ViewGroup parent = (ViewGroup) view.getParent();
+            parent.removeView(view);
+            mSnakeLayout.addView(view);
+            parent.addView(mSnakeLayout);
         }
+
+        try {
+            Field mView = android.app.Fragment.class.getDeclaredField("mView");
+            mView.setAccessible(true);
+            mView.set(this, mSnakeLayout);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        Snake.openDragToCloseForFragment(mSnakeLayout, this);
     }
 
     @Override
