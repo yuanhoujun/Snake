@@ -46,6 +46,8 @@ import javax.tools.Diagnostic;
 public class SnakeProcessor extends AbstractProcessor {
     private static final String FRAGMENT_TYPE = "android.app.Fragment";
     private static final String SUPPORT_FRAGMENT_TYPE = "android.support.v4.app.Fragment";
+    private static final String SNAKE_FRAGMENT_TYPE = "com.youngfeng.snake.app.Fragment";
+    private static final String SUPPORT_SNAKE_FRAGMENT_TYPE = "com.youngfeng.snake.support.v4.app.Fragment";
     private static final String ACTIVITY_TYPE = "android.app.Activity";
     private static final String LAYOUT_INFLATER_TYPE = "android.view.LayoutInflater";
     private static final String VIEWGROUP_TYPE = "android.view.ViewGroup";
@@ -78,7 +80,7 @@ public class SnakeProcessor extends AbstractProcessor {
 
         TypeMirror elementType = element.asType();
         // Only process Fragment or its child class.
-        if(!isSubtypeOfFragment(elementType)) return;
+        if(!isSubtypeOfFragment(elementType) || isSubtypeOfSnakeFragment(elementType)) return;
 
         if(isFinalClass(element)) {
             error(element, "%s can't be used in a final class, %s",
@@ -256,6 +258,10 @@ public class SnakeProcessor extends AbstractProcessor {
 
     private boolean isSubtypeOfFragment(TypeMirror typeMirror) {
         return isSubtypeOfType(typeMirror, FRAGMENT_TYPE) || isSubtypeOfType(typeMirror, SUPPORT_FRAGMENT_TYPE);
+    }
+
+    private boolean isSubtypeOfSnakeFragment(TypeMirror typeMirror) {
+        return isSubtypeOfType(typeMirror, SNAKE_FRAGMENT_TYPE) || isSubtypeOfType(typeMirror, SUPPORT_SNAKE_FRAGMENT_TYPE);
     }
 
     private boolean isFinalClass(Element element) {
