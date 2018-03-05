@@ -14,6 +14,7 @@ import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.activities.FirstActivity;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.fragments.DragFragmentContainerActivity;
+import com.youngfeng.snake.demo.inherit.SupportDragFragmentContainerActivity2;
 import com.youngfeng.snake.demo.mix.MixActivity;
 import com.youngfeng.snake.demo.other.StarGuideActivity;
 import com.youngfeng.snake.demo.other.WebBrowserActivity;
@@ -82,6 +83,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.btn_mix_use)
     public void mixUse(View view) {
         start(MixActivity.class);
+    }
+
+    @OnClick(R.id.btn_use_inherit)
+    public void useInherit(View view) {
+        start(SupportDragFragmentContainerActivity2.class);
     }
 
     @OnClick(R.id.btn_check_update)
