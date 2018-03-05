@@ -8,8 +8,8 @@ android {
         applicationId "com.youngfeng.snake.demo"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.compileSdk
-        versionCode 100
-        versionName "1.0.0"
+        versionCode 110
+        versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -51,8 +51,8 @@ dependencies {
     api deps.butterknife
     annotationProcessor deps.butterknifeCompiler
 
-    implementation 'com.youngfeng.android:snake:0.2.0'
-    annotationProcessor 'com.youngfeng.android:snake-compiler:0.2.0'
+    implementation 'com.youngfeng.android:snake:0.3.0'
+    annotationProcessor 'com.youngfeng.android:snake-compiler:0.3.0'
 
 //    implementation project(":snake")
 //    annotationProcessor project(":snake-compiler")
