@@ -14,7 +14,7 @@ publish {
     groupId = 'com.youngfeng.android'
     artifactId = 'snake-annotations'
     publishVersion = snakeVersions.snakeAnnotations
-    desc = 'Android轻松集成滑动关闭功能'
+    desc = 'Snake annotations'
     website = 'https://github.com/yuanhoujun/Android_Slide_To_Close'
 }
 
