@@ -25,6 +25,8 @@ Snake
 ``
 ## 更新日志
 * [版本 **0.2.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.2.0.md)
+* [版本 **0.3.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.3.0.md)
+
 
 ## 使用方法
 1）添加依赖
@@ -240,6 +242,11 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 **关注欧阳锋工作室，学更多编程知识**
 
 ![欧阳锋工作室](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/%E6%AC%A7%E9%98%B3%E9%94%8B%E5%B7%A5%E4%BD%9C%E5%AE%A4.jpg)
+
+## 交流群
+**QQ群**：288177681
+
+如果你在使用过程中遇到了任何问题，欢迎加群交流。如果你想给作者支持，请点击上方star支持。
 
 **相关文章** 
 
