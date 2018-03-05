@@ -11,6 +11,7 @@ import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.animation.SnakeAnimationController;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.config.SnakeConfigException;
+import com.youngfeng.snake.util.FragmentManagerHelper;
 import com.youngfeng.snake.view.SnakeHackLayout;
 import com.youngfeng.snake.view.SnakeTouchInterceptor;
 
@@ -31,7 +32,9 @@ public class Fragment extends android.support.v4.app.Fragment implements SnakeAn
     }
 
     private void replaceWithSnakeLayout(View view) {
-        if(null == view) return;
+        FragmentManagerHelper fragmentManagerHelper = FragmentManagerHelper.get(getActivity().getSupportFragmentManager());
+
+        if(null == view || fragmentManagerHelper.supportBackStackEmpty()) return;
 
         EnableDragToClose enableDragToClose = getClass().getAnnotation(EnableDragToClose.class);
         if(null != enableDragToClose && !enableDragToClose.value()) return;
