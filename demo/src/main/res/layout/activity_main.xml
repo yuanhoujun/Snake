@@ -57,6 +57,13 @@
             android:text="@string/mix_use" />
 
         <Button
+            android:id="@+id/btn_use_inherit"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/use_inherit" />
+
+        <Button
             android:id="@+id/btn_check_update"
             style="@style/ButtonStyle"
             android:layout_width="match_parent"

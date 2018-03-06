@@ -180,7 +180,7 @@ public class BaseActivity extends AppCompatActivity {
 
 
     public void push(@AnimatorRes int enter, @AnimatorRes int exit, @AnimatorRes int popEnter,
-                     @AnimatorRes int popExit, @NonNull Class<? extends BaseFragment> fragment, boolean addToBackStack) {
+                     @AnimatorRes int popExit, @NonNull Class<? extends android.app.Fragment> fragment, boolean addToBackStack) {
         try {
             if (fragment.getName().equals(mCurrentFragmentTag)) return;
 
@@ -218,21 +218,21 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void push(Class<? extends BaseFragment> fragment, boolean addToBackStack) {
+    public void push(Class<? extends android.app.Fragment> fragment, boolean addToBackStack) {
         push(R.animator.snake_slide_in_right, R.animator.snake_slide_out_left,
                 R.animator.snake_slide_in_left, R.animator.snake_slide_out_right, fragment, addToBackStack);
     }
 
-    public void push(Class<? extends BaseFragment> fragment) {
+    public void push(Class<? extends android.app.Fragment> fragment) {
         push(fragment, true);
     }
 
-    public void switchTo(Class<? extends BaseFragment> fragment) {
+    public void switchTo(Class<? extends android.app.Fragment> fragment) {
         push(0, 0, 0, 0, fragment, true);
     }
 
     public void push(@AnimatorRes int enter, @AnimatorRes int exit, @AnimatorRes int popEnter,
-                     @AnimatorRes int popExit, @NonNull Fragment fragment, boolean addToBackStack) {
+                     @AnimatorRes int popExit, @NonNull android.app.Fragment fragment, boolean addToBackStack) {
         try {
             if (fragment.getClass().getName().equals(mCurrentFragmentTag)) return;
 
@@ -265,17 +265,17 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void push(BaseFragment fragment, boolean addToBackStack) {
+    public void push(android.app.Fragment fragment, boolean addToBackStack) {
         push(R.animator.snake_slide_in_right, R.animator.snake_slide_out_left,
                 R.animator.snake_slide_in_left, R.animator.snake_slide_out_right, fragment, addToBackStack);
     }
 
-    public void push(BaseFragment fragment) {
+    public void push(android.app.Fragment fragment) {
         push(fragment, true);
     }
 
     public void supportPush(@AnimRes int enter, @AnimRes int exit, @AnimRes int popEnter,
-                            @AnimRes int popExit, @NonNull Class<? extends BaseSupportFragment> fragment, boolean addToBackStack) {
+                            @AnimRes int popExit, @NonNull Class<? extends android.support.v4.app.Fragment> fragment, boolean addToBackStack) {
         try {
             if (fragment.getName().equals(mCurrentFragmentTag)) return;
 
@@ -313,16 +313,16 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void supportPush(Class<? extends BaseSupportFragment> fragment, boolean addToBackStack) {
+    public void supportPush(Class<? extends android.support.v4.app.Fragment> fragment, boolean addToBackStack) {
         supportPush(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left,
                 R.anim.snake_slide_in_left, R.anim.snake_slide_out_right, fragment, addToBackStack);
     }
 
-    public void supportPush(Class<? extends BaseSupportFragment> fragment) {
-        supportPush(fragment, true);
+    public void supportSwitchTo(android.support.v4.app.Fragment  fragment) {
+        supportPush(0, 0, 0, 0, fragment, true);
     }
 
-    public void supportSwitchTo(Class<? extends BaseSupportFragment> fragment) {
+    public void supportSwitchTo(Class<? extends android.support.v4.app.Fragment> fragment) {
         supportPush(0, 0, 0, 0, fragment, true);
     }
 
@@ -360,13 +360,13 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void supportPush(BaseSupportFragment fragment, boolean addToBackStack) {
+    public void supportPush(android.support.v4.app.Fragment fragment, boolean addToBackStack) {
         supportPush(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left,
                 R.anim.snake_slide_in_left, R.anim.snake_slide_out_right, fragment, addToBackStack);
     }
 
-    public void supportPush(BaseFragment fragment) {
-        push(fragment, true);
+    public void supportPush(android.support.v4.app.Fragment fragment) {
+        supportPush(fragment, true);
     }
 
     public boolean popFragment() {

@@ -50,6 +50,10 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="fullUser"/>
         <activity
+            android:name=".inherit.SupportDragFragmentContainerActivity2"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullUser"/>
+        <activity
             android:name=".mix.DragFragmentContainerMixActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="fullUser"/>

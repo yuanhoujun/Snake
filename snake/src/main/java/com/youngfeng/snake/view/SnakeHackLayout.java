@@ -237,12 +237,19 @@ public class SnakeHackLayout extends FrameLayout {
         SnakeHackLayout snakeHackLayout = new SnakeHackLayout(context);
         snakeHackLayout.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         snakeHackLayout.setAllowDragChildView(allowDragChildView);
-        snakeHackLayout.addView(contentView);
+
+        if (null != contentView) {
+            snakeHackLayout.addView(contentView);
+        }
 
         return snakeHackLayout;
     }
 
-    @Override
+    public static SnakeHackLayout getLayout(Context context) {
+        return getLayout(context, null, true);
+    }
+
+        @Override
     public void addView(View child) {
         if(getChildCount() > 0) {
             throw new IllegalStateException("SnakeHackLayout can host only one direct child. ");

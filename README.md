@@ -22,9 +22,11 @@ Snake
 ![扫描图中二维码下载](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/demo_snapshot.jpg)
 
 扫描上方二维码或 [直接点这里下载](https://www.pgyer.com/Wd3H)
-
+``
 ## 更新日志
 * [版本 **0.2.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.2.0.md)
+* [版本 **0.3.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.3.0.md)
+
 
 ## 使用方法
 1）添加依赖
@@ -91,10 +93,29 @@ public class FirstFragment extends Fragment {
 ```
 
 在使用了主构造器的情况下，使用**Snake.newProxy**接口创建实例的时候需要传入构造参数，以上述代码片段为例，可以这样使用：
+
 ```
     FirstFragment fragment = Snake.newProxy(FirstFragment.class, 1, 2);
 ```
+
 **Snake.newProxySupport**接口同理
+
+## 0.3.0版本后，Fragment新增继承方式集成
+按照下面的对应关系，改变你的Fragment父类就可以完成滑动关闭集成:
+* `android.app.Fragment` => `com.youngfeng.snake.app.Fragment`
+* `android.support.v4.app.Fragment` => `com.youngfeng.snake.support.v4.app.Fragment`
+
+## 两种集成方案的区别
+集成方案|newProxy/newProxySupport|使用继承
+:---:|:---:|:---:
+侵入性|无|改变了顶级父类
+难易程度|稍难一点|简单
+动画处理|需要自行处理|不需要处理
+实例创建|必须使用newProxy/newProxySupport创建|可以自行处理
+
+注意：使用继承方式集成的情况下，原来的API完全可以通用。你可以选择使用Snake的API进行滑动控制，也可以使用父类中的方法进行滑动控制，这取决于你自己。甚至实例创建你依然可以交给newProxy/newProxySupport接口。
+
+一点建议：如果你的工程有一致的编程规范，代码工整，我推荐你使用继承的方式集成。如果你的工程相对较乱，整体表现不一致，我推荐你使用newProxy/newProxySupport方式集成，灵活性更高。
 
 ## 滑动参数配置
 通常情况下，完成上面的步骤，你已经可以正常使用滑动关闭功能了。可是，有些同学可能希望对滑动样式进行定制化。别担心，
@@ -221,6 +242,11 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 **关注欧阳锋工作室，学更多编程知识**
 
 ![欧阳锋工作室](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/%E6%AC%A7%E9%98%B3%E9%94%8B%E5%B7%A5%E4%BD%9C%E5%AE%A4.jpg)
+
+## 交流群
+**QQ群**：288177681
+
+如果你在使用过程中遇到了任何问题，欢迎加群交流。如果你想给作者支持，请点击上方star支持。
 
 **相关文章** 
 
