@@ -39,7 +39,7 @@ buildscript {
     ]
 
     ext.snakeVersions = [
-            'snake': '0.3.0',
+            'snake': '0.3.1',
             'snakeAnnotations': '0.3.0',
             'snakeCompiler': '0.3.0'
     ]
