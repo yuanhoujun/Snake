@@ -125,6 +125,8 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
     private void convertToTranslucent(Activity activity, TranslucentConversionListener listener) {
         if(needConvertToTranslucent(activity)) {
             ActivityHelper.convertToTranslucent(activity, listener);
+        } else {
+            if(null != listener) listener.onTranslucentConversionComplete(true);
         }
     }
 
