@@ -26,7 +26,7 @@ Snake
 ## 更新日志
 * [版本 **0.2.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.2.0.md)
 * [版本 **0.3.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.3.0.md)
-
+* [版本 **0.3.1** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.3.1.md)
 
 ## 使用方法
 1）添加依赖
