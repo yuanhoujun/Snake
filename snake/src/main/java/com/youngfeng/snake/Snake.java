@@ -15,28 +15,20 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-
-import com.youngfeng.snake.animation.SnakeAnimationController;
 import com.youngfeng.snake.animation.AnimationFactory;
+import com.youngfeng.snake.animation.SnakeAnimationController;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.annotations.PrimaryConstructor;
 import com.youngfeng.snake.annotations.SetDragParameter;
 import com.youngfeng.snake.app.Fragment;
 import com.youngfeng.snake.config.SnakeConfigException;
 import com.youngfeng.snake.config.SnakeConfigReader;
-import com.youngfeng.snake.util.ActivityDragInterceptor;
-import com.youngfeng.snake.util.ActivityManager;
-import com.youngfeng.snake.util.FragmentManagerHelper;
-import com.youngfeng.snake.util.GlobalActivityLifecycleDelegate;
-import com.youngfeng.snake.util.Logger;
-import com.youngfeng.snake.util.SoftKeyboardHelper;
+import com.youngfeng.snake.util.*;
 import com.youngfeng.snake.view.SnakeHackLayout;
+import com.youngfeng.snake.view.SnakeTouchInterceptor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-
-import com.youngfeng.snake.util.Utils;
-import com.youngfeng.snake.view.SnakeTouchInterceptor;
 
 /**
  * 框架入口，用于集成滑动关闭功能
@@ -57,6 +49,7 @@ public class Snake {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 ActivityManager.get().put(activity);
+                openDragToCloseForActivity(activity);
                 Logger.d(activity.getClass() + " onCreate completed...");
             }
 
@@ -429,9 +422,10 @@ public class Snake {
      * Let snake host the current activity.
      *
      * @param activity the specified activity instance
+     * @deprecated this method will not be called in {@link Activity#onCreate(Bundle)}
      */
+    @Deprecated
     public static void host(@NonNull Activity activity) {
-        openDragToCloseForActivity(activity);
     }
 
     /**
