@@ -377,10 +377,9 @@ public class Snake {
      */
     private static void openDragToCloseForActivity(@NonNull final Activity activity) {
         assertActivityDestroyed(activity);
-        checkAnnotationNotEmpty(activity.getClass());
 
         EnableDragToClose enableDragToClose = activity.getClass().getAnnotation(EnableDragToClose.class);
-        if(!enableDragToClose.value()) return;
+        if(null == enableDragToClose || !enableDragToClose.value()) return;
 
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         View topWindowView = decorView.getChildAt(0);
