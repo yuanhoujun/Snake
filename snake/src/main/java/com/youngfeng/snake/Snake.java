@@ -749,7 +749,7 @@ public class Snake {
                 method.invoke(fragment, enable);
             } catch (Throwable e) {
                 if (e instanceof NoSuchMethodException) {
-                    throw new SnakeConfigException("Plase use Snake.newProxy create a Fragment instance");
+                    throw new SnakeConfigException("Please use Snake.newProxy create a Fragment instance");
                 } else {
                     e.printStackTrace();
                 }
@@ -772,7 +772,7 @@ public class Snake {
                 method.invoke(fragment, enable);
             } catch (Throwable e) {
                 if (e instanceof NoSuchMethodException) {
-                    throw new SnakeConfigException("Plase use Snake.newProxySupport create a Fragment instance");
+                    throw new SnakeConfigException("Please use Snake.newProxySupport create a Fragment instance");
                 } else {
                     e.printStackTrace();
                 }
