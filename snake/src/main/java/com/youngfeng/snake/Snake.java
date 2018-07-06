@@ -449,7 +449,7 @@ public class Snake {
         View topWindowView = decorView.getChildAt(0);
 
         if(!(topWindowView instanceof SnakeHackLayout)) {
-            throw new SnakeConfigException("Add Snake.host(this) to onCreate method first.");
+            throw new SnakeConfigException("Did you enable the keep activities option in the settings? if not, commit issue please");
         }
 
         ((SnakeHackLayout) topWindowView).ignoreDragEvent(!enable);
@@ -728,7 +728,7 @@ public class Snake {
         View topWindowView = decorView.getChildAt(0);
 
         if(!(topWindowView instanceof SnakeHackLayout)) {
-            throw new SnakeConfigException("Add Snake.host(this) to onCreate method first.");
+            throw new SnakeConfigException("Did you enable the keep activities option in the settings? if not, commit issue please");
         }
 
         ((SnakeHackLayout) topWindowView).enableSwipeUpToHome(enable);
