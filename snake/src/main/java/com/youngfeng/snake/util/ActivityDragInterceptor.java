@@ -2,7 +2,6 @@ package com.youngfeng.snake.util;
 
 import android.app.Activity;
 import android.view.View;
-
 import com.youngfeng.snake.R;
 import com.youngfeng.snake.config.SnakeConfigReader;
 import com.youngfeng.snake.view.SnakeHackLayout;
@@ -21,6 +20,14 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
 
     private ActivityDragInterceptor(Activity activity) {
         mActivity = activity;
+        convertToTranslucent(mActivity, new TranslucentConversionListener() {
+            @Override
+            public void onTranslucentConversionComplete(boolean drawComplete) {
+                isTranslucent = true;
+                convertFromTranslucent(mActivity);
+                isTranslucent = false;
+            }
+        });
     }
 
     public static ActivityDragInterceptor get(Activity activity) {
@@ -34,16 +41,17 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
             public void onDragStart(SnakeHackLayout parent) {
                 SoftKeyboardHelper.hideKeyboard(mActivity);
 
-                if(!parent.onlyListenToFastSwipe()) {
+                if (parent.onlyListenToFastSwipe()) {
+                    isTranslucent = true;
+                } else {
                     convertToTranslucent(mActivity, new TranslucentConversionListener() {
                         @Override
                         public void onTranslucentConversionComplete(boolean drawComplete) {
                             isTranslucent = true;
                         }
                     });
-                } else {
-                    isTranslucent = true;
                 }
+
                 Logger.d("ActivityDragInterceptor: onDragStart...");
             }
 
