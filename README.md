@@ -250,7 +250,7 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 -keep @com.youngfeng.snake.annotations.EnableDragToClose public class *
 ```
 
-## 关注Snake动态，关注欧阳锋工作室
+## 追踪Snake动态，关注欧阳锋工作室
 ![欧阳锋工作室](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/%E6%AC%A7%E9%98%B3%E9%94%8B%E5%B7%A5%E4%BD%9C%E5%AE%A4.jpg)
 
 ## 唯一官方QQ交流群
