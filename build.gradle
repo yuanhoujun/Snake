@@ -6,7 +6,7 @@ buildscript {
 
             'supportLibrary': '26.0.2',
             'androidPlugin': '3.0.0',
-            'androidTools': '26.0.2',
+            'androidTools': '27.0.3',
             'kotlin': '1.2.10',
             'ankoVersion': '0.9',
             'ankoExtVersion': '0.3.4',
@@ -39,7 +39,7 @@ buildscript {
     ]
 
     ext.snakeVersions = [
-            'snake': '0.3.1',
+            'snake': '0.3.2',
             'snakeAnnotations': '0.3.0',
             'snakeCompiler': '0.3.0'
     ]
@@ -104,8 +104,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.android.tools.build:gradle:3.1.3'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.4.7'
         classpath "com.novoda:bintray-release:${versions.bintrayRelease}"
@@ -122,6 +122,10 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 
