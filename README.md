@@ -24,6 +24,7 @@ Snake
 * [版本 **0.2.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.2.0.md)
 * [版本 **0.3.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.3.0.md)
 * [版本 **0.3.1** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.3.1.md)
+* [版本 **0.3.2** 更新说明](https://github.com/yuanhoujun/Snake/blob/develop/docs/update_log_0.3.2.md)
 
 ## 使用方法
 1）添加依赖
@@ -55,7 +56,7 @@ public class SnakeApplication extends Application {
 }
 ```
 
-## Activity使用方法
+## Activity集成步骤
 在需要开启滑动返回的Activity类中添加注解 **@EnableDragToClose**即可
 
 ```
@@ -64,7 +65,7 @@ public class FirstActivity extends Activity
 ```
 
 
-## Fragment使用方法
+## Fragment集成步骤
 #### 方法一：动态配置
 1. 在需要开启滑动返回的Fragment类中添加注解 **@EnableDragToClose**
  
@@ -238,6 +239,15 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 
 ```
 <item name="android:windowIsTranslucent">true</item>
+```
+
+## 混淆配置
+
+```
+# 如果已经应用该规则，无需重复配置
+-keepattributes *Annotation*
+-keep class **.*_SnakeProxy
+-keep @com.youngfeng.snake.annotations.EnableDragToClose public class *
 ```
 
 ## 关注Snake动态，关注欧阳锋工作室
