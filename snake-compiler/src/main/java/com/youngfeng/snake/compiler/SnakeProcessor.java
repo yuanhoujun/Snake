@@ -2,40 +2,21 @@ package com.youngfeng.snake.compiler;
 
 import com.google.auto.common.SuperficialValidation;
 import com.google.auto.service.AutoService;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.TypeName;
-import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.*;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.Processor;
-import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
+import javax.lang.model.element.*;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Snake processor
@@ -45,9 +26,11 @@ import javax.tools.Diagnostic;
 @AutoService(Processor.class)
 public class SnakeProcessor extends AbstractProcessor {
     private static final String FRAGMENT_TYPE = "android.app.Fragment";
-    private static final String SUPPORT_FRAGMENT_TYPE = "android.support.v4.app.Fragment";
+    private static final String SUPPORT_FRAGMENT_TYPE = "androidx.fragment.app.Fragment";
+
     private static final String SNAKE_FRAGMENT_TYPE = "com.youngfeng.snake.app.Fragment";
-    private static final String SUPPORT_SNAKE_FRAGMENT_TYPE = "com.youngfeng.snake.support.v4.app.Fragment";
+    private static final String SUPPORT_SNAKE_FRAGMENT_TYPE = "com.youngfeng.snake.androidx.app.Fragment";
+
     private static final String ACTIVITY_TYPE = "android.app.Activity";
     private static final String LAYOUT_INFLATER_TYPE = "android.view.LayoutInflater";
     private static final String VIEWGROUP_TYPE = "android.view.ViewGroup";
@@ -296,7 +279,7 @@ public class SnakeProcessor extends AbstractProcessor {
         return hasError;
     }
 
-    static boolean isSubtypeOfType(TypeMirror typeMirror, String otherType) {
+    private boolean isSubtypeOfType(TypeMirror typeMirror, String otherType) {
         if (isTypeEqual(typeMirror, otherType)) {
             return true;
         }
@@ -346,7 +329,7 @@ public class SnakeProcessor extends AbstractProcessor {
         return otherType.equals(typeMirror.toString());
     }
 
-    public Set<Class<? extends Annotation>> getSupportAnnotations() {
+    private Set<Class<? extends Annotation>> getSupportAnnotations() {
         Set<Class<? extends Annotation>> annotations = new LinkedHashSet<>();
         annotations.add(EnableDragToClose.class);
 

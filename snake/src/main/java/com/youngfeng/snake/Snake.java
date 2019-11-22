@@ -10,8 +10,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -123,12 +123,12 @@ public class Snake {
      *
      * @return support fragment proxy object
      */
-    public static <T extends android.support.v4.app.Fragment> T newProxySupport(Class<? extends T> fragment, Object... args) {
+    public static <T extends androidx.fragment.app.Fragment> T newProxySupport(Class<? extends T> fragment, Object... args) {
         checkAnnotationNotEmpty(fragment);
 
         try {
             String className = fragment.getName() + "_SnakeProxy";
-            if(com.youngfeng.snake.support.v4.app.Fragment.class.isAssignableFrom(fragment)) {
+            if(com.youngfeng.snake.androidx.app.Fragment.class.isAssignableFrom(fragment)) {
                 className = fragment.getName();
             }
             Class<?> snakeProxyClass = Class.forName(className);
@@ -246,12 +246,12 @@ public class Snake {
     }
 
     /**
-     * Open DragToClose for support fragment, just for internal using.
+     * Open DragToClose for fragment, just for internal using.
      *
      * @param snakeHackLayout SnakeHackLayout
      * @param fragment the current fragment
      */
-    public static void openDragToCloseForFragment(@NonNull SnakeHackLayout snakeHackLayout, @NonNull final android.support.v4.app.Fragment fragment) {
+    public static void openDragToCloseForFragment(@NonNull SnakeHackLayout snakeHackLayout, @NonNull final androidx.fragment.app.Fragment fragment) {
         assertFragmentActive(fragment);
 
         setDragParameter(fragment.getClass().getAnnotation(SetDragParameter.class), snakeHackLayout);
@@ -268,7 +268,7 @@ public class Snake {
             @SuppressLint("WrongConstant")
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
-                View viewOfLastFragment = fragmentManagerHelper.getViewOfLastSupportFragment();
+                View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment();
                 if (null != viewOfLastFragment) {
                     if (View.VISIBLE != viewOfLastFragment.getVisibility()) {
                         mVisibility = viewOfLastFragment.getVisibility();
@@ -289,14 +289,14 @@ public class Snake {
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastSupportFragment();
+                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment();
                             if(null != viewOfLastFragment) {
                                 viewOfLastFragment.setX(0f);
                             }
 
-                            android.support.v4.app.Fragment lastFragment = fragmentManagerHelper.getLastSupportFragment();
+                            androidx.fragment.app.Fragment lastFragment = fragmentManagerHelper.getLastAndroidXFragment();
                             disableAnimation(lastFragment, true);
-                            if (fragmentManagerHelper.backToSupportFragment()) {
+                            if (fragmentManagerHelper.backToAndroidXFragment()) {
                                 disableAnimation(lastFragment, false);
                             } else {
                                 disableAnimation(lastFragment, false);
@@ -308,7 +308,7 @@ public class Snake {
                         @SuppressLint("WrongConstant")
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastSupportFragment();
+                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment();
                             if(null != viewOfLastFragment) {
                                 if(mVisibility >= 0) {
                                     viewOfLastFragment.setVisibility(mVisibility);
@@ -328,7 +328,7 @@ public class Snake {
         }
     }
 
-    private static void assertFragmentActive(android.support.v4.app.Fragment fragment) {
+    private static void assertFragmentActive(androidx.fragment.app.Fragment fragment) {
         if(fragment.isDetached() || fragment.isRemoving()) {
             throw new IllegalStateException("You can't add this feature to a detached or removing fragment");
         }
@@ -484,9 +484,9 @@ public class Snake {
      * @param fragment the specified support fragment
      * @param enable true: turn on, false: turn off
      */
-    public static void enableDragToClose(@NonNull android.support.v4.app.Fragment fragment, boolean enable) {
-        if(fragment instanceof com.youngfeng.snake.support.v4.app.Fragment) {
-            ((com.youngfeng.snake.support.v4.app.Fragment) fragment).enableDragToClose(enable);
+    public static void enableDragToClose(@NonNull androidx.fragment.app.Fragment fragment, boolean enable) {
+        if(fragment instanceof com.youngfeng.snake.androidx.app.Fragment) {
+            ((com.youngfeng.snake.androidx.app.Fragment) fragment).enableDragToClose(enable);
         } else {
             try {
                 Method method = fragment.getClass().getMethod("enableDragToClose", Boolean.class);
@@ -539,9 +539,9 @@ public class Snake {
      * @param fragment the current fragment.
      * @param onDragListener onDragListener
      */
-    public static void addDragListener(@NonNull android.support.v4.app.Fragment fragment, Snake.OnDragListener onDragListener) {
-        if(fragment instanceof com.youngfeng.snake.support.v4.app.Fragment) {
-            ((com.youngfeng.snake.support.v4.app.Fragment) fragment).addOnDragListener(onDragListener);
+    public static void addDragListener(@NonNull androidx.fragment.app.Fragment fragment, Snake.OnDragListener onDragListener) {
+        if(fragment instanceof com.youngfeng.snake.androidx.app.Fragment) {
+            ((com.youngfeng.snake.androidx.app.Fragment) fragment).addOnDragListener(onDragListener);
         } else {
             try {
                 Method method = fragment.getClass().getMethod("addOnDragListener", OnDragListener.class);
@@ -593,9 +593,9 @@ public class Snake {
      * @param fragment the specified fragment.
      * @param interceptor the custom touch interceptor.
      */
-    public static void setCustomTouchInterceptor(@NonNull android.support.v4.app.Fragment fragment, SnakeTouchInterceptor interceptor) {
-        if(fragment instanceof com.youngfeng.snake.support.v4.app.Fragment) {
-            ((com.youngfeng.snake.support.v4.app.Fragment) fragment).setCustomTouchInterceptor(interceptor);
+    public static void setCustomTouchInterceptor(@NonNull androidx.fragment.app.Fragment fragment, SnakeTouchInterceptor interceptor) {
+        if(fragment instanceof com.youngfeng.snake.androidx.app.Fragment) {
+            ((com.youngfeng.snake.androidx.app.Fragment) fragment).setCustomTouchInterceptor(interceptor);
         } else {
             try {
                 Method method = fragment.getClass().getMethod("setCustomTouchInterceptor", SnakeTouchInterceptor.class);
@@ -638,7 +638,7 @@ public class Snake {
      * @param fragment the specified support fragment
      * @param disable disable or enable animation
      */
-    public static void disableAnimation(android.support.v4.app.Fragment fragment, boolean disable) {
+    public static void disableAnimation(androidx.fragment.app.Fragment fragment, boolean disable) {
         if(fragment instanceof SnakeAnimationController) {
             ((SnakeAnimationController) fragment).disableAnimation(disable);
         }
@@ -696,7 +696,7 @@ public class Snake {
      * @param fragment the specified fragment
      * @return true: enabled false: disabled
      */
-    public static boolean dragToCloseEnabled(@NonNull android.support.v4.app.Fragment fragment) {
+    public static boolean dragToCloseEnabled(@NonNull androidx.fragment.app.Fragment fragment) {
         View contentView = fragment.getView();
 
         if(contentView instanceof SnakeHackLayout) {
@@ -739,6 +739,7 @@ public class Snake {
      * @param fragment the specified fragment
      * @param enable true: enable, false: disable
      */
+    @Deprecated
     public static void enableSwipeUpToHome(@NonNull android.app.Fragment fragment, boolean enable) {
         if(fragment instanceof com.youngfeng.snake.app.Fragment) {
             ((Fragment) fragment).enableSwipeUpToHome(enable);
@@ -762,9 +763,10 @@ public class Snake {
      * @param fragment the specified support fragment
      * @param enable true: enable, false: disable
      */
-    public static void enableSwipeUpToHome(@NonNull android.support.v4.app.Fragment fragment, boolean enable) {
-        if(fragment instanceof com.youngfeng.snake.support.v4.app.Fragment) {
-            ((com.youngfeng.snake.support.v4.app.Fragment) fragment).enableSwipeUpToHome(enable);
+    @Deprecated
+    public static void enableSwipeUpToHome(@NonNull androidx.fragment.app.Fragment fragment, boolean enable) {
+        if(fragment instanceof com.youngfeng.snake.androidx.app.Fragment) {
+            ((com.youngfeng.snake.androidx.app.Fragment) fragment).enableSwipeUpToHome(enable);
         } else {
             try {
                 Method method = fragment.getClass().getMethod("enableSwipeUpToHome", Boolean.class);
@@ -805,6 +807,7 @@ public class Snake {
      *
      * @return true: enable, false: disable
      */
+    @Deprecated
     public static boolean swipeUpToHomeEnabled(@NonNull android.app.Fragment fragment) {
         View contentView = fragment.getView();
 
@@ -822,7 +825,8 @@ public class Snake {
      *
      * @return true: enable, false: disable
      */
-    public static boolean swipeUpToHomeEnabled(@NonNull android.support.v4.app.Fragment fragment) {
+    @Deprecated
+    public static boolean swipeUpToHomeEnabled(@NonNull androidx.fragment.app.Fragment fragment) {
         View contentView = fragment.getView();
 
         if(contentView instanceof SnakeHackLayout) {

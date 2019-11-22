@@ -2,7 +2,7 @@ package com.youngfeng.snake.view;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;

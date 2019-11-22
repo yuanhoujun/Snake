@@ -6,7 +6,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -51,7 +51,7 @@ public class SoftKeyboardHelper {
         return true;
     }
 
-    public static boolean hideKeyboard(@NonNull android.support.v4.app.Fragment fragment) {
+    public static boolean hideKeyboard(@NonNull androidx.fragment.app.Fragment fragment) {
         if(fragment.isDetached() || fragment.isRemoving() || null == fragment.getActivity()) return true;
 
         InputMethodManager inputMethodManager = (InputMethodManager) fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

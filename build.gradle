@@ -2,11 +2,11 @@
 buildscript {
     ext.versions = [
             'minSdk': 14,
-            'compileSdk': 26,
+            'compileSdk': 28,
 
-            'supportLibrary': '26.0.2',
+            'supportLibrary': '28.0.0',
             'androidPlugin': '3.0.0',
-            'androidTools': '27.0.3',
+            'androidTools': '28.0.3',
             'kotlin': '1.2.10',
             'ankoVersion': '0.9',
             'ankoExtVersion': '0.3.4',
@@ -28,14 +28,15 @@ buildscript {
             'eventbus': '3.0.0',
             'adapterRxJavaVersion': '2.3.0',
             'javapoet': '1.9.0',
-            'autoService': '1.0-rc4',
+            'autoService': '1.0-rc6',
             'autoCommon': '0.9',
-            'butterknife': '8.8.1',
+            'butterknife': '10.2.0',
             'crashreportUpgrade': '1.3.4',
             'photoView': '2.0.0',
             'circleImageView': '2.2.0',
             'snake': '0.1.0',
-            'bintrayRelease': '0.8.0'
+            'bintrayRelease': '0.9.1',
+            "appcompatVersion": "1.1.0"
     ]
 
     ext.snakeVersions = [
@@ -49,7 +50,7 @@ buildscript {
                     support: [
                             compat: "com.android.support:appcompat-v7:${versions.supportLibrary}",
                             design: "com.android.support:design:${versions.supportLibrary}",
-                            recyclerView: "com.android.support:recyclerview-v7:${versions.supportLibrary}"
+                            recyclerView: 'androidx.recyclerview:recyclerview:1.0.0'
                     ]
             ],
             kotlin: [
@@ -96,7 +97,11 @@ buildscript {
             autoScrollViewPager: "com.github.yuanhoujun:AutoScrollViewPager:${versions.autoScrollViewPager}",
             crashreportUpgrade: "com.tencent.bugly:crashreport_upgrade:${versions.crashreportUpgrade}",
             photoView: "com.github.chrisbanes:PhotoView:${versions.photoView}",
-            circleImageView: "de.hdodenhof:circleimageview:${versions.circleImageView}"
+            circleImageView: "de.hdodenhof:circleimageview:${versions.circleImageView}",
+
+            androidx: [
+                    compat: "androidx.appcompat:appcompat:${versions.appcompatVersion}"
+            ]
     ]
 
     repositories {
@@ -104,9 +109,9 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.5.2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.4.7'
         classpath "com.novoda:bintray-release:${versions.bintrayRelease}"
     }

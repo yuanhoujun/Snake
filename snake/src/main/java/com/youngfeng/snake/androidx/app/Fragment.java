@@ -1,12 +1,11 @@
-package com.youngfeng.snake.support.v4.app;
+package com.youngfeng.snake.androidx.app;
 
 import android.animation.Animator;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-
 import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.animation.SnakeAnimationController;
 import com.youngfeng.snake.annotations.EnableDragToClose;
@@ -18,11 +17,11 @@ import com.youngfeng.snake.view.SnakeTouchInterceptor;
 import java.lang.reflect.Field;
 
 /**
- * Fragment
+ * Androidx fragment implementation for Snake.
  *
- * @author Scott Smith 2018-03-04 14:45
+ * @author Scott Smith 2019-11-22 10:18
  */
-public class Fragment extends android.support.v4.app.Fragment implements SnakeAnimationController {
+public class Fragment extends androidx.fragment.app.Fragment implements SnakeAnimationController {
     private SnakeHackLayout mSnakeLayout;
     private boolean mDisableAnimation;
 
@@ -34,7 +33,7 @@ public class Fragment extends android.support.v4.app.Fragment implements SnakeAn
     private void replaceWithSnakeLayout(View view) {
         FragmentManagerHelper fragmentManagerHelper = FragmentManagerHelper.get(getActivity().getSupportFragmentManager());
 
-        if(null == view || fragmentManagerHelper.supportBackStackEmpty()) return;
+        if(null == view || fragmentManagerHelper.androidXBackStackEmpty()) return;
 
         EnableDragToClose enableDragToClose = getClass().getAnnotation(EnableDragToClose.class);
         if(null != enableDragToClose && !enableDragToClose.value()) return;
@@ -49,7 +48,7 @@ public class Fragment extends android.support.v4.app.Fragment implements SnakeAn
         }
 
         try {
-            Field mView = android.support.v4.app.Fragment.class.getDeclaredField("mView");
+            Field mView = androidx.fragment.app.Fragment.class.getDeclaredField("mView");
             mView.setAccessible(true);
             mView.set(this, mSnakeLayout);
         } catch (Throwable e) {

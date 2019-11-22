@@ -2,10 +2,9 @@ package com.youngfeng.snake.demo.ui;
 
 import android.animation.Animator;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.youngfeng.snake.Snake;
+import com.youngfeng.snake.androidx.app.Fragment;
 import com.youngfeng.snake.animation.SnakeAnimationController;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  *
  * @author Scott Smith 2017-12-24 10:29
  */
-public class BaseSupportFragment2 extends com.youngfeng.snake.support.v4.app.Fragment implements SnakeAnimationController {
+public class BaseSupportFragment2 extends Fragment implements SnakeAnimationController {
     private Toolbar mToolbar;
     private TranslateLinearLayout mContentView;
     private final String KEY_STATE_HIDDEN = "com.youngfeng:fragment.state.hidden";

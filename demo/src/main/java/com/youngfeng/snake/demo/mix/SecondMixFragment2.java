@@ -1,22 +1,18 @@
 package com.youngfeng.snake.demo.mix;
 
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.annotations.BindView;
-import com.youngfeng.snake.demo.ui.BaseActivity;
 import com.youngfeng.snake.demo.ui.BaseSupportFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.OnClick;
 
 /**
  * The first mix activity.

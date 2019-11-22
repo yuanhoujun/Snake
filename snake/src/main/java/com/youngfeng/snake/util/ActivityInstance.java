@@ -1,8 +1,8 @@
 package com.youngfeng.snake.util;
 
 import android.app.Activity;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 
 /**
  * It keep a Activity instance and its info

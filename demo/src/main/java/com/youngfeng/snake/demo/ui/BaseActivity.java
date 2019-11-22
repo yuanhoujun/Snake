@@ -7,15 +7,14 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.AnimRes;
-import android.support.annotation.AnimatorRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.AnimRes;
+import androidx.annotation.AnimatorRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -78,10 +77,10 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
 
-        getSupportFragmentManager().addOnBackStackChangedListener(new android.support.v4.app.FragmentManager.OnBackStackChangedListener() {
+        getSupportFragmentManager().addOnBackStackChangedListener(new androidx.fragment.app.FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                android.support.v4.app.Fragment fragment = getSupportFragmentManager().findFragmentById(containerId());
+                androidx.fragment.app.Fragment fragment = getSupportFragmentManager().findFragmentById(containerId());
                 if(null != fragment) {
                     mCurrentFragmentTag = fragment.getTag();
                 }
@@ -275,16 +274,16 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void supportPush(@AnimRes int enter, @AnimRes int exit, @AnimRes int popEnter,
-                            @AnimRes int popExit, @NonNull Class<? extends android.support.v4.app.Fragment> fragment, boolean addToBackStack) {
+                            @AnimRes int popExit, @NonNull Class<? extends androidx.fragment.app.Fragment> fragment, boolean addToBackStack) {
         try {
             if (fragment.getName().equals(mCurrentFragmentTag)) return;
 
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+            androidx.fragment.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            androidx.fragment.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setCustomAnimations(enter, exit, popEnter, popExit);
 
             if (!TextUtils.isEmpty(mCurrentFragmentTag)) {
-                android.support.v4.app.Fragment currentFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
+                androidx.fragment.app.Fragment currentFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
 
                 if (null != currentFragment) {
                     transaction.hide(currentFragment);
@@ -295,12 +294,12 @@ public class BaseActivity extends AppCompatActivity {
                 }
             }
 
-            android.support.v4.app.Fragment targetFragment = fragmentManager.findFragmentByTag(fragment.getName());
+            androidx.fragment.app.Fragment targetFragment = fragmentManager.findFragmentByTag(fragment.getName());
 
             if (null != targetFragment && isActive((BaseSupportFragment) targetFragment)) {
                 transaction.show(targetFragment);
             } else {
-                targetFragment = android.support.v4.app.Fragment.instantiate(this, fragment.getName());
+                targetFragment = androidx.fragment.app.Fragment.instantiate(this, fragment.getName());
                 if (null != targetFragment) {
                     transaction.add(containerId(), targetFragment, fragment.getName());
                 }
@@ -313,30 +312,30 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void supportPush(Class<? extends android.support.v4.app.Fragment> fragment, boolean addToBackStack) {
+    public void supportPush(Class<? extends androidx.fragment.app.Fragment> fragment, boolean addToBackStack) {
         supportPush(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left,
                 R.anim.snake_slide_in_left, R.anim.snake_slide_out_right, fragment, addToBackStack);
     }
 
-    public void supportSwitchTo(android.support.v4.app.Fragment  fragment) {
+    public void supportSwitchTo(androidx.fragment.app.Fragment fragment) {
         supportPush(0, 0, 0, 0, fragment, true);
     }
 
-    public void supportSwitchTo(Class<? extends android.support.v4.app.Fragment> fragment) {
+    public void supportSwitchTo(Class<? extends androidx.fragment.app.Fragment> fragment) {
         supportPush(0, 0, 0, 0, fragment, true);
     }
 
     public void supportPush(@AnimRes int enter, @AnimRes int exit, @AnimRes int popEnter,
-                            @AnimRes int popExit, @NonNull android.support.v4.app.Fragment fragment, boolean addToBackStack) {
+                            @AnimRes int popExit, @NonNull androidx.fragment.app.Fragment fragment, boolean addToBackStack) {
         try {
             if (fragment.getClass().getName().equals(mCurrentFragmentTag)) return;
 
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+            androidx.fragment.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            androidx.fragment.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setCustomAnimations(enter, exit, popEnter, popExit);
 
             if (!TextUtils.isEmpty(mCurrentFragmentTag)) {
-                android.support.v4.app.Fragment currentFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
+                androidx.fragment.app.Fragment currentFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
 
                 if (null != currentFragment) {
                     transaction.hide(currentFragment);
@@ -360,12 +359,12 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void supportPush(android.support.v4.app.Fragment fragment, boolean addToBackStack) {
+    public void supportPush(androidx.fragment.app.Fragment fragment, boolean addToBackStack) {
         supportPush(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left,
                 R.anim.snake_slide_in_left, R.anim.snake_slide_out_right, fragment, addToBackStack);
     }
 
-    public void supportPush(android.support.v4.app.Fragment fragment) {
+    public void supportPush(androidx.fragment.app.Fragment fragment) {
         supportPush(fragment, true);
     }
 
@@ -393,7 +392,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public boolean popSupportFragment() {
         try {
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            androidx.fragment.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
             String fragmentTag = null;
             if (fragmentManager.getBackStackEntryCount() > 0) {

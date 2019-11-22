@@ -1,9 +1,7 @@
 package com.youngfeng.snake.config;
 
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
-
-import java.security.PublicKey;
+import androidx.annotation.ColorInt;
 
 /**
  * Snake basic parameter configuration

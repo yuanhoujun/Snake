@@ -1,16 +1,12 @@
 package com.youngfeng.snake.demo.fragments;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
-import com.youngfeng.snake.demo.activities.SecondActivity;
 import com.youngfeng.snake.demo.annotations.BindView;
 import com.youngfeng.snake.demo.ui.BaseFragment;
 
