@@ -13,6 +13,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    dataBinding {
+        enabled = true
+        enabledForTests = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -67,4 +72,9 @@ dependencies {
     implementation deps.photoView
     implementation deps.circleImageView
     implementation deps.easyPermission
+    implementation deps.jetpack.navigationFragment
+    implementation deps.jetpack.navigationUI
+    implementation deps.jetpack.lifecycle
+    annotationProcessor deps.jetpack.lifecycleCompiler
+    implementation deps.jetpack.lifecycleCompilerJ8
 }

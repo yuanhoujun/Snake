@@ -14,17 +14,4 @@
         android:scaleType="centerCrop"
         android:src="@mipmap/tiger_hugging_man"/>
 
-    <Button
-        android:id="@+id/btn_star_this_repo"
-        style="@style/ButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/star_this_repo"/>
-
-    <Button
-        android:id="@+id/btn_follow_the_authors_article"
-        style="@style/ButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/follow_the_authors_article"/>
 </LinearLayout>

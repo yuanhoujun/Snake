@@ -36,7 +36,9 @@ buildscript {
             'circleImageView': '2.2.0',
             'snake': '0.1.0',
             'bintrayRelease': '0.9.1',
-            "appcompatVersion": "1.1.0"
+            "appcompatVersion": "1.1.0",
+            "navi": "2.1.0",
+            "lifecycle": "2.1.0"
     ]
 
     ext.snakeVersions = [
@@ -101,6 +103,15 @@ buildscript {
 
             androidx: [
                     compat: "androidx.appcompat:appcompat:${versions.appcompatVersion}"
+            ],
+
+            jetpack: [
+                    navigationFragment: "androidx.navigation:navigation-fragment:${versions.navi}",
+                    navigationUI: "androidx.navigation:navigation-ui:${versions.navi}",
+                    lifecycle: "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}",
+                    lifecycleCompiler: "androidx.lifecycle:lifecycle-compiler:${versions.lifecycle}",
+                    lifecycleCompilerJ8: "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
+
             ]
     ]
 
@@ -114,6 +125,7 @@ buildscript {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.4.7'
         classpath "com.novoda:bintray-release:${versions.bintrayRelease}"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0"
     }
 }
 

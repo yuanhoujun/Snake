@@ -1,97 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:fillViewport="true"
-    android:scrollbars="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="vm"
+                type="com.youngfeng.snake.demo.main.MainViewModel" />
+    </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@android:color/white">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
 
         <TextView
-            android:id="@+id/text_version"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:textSize="18dp" />
+                android:id="@+id/text_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textSize="18dp" />
 
         <Button
-            android:id="@+id/btn_use_in_activity"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/use_in_activity" />
+                android:id="@+id/btn_use_in_activity"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/use_in_activity"
+                android:onClick="@{() -> vm.openUseCaseInActivity()}"/>
 
         <Button
-            android:id="@+id/btn_use_in_fragment"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/use_in_fragment" />
+                android:id="@+id/btn_use_in_fragment"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/use_in_fragment" />
 
         <Button
-            android:id="@+id/btn_use_in_support_fragment"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/use_in_support_fragment" />
+                android:id="@+id/btn_use_in_support_fragment"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/use_in_support_fragment"
+                android:onClick="@{() -> vm.openUseCaseInAndroidXFrgEvent()}"/>
 
         <Button
-            android:id="@+id/btn_use_in_webview"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/use_in_webview" />
-
-        <Button
-            android:id="@+id/btn_mix_use"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mix_use" />
-
-        <Button
-            android:id="@+id/btn_use_inherit"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/use_inherit" />
-
-        <Button
-            android:id="@+id/btn_check_update"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/check_update" />
-
-        <Button
-            android:id="@+id/btn_share_to_wechat"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/share_to_wechat"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/btn_cheer_for_the_author"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/cheer_for_the_author" />
-
-
-        <Button
-            android:id="@+id/btn_enable_swipe_up_to_home"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/enable_swipe_up_to_home" />
-
+                android:id="@+id/btn_about_author"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_author" />
     </LinearLayout>
-</ScrollView>
+</layout>

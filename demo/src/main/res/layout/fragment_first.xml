@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:background="@android:color/white">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/kong_skull_island"/>
+    <data>
+        <variable
+                name="vm"
+                type="com.youngfeng.snake.demo.androidx.FragmentViewModel" />
+    </data>
 
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_second_fragment"
-        style="@style/ButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:layout_gravity="bottom"
-        android:text="@string/next"/>
-</FrameLayout>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/kong_skull_island" />
+
+        <Button
+                android:id="@+id/btn_second_fragment"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="30dp"
+                android:text="@string/next"
+                android:onClick="@{() -> vm.goToSecondFrag()}"/>
+    </FrameLayout>
+</layout>

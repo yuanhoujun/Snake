@@ -1,27 +1,16 @@
 package com.youngfeng.snake.demo.main;
 
-import android.content.pm.PackageManager;
-import android.text.Html;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.tencent.bugly.Bugly;
-import com.tencent.bugly.beta.Beta;
-import com.youngfeng.snake.Snake;
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.activities.FirstActivity;
-import com.youngfeng.snake.demo.annotations.BindView;
-import com.youngfeng.snake.demo.fragments.DragFragmentContainerActivity;
-import com.youngfeng.snake.demo.inherit.SupportDragFragmentContainerActivity2;
-import com.youngfeng.snake.demo.mix.MixActivity;
-import com.youngfeng.snake.demo.other.StarGuideActivity;
-import com.youngfeng.snake.demo.other.WebBrowserActivity;
-import com.youngfeng.snake.demo.support.SupportDragFragmentContainerActivity;
-import com.youngfeng.snake.demo.ui.BaseActivity;
-
-import butterknife.OnClick;
+import com.youngfeng.snake.demo.androidx.FragmentSampleActivity;
+import com.youngfeng.snake.demo.databinding.ActivityMainBinding;
+import com.youngfeng.snake.demo.utils.EventObserver;
 
 /**
  * Main activity.
@@ -29,90 +18,29 @@ import butterknife.OnClick;
  * @author Scott Smith 2017-12-24 16:23
  */
 @EnableDragToClose()
-@BindView(layoutId = R.layout.activity_main)
-public class MainActivity extends BaseActivity {
-    @butterknife.BindView(R.id.text_version) TextView mTextVersion;
-    @butterknife.BindView(R.id.btn_enable_swipe_up_to_home) Button mEnableSwipeUpToHomeBtn;
+public class MainActivity extends AppCompatActivity {
+    private MainViewModel viewModel = new MainViewModel();
+    private ActivityMainBinding dataBinding;
 
     @Override
-    protected void onInitView() {
-        super.onInitView();
-        Snake.host(this);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        dataBinding.setLifecycleOwner(this);
+        dataBinding.setVm(viewModel);
 
-        setTitle(R.string.demo_drag_to_close);
-        setReturnBackVisible(false);
-        setVersion();
-        updateSwipeUpEnableStatus();
+        setupNavigation();
     }
 
-    private void setVersion() {
-        try {
-            String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-            mTextVersion.setText(Html.fromHtml(getString(R.string.ph_version).replace("#version", versionName)));
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+    private void setupNavigation() {
+        viewModel.openUseCaseInActivityEvent.observe(this, new EventObserver<>(content -> {
+            Intent intent = new Intent(MainActivity.this, FirstActivity.class);
+            startActivity(intent);
+        }));
 
-    private void updateSwipeUpEnableStatus() {
-        String onOrOff = Snake.swipeUpToHomeEnabled(this) ? "ON" : "OFF";
-        mEnableSwipeUpToHomeBtn.setText(getString(R.string.enable_swipe_up_to_home) + "(" + onOrOff + ")");
-    }
-
-    @OnClick(R.id.btn_use_in_activity)
-    public void useInActivity(View view) {
-        start(FirstActivity.class);
-    }
-
-    @OnClick(R.id.btn_use_in_fragment)
-    public void useInFragment(View view) {
-        start(DragFragmentContainerActivity.class);
-    }
-
-    @OnClick(R.id.btn_use_in_support_fragment)
-    public void useInSupportFragment(View view) {
-        start(SupportDragFragmentContainerActivity.class);
-    }
-
-    @OnClick(R.id.btn_use_in_webview)
-    public void useInWebView() {
-        start(WebBrowserActivity.class);
-        toast("快速左滑前进，快速右滑返回前一页");
-    }
-
-    @OnClick(R.id.btn_mix_use)
-    public void mixUse(View view) {
-        start(MixActivity.class);
-    }
-
-    @OnClick(R.id.btn_use_inherit)
-    public void useInherit(View view) {
-        start(SupportDragFragmentContainerActivity2.class);
-    }
-
-    @OnClick(R.id.btn_check_update)
-    public void checkUpdate() {
-        Beta.checkUpgrade();
-    }
-
-    @OnClick(R.id.btn_share_to_wechat)
-    public void shareToWechat() {
-
-    }
-
-    @OnClick(R.id.btn_cheer_for_the_author)
-    public void cheerFor() {
-        start(StarGuideActivity.class);
-    }
-
-    @OnClick(R.id.btn_enable_swipe_up_to_home)
-    public void swipeUpToHome() {
-        Snake.enableSwipeUpToHome(this, !Snake.swipeUpToHomeEnabled(this));
-        updateSwipeUpEnableStatus();
-    }
-
-    @Override
-    protected boolean needAutoUpdateTitle() {
-        return false;
+        viewModel.openUseCaseInAndroidXFrgEvent.observe(this, new EventObserver<>(content -> {
+            Intent intent = new Intent(MainActivity.this, FragmentSampleActivity.class);
+            startActivity(intent);
+        }));
     }
 }
