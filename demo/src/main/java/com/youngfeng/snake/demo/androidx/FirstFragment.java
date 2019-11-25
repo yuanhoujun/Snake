@@ -9,17 +9,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.databinding.FragmentFirstBinding;
 import com.youngfeng.snake.demo.utils.EventObserver;
+import com.youngfeng.snake.demo.utils.Util;
 
 /**
  * The first support fragment.
  *
  * @author Scott Smith 2017-12-26 14:38
  */
-@EnableDragToClose()
+@EnableDragToClose(false)
 public class FirstFragment extends Fragment {
     private FragmentViewModel viewModel = new FragmentViewModel();
     private FragmentFirstBinding viewDataBinding;
@@ -39,12 +41,25 @@ public class FirstFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         setupNavigation();
+        setupTitle();
     }
 
     private void setupNavigation() {
         viewModel.goToSecondFrgEvent.observe(this, new EventObserver<>(content -> {
-            NavController navController = NavHostFragment.findNavController(FirstFragment.this);
-            navController.navigate(R.id.action_FirstFragment_to_SecondFragment);
+            SecondFragment fragment = Snake.newProxySupport(SecondFragment.class);
+            Util.push(FirstFragment.this, fragment, R.id.container);
         }));
+    }
+
+    private void setupTitle() {
+        ((FragmentSampleActivity)requireActivity()).setTitle(FirstFragment.class.getSimpleName());
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            setupTitle();
+        }
     }
 }

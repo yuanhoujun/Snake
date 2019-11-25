@@ -23,6 +23,9 @@ public class FragmentViewModel extends ViewModel {
     private MutableLiveData<String> _dragToCloseEnableStatusText = new MutableLiveData<>("");
     public LiveData<String> dragToCloseEnableStatusText = _dragToCloseEnableStatusText;
 
+    private MutableLiveData<String> _titleText = new MutableLiveData<>();
+    public LiveData<String> titleText = _titleText;
+
     public void goToSecondFrag() {
         _goToSecondFrgEvent.setValue(new Event<>(true));
     }
@@ -37,5 +40,9 @@ public class FragmentViewModel extends ViewModel {
 
     public void setDragToCloseStatusText(String text) {
         _dragToCloseEnableStatusText.setValue(text);
+    }
+
+    public void setTitle(String title) {
+        _titleText.setValue(title);
     }
 }

@@ -7,8 +7,16 @@
         <import type="android.text.Html"/>
 
         <variable
+                name="title"
+                type="String" />
+
+        <variable
                 name="vm"
                 type="com.youngfeng.snake.demo.activities.ActivityViewModel" />
+
+        <variable
+                name="onNavigateUpListener"
+                type="com.youngfeng.snake.demo.utils.OnNavigateUpListener" />
     </data>
 
     <LinearLayout
@@ -17,6 +25,13 @@
             android:background="@android:color/white"
             android:gravity="center_horizontal"
             android:orientation="vertical">
+
+        <include android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 layout="@layout/default_toolbar"
+                 app:title="@{title}"
+                 app:displayHomeUp="@{true}"
+                 app:onNavigateUpListener="@{onNavigateUpListener}"/>
 
         <ImageView
                 android:layout_width="320dp"

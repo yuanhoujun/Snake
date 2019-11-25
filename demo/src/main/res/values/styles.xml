@@ -9,6 +9,10 @@
         <item name="textAllCaps">false</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:activityOpenEnterAnimation">@anim/snake_slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/snake_slide_out_right</item>
+        <item name="android:activityCloseEnterAnimation">@anim/snake_slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/snake_slide_out_right</item>
     </style>
 
     <style name="ButtonStyle">

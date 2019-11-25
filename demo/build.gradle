@@ -72,8 +72,6 @@ dependencies {
     implementation deps.photoView
     implementation deps.circleImageView
     implementation deps.easyPermission
-    implementation deps.jetpack.navigationFragment
-    implementation deps.jetpack.navigationUI
     implementation deps.jetpack.lifecycle
     annotationProcessor deps.jetpack.lifecycleCompiler
     implementation deps.jetpack.lifecycleCompilerJ8

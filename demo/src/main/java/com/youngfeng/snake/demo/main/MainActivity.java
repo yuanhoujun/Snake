@@ -36,11 +36,13 @@ public class MainActivity extends AppCompatActivity {
         viewModel.openUseCaseInActivityEvent.observe(this, new EventObserver<>(content -> {
             Intent intent = new Intent(MainActivity.this, FirstActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left);
         }));
 
         viewModel.openUseCaseInAndroidXFrgEvent.observe(this, new EventObserver<>(content -> {
             Intent intent = new Intent(MainActivity.this, FragmentSampleActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left);
         }));
     }
 }

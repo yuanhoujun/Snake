@@ -1,17 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:background="@android:color/white">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/tiger_hugging_man"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</LinearLayout>
+    <data>
+
+        <import type="android.text.Html" />
+
+        <variable
+                name="title"
+                type="String" />
+
+        <variable
+                name="onNavigateUpListener"
+                type="com.youngfeng.snake.demo.utils.OnNavigateUpListener" />
+
+        <variable
+                name="vm"
+                type="com.youngfeng.snake.demo.activities.ActivityViewModel" />
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+        <include
+                layout="@layout/default_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:displayHomeUp="@{true}"
+                app:title="@{title}"
+                app:onNavigateUpListener="@{onNavigateUpListener}"/>
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/tiger_hugging_man" />
+
+    </LinearLayout>
+</layout>

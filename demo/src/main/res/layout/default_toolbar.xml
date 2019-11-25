@@ -1,33 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:background="@color/colorPrimary"
-    app:contentInsetLeft="0dp"
-    app:contentInsetRight="0dp"
-    app:contentInsetStart="0dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
 
-    <TextView
-        android:id="@+id/text_return_back"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="left|center"
-        android:scaleType="center"
-        android:gravity="center"
-        android:drawableLeft="@drawable/selector_return_back"
-        android:paddingLeft="10dp"
-        android:clickable="true"
-        android:focusable="true"/>
+        <variable
+                name="title"
+                type="String" />
 
-    <TextView
-        android:id="@+id/text_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="14dp"
-        android:text="测试标题"
-        tools:text="标题"/>
-</androidx.appcompat.widget.Toolbar>
+        <variable
+                name="displayHomeUp"
+                type="Boolean" />
+
+        <variable
+                name="onNavigateUpListener"
+                type="com.youngfeng.snake.demo.utils.OnNavigateUpListener" />
+    </data>
+
+    <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/colorPrimary"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp">
+
+        <TextView
+                android:id="@+id/text_return_back"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|center"
+                android:clickable="true"
+                android:drawableLeft="@drawable/selector_return_back"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:scaleType="center"
+                android:visibility="@{ displayHomeUp ? View.VISIBLE : View.INVISIBLE}"
+                android:onClick="@{() -> null != onNavigateUpListener ? onNavigateUpListener.onNavigateUp() : null}"/>
+
+        <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{title}"
+                android:textColor="@android:color/white"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                tools:text="Snake" />
+    </androidx.appcompat.widget.Toolbar>
+</layout>

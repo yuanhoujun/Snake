@@ -16,6 +16,12 @@
             android:background="@android:color/white"
             android:orientation="vertical">
 
+        <include android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/default_toolbar"
+                app:title="@{`Snake`}"
+                app:displayHomeUp="@{false}" />
+
         <TextView
                 android:id="@+id/text_version"
                 android:layout_width="match_parent"

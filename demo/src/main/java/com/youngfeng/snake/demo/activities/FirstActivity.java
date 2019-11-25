@@ -29,6 +29,10 @@ public class FirstActivity extends AppCompatActivity {
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_first);
         dataBinding.setLifecycleOwner(this);
         dataBinding.setVm(viewModel);
+        dataBinding.setOnNavigateUpListener(() -> {
+            finish();
+        });
+        dataBinding.setTitle(FirstActivity.class.getSimpleName());
 
         setupDragToCloseStatus();
         setupNavigation();
@@ -51,6 +55,11 @@ public class FirstActivity extends AppCompatActivity {
         viewModel.goToNextEvent.observe(this, new EventObserver<>(content -> {
             Intent intent = new Intent(this, SecondActivity.class);
             startActivity(intent);
-        }));
+            overridePendingTransition(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left);
+        }));;
+    }
+
+    public void setTitle(String title) {
+        viewModel.setTitle(title);
     }
 }

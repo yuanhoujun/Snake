@@ -7,13 +7,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import com.youngfeng.snake.Snake;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.databinding.FragmentSecondBinding;
 import com.youngfeng.snake.demo.utils.EventObserver;
+import com.youngfeng.snake.demo.utils.Util;
 
 /**
  * The first support fragment.
@@ -41,12 +40,13 @@ public class SecondFragment extends Fragment {
 
         setupNavigation();
         setupDragToCloseStatus();
+        setupTitle();
     }
 
     private void setupNavigation() {
         viewModel.goToThirdFrgEvent.observe(this, new EventObserver<>(content -> {
-            NavController navController = NavHostFragment.findNavController(SecondFragment.this);
-            navController.navigate(R.id.action_SecondFragment_to_ThirdFragment);
+            ThirdFragment fragment = Snake.newProxySupport(ThirdFragment.class);
+            Util.push(SecondFragment.this, fragment, R.id.container);
         }));
     }
 
@@ -61,5 +61,17 @@ public class SecondFragment extends Fragment {
         // Get enabled status of current activity.
         boolean isEnabled = Snake.dragToCloseEnabled(this);
         viewModel.enableDragToClose(isEnabled);
+    }
+
+    private void setupTitle() {
+        ((FragmentSampleActivity)requireActivity()).setTitle(SecondFragment.class.getSimpleName());
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            setupTitle();
+        }
     }
 }
