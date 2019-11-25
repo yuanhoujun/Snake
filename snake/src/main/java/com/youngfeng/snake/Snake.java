@@ -847,6 +847,18 @@ public class Snake {
         return mContext;
     }
 
+    public static String versionName() {
+        return BuildConfig.VERSION_NAME;
+    }
+
+    public static int versionCode() {
+        return BuildConfig.VERSION_CODE;
+    }
+
+    public static boolean isSupportedForActivity() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
+
     public static abstract class OnDragListener {
         public void onDragStart(View view) {}
 
