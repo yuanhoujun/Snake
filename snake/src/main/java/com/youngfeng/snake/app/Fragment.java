@@ -21,6 +21,7 @@ import java.lang.reflect.Field;
  *
  * @author Scott Smith 2018-03-04 14:42
  */
+@Deprecated
 public class Fragment extends android.app.Fragment implements SnakeAnimationController {
     private SnakeHackLayout mSnakeLayout;
     private boolean mDisableAnimation;

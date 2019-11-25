@@ -31,7 +31,7 @@ public class Fragment extends androidx.fragment.app.Fragment implements SnakeAni
     }
 
     private void replaceWithSnakeLayout(View view) {
-        FragmentManagerHelper fragmentManagerHelper = FragmentManagerHelper.get(getActivity().getSupportFragmentManager());
+        FragmentManagerHelper fragmentManagerHelper = FragmentManagerHelper.get(requireActivity().getSupportFragmentManager());
 
         if(null == view || fragmentManagerHelper.androidXBackStackEmpty()) return;
 

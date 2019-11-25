@@ -126,20 +126,35 @@ public class SnakeProcessor extends AbstractProcessor {
             FieldSpec field = FieldSpec.builder(TypeName.get(snakeHackLayoutTypeElement.asType()),
                     "mSnakeLayout", Modifier.PRIVATE).build();
 
+            FieldSpec disableAnimationField = FieldSpec.builder(TypeName.get(Boolean.class).unbox(),
+                    "mDisableAnimation", Modifier.PRIVATE).build();
+
+            ClassName snakeAnimationController = ClassName.get("com.youngfeng.snake.animation",
+                    "SnakeAnimationController");
+            TypeMirror snakeAnimationControllerType = mElementUtils.getTypeElement(snakeAnimationController.toString())
+                    .asType();
+
+
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.CHINA);
             String dateStr = dateFormat.format(new Date());
             TypeSpec typeSpec = TypeSpec.classBuilder(simpleName + "_SnakeProxy")
                                         .addJavadoc("Use this class to implement drag to close current fragment\n")
                                         .addJavadoc("\n")
-                                        .addJavadoc("@author Scott Smith $L\n", dateStr)
+                                        .addJavadoc("@author Snake $L\n", dateStr)
                                         .addModifiers(Modifier.PUBLIC)
                                         .superclass(typeName)
+                                        .addSuperinterface(TypeName.get(snakeAnimationControllerType))
                                         .addMethod(method)
                                         .addMethod(buildMethodEnableDragToClose())
                                         .addMethod(buildMethodAddOnDragListener())
                                         .addMethod(buildMethodSetCustomTouchInterceptor())
                                         .addMethod(buildMethodEnableSwipeUpToHome())
+                                        .addMethod(buildMethodOnCreateAnimation())
+                                        .addMethod(buildMethodOnCreateAnimator())
+                                        .addMethod(buildMethodDisableAnimation())
+                                        .addMethod(buildMethodAnimationDisabled())
                                         .addField(field)
+                                        .addField(disableAnimationField)
                                         .build();
 
             JavaFile javaFile = JavaFile.builder(packageName, typeSpec)
@@ -150,6 +165,69 @@ public class SnakeProcessor extends AbstractProcessor {
                 e.printStackTrace();
             }
         }
+    }
+
+    private MethodSpec buildMethodOnCreateAnimation() {
+        ParameterSpec p1 = ParameterSpec.builder(TypeName.get(Integer.class).unbox(), "transit").build();
+        ParameterSpec p2 = ParameterSpec.builder(TypeName.get(Boolean.class).unbox(), "enter").build();
+        ParameterSpec p3 = ParameterSpec.builder(TypeName.get(Integer.class).unbox(), "nextAnim").build();
+
+        ClassName snakeClass = ClassName.get("com.youngfeng.snake", "Snake");
+        TypeElement snakeTypeElement = mElementUtils.getTypeElement(snakeClass.toString());
+
+        ClassName animationClass = ClassName.get("android.view.animation", "Animation");
+
+        return MethodSpec.methodBuilder("onCreateAnimation")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(p1)
+                .addParameter(p2)
+                .addParameter(p3)
+                .addAnnotation(Override.class)
+                .addStatement("return $T.wrap(super.onCreateAnimation(transit, enter, nextAnim), this)", snakeTypeElement.asType())
+                .returns(animationClass)
+                .build();
+    }
+
+    private MethodSpec buildMethodOnCreateAnimator() {
+        ParameterSpec p1 = ParameterSpec.builder(TypeName.get(Integer.class).unbox(), "transit").build();
+        ParameterSpec p2 = ParameterSpec.builder(TypeName.get(Boolean.class).unbox(), "enter").build();
+        ParameterSpec p3 = ParameterSpec.builder(TypeName.get(Integer.class).unbox(), "nextAnim").build();
+
+        ClassName snakeClass = ClassName.get("com.youngfeng.snake", "Snake");
+        TypeElement snakeTypeElement = mElementUtils.getTypeElement(snakeClass.toString());
+
+        ClassName animationClass = ClassName.get("android.animation", "Animator");
+
+        return MethodSpec.methodBuilder("onCreateAnimator")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(p1)
+                .addParameter(p2)
+                .addParameter(p3)
+                .addAnnotation(Override.class)
+                .addStatement("return $T.wrap(super.onCreateAnimator(transit, enter, nextAnim), this)", snakeTypeElement.asType())
+                .returns(animationClass)
+                .build();
+    }
+
+    private MethodSpec buildMethodDisableAnimation() {
+        ParameterSpec p = ParameterSpec.builder(TypeName.get(Boolean.class).unbox(), "disable").build();
+
+        return MethodSpec.methodBuilder("disableAnimation")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(p)
+                .addAnnotation(Override.class)
+                .addStatement("mDisableAnimation = disable")
+                .returns(TypeName.VOID)
+                .build();
+    }
+
+    private MethodSpec buildMethodAnimationDisabled() {
+        return MethodSpec.methodBuilder("animationDisabled")
+                .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(Override.class)
+                .addStatement("return mDisableAnimation")
+                .returns(TypeName.get(Boolean.class).unbox())
+                .build();
     }
 
     private MethodSpec buildMethodEnableDragToClose() {
@@ -166,7 +244,7 @@ public class SnakeProcessor extends AbstractProcessor {
                 .addCode("\tif(null == enableDragToClose || !enableDragToClose.value()) {\n")
                 .addStatement("\t\tthrow new $T($S + getClass().getName() + $S)",
                         snakeConfigExceptionTypeElement.asType(),
-                        "If you want to dynamically turn the slide-off feature on or off, add the EnableDragToClose annotation to ",
+                        "If you want to dynamically turn the slide-off feature on\n or off, add the EnableDragToClose annotation to ",
                         " and set to true")
                 .addCode("\t}\n")
                 .addCode("}\n\n")

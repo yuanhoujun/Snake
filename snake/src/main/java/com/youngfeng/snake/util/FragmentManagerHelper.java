@@ -3,6 +3,7 @@ package com.youngfeng.snake.util;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.view.View;
+import androidx.navigation.NavHost;
 
 /**
  * Fragment manager utils
@@ -38,13 +39,25 @@ public class FragmentManagerHelper {
         return mFragmentManager.findFragmentByTag(fragmentTag);
     }
 
-    public androidx.fragment.app.Fragment getLastAndroidXFragment() {
-        int backStackCount = mAndroidXFragmentManager.getBackStackEntryCount();
+    public androidx.fragment.app.Fragment getLastAndroidXFragment(androidx.fragment.app.FragmentManager fragmentManager) {
+        if (null == fragmentManager) return null;
+
+        int backStackCount = fragmentManager.getBackStackEntryCount();
         if (backStackCount <= 0) return null;
 
-        androidx.fragment.app.FragmentManager.BackStackEntry backStackEntry = mAndroidXFragmentManager.getBackStackEntryAt(backStackCount - 1);
+        androidx.fragment.app.FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(backStackCount - 1);
         String fragmentTag = backStackEntry.getName();
-        return mAndroidXFragmentManager.findFragmentByTag(fragmentTag);
+        return fragmentManager.findFragmentByTag(fragmentTag);
+    }
+
+    public androidx.fragment.app.Fragment getLastAndroidXFragment(androidx.fragment.app.Fragment fragment) {
+        androidx.fragment.app.Fragment parent = fragment.getParentFragment();
+        androidx.fragment.app.FragmentManager fragmentManager = mAndroidXFragmentManager;
+        if (parent instanceof NavHost) {
+            fragmentManager = parent.getChildFragmentManager();
+        }
+
+        return getLastAndroidXFragment(fragmentManager);
     }
 
     public View getViewOfLastFragment() {
@@ -52,10 +65,10 @@ public class FragmentManagerHelper {
         return getLastFragment().getView();
     }
 
-    public View getViewOfLastAndroidXFragment() {
-        if (null == getLastAndroidXFragment()) return null;
+    public View getViewOfLastAndroidXFragment(androidx.fragment.app.Fragment fragment) {
+        if (null == getLastAndroidXFragment(fragment)) return null;
 
-        return getLastAndroidXFragment().getView();
+        return getLastAndroidXFragment(fragment).getView();
     }
 
     public boolean backToLastFragment() {

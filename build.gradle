@@ -2,11 +2,11 @@
 buildscript {
     ext.versions = [
             'minSdk': 14,
-            'compileSdk': 28,
+            'compileSdk': 29,
 
             'supportLibrary': '28.0.0',
             'androidPlugin': '3.0.0',
-            'androidTools': '28.0.3',
+            'androidTools': '29.0.2',
             'kotlin': '1.2.10',
             'ankoVersion': '0.9',
             'ankoExtVersion': '0.3.4',

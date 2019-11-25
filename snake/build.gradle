@@ -50,5 +50,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     api deps.androidx.compat
+    api deps.jetpack.navigationFragment
     api project(":snake-annotations")
 }

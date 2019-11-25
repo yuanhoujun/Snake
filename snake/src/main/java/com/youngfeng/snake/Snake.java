@@ -268,7 +268,7 @@ public class Snake {
             @SuppressLint("WrongConstant")
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
-                View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment();
+                View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment(fragment);
                 if (null != viewOfLastFragment) {
                     if (View.VISIBLE != viewOfLastFragment.getVisibility()) {
                         mVisibility = viewOfLastFragment.getVisibility();
@@ -289,12 +289,12 @@ public class Snake {
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment();
+                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment(fragment);
                             if(null != viewOfLastFragment) {
                                 viewOfLastFragment.setX(0f);
                             }
 
-                            androidx.fragment.app.Fragment lastFragment = fragmentManagerHelper.getLastAndroidXFragment();
+                            androidx.fragment.app.Fragment lastFragment = fragmentManagerHelper.getLastAndroidXFragment(fragment);
                             disableAnimation(lastFragment, true);
                             if (fragmentManagerHelper.backToAndroidXFragment()) {
                                 disableAnimation(lastFragment, false);
@@ -308,7 +308,7 @@ public class Snake {
                         @SuppressLint("WrongConstant")
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment();
+                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment(fragment);
                             if(null != viewOfLastFragment) {
                                 if(mVisibility >= 0) {
                                     viewOfLastFragment.setVisibility(mVisibility);
@@ -435,14 +435,16 @@ public class Snake {
      */
     public static void enableDragToClose(@NonNull Activity activity, boolean enable) {
         if(activity.isFinishing()) return;
+        EnableDragToClose enableDragToClose = activity.getClass().getAnnotation(EnableDragToClose.class);
 
-        if(enable) {
-            EnableDragToClose enableDragToClose = activity.getClass().getAnnotation(EnableDragToClose.class);
-            if (null == enableDragToClose || !enableDragToClose.value()) {
-                throw new SnakeConfigException("If you want to dynamically turn the slide-off feature on or off, add the EnableDragToClose annotation to "
-                        + activity.getClass().getName() + " and set to true");
-            }
+        if (null == enableDragToClose) {
+            throw new SnakeConfigException("If you want to dynamically turn the slide-off feature on or off, add the EnableDragToClose annotation to "
+                    + activity.getClass().getName() + " and set to true");
         }
+
+        boolean isEnabled = Snake.dragToCloseEnabled(activity);
+
+        if(enable == isEnabled) return;
 
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         View topWindowView = decorView.getChildAt(0);
