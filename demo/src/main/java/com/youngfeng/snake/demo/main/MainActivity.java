@@ -1,7 +1,9 @@
 package com.youngfeng.snake.demo.main;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -11,6 +13,8 @@ import com.youngfeng.snake.demo.activities.FirstActivity;
 import com.youngfeng.snake.demo.androidx.FragmentSampleActivity;
 import com.youngfeng.snake.demo.databinding.ActivityMainBinding;
 import com.youngfeng.snake.demo.utils.EventObserver;
+import com.youngfeng.snake.demo.utils.Util;
+import com.youngfeng.snake.demo.widget.SimpleDialog;
 
 /**
  * Main activity.
@@ -21,6 +25,7 @@ import com.youngfeng.snake.demo.utils.EventObserver;
 public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel = new MainViewModel();
     private ActivityMainBinding dataBinding;
+    private SimpleDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,7 +34,14 @@ public class MainActivity extends AppCompatActivity {
         dataBinding.setLifecycleOwner(this);
         dataBinding.setVm(viewModel);
 
+        setupViews();
         setupNavigation();
+        setupListeners();
+    }
+
+    private void setupViews() {
+        int oldFlag = dataBinding.btnUseInFragment.getPaintFlags();
+        dataBinding.btnUseInFragment.setPaintFlags(oldFlag | Paint.STRIKE_THRU_TEXT_FLAG);
     }
 
     private void setupNavigation() {
@@ -44,5 +56,39 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left);
         }));
+
+        viewModel.startGitRepoEvent.observe(this, new EventObserver<>(content -> {
+            Util.startGitRepo(MainActivity.this);
+        }));
+    }
+
+    private void setupListeners() {
+        dataBinding.btnAboutAuthor.setOnClickListener(v -> {
+            Util.copy(MainActivity.this, "Wechat", "欧阳锋工作室");
+            Toast.makeText(MainActivity.this, "公众号已复制，请粘贴到微信搜索栏", Toast.LENGTH_LONG)
+                    .show();
+            Util.startWechat(MainActivity.this);
+        });
+
+        dataBinding.btnUpdateLog.setOnClickListener(v -> {
+            showDialog(getString(R.string.update_log), getString(R.string.update_log_content));
+        });
+
+        dataBinding.btnUseInFragment.setOnClickListener(v -> {
+            showDialog(getString(R.string.prompt_tips), getString(R.string.tips_app_fragment));
+        });
+    }
+
+    private void showDialog(String title, String content) {
+        if (null == dialog) {
+            dialog = new SimpleDialog.Builder(this).title(title).content(content).build();
+        }
+
+        dialog.setTitle(title);
+        dialog.setContent(content);
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
     }
 }

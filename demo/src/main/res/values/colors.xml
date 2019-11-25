@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303135</color>
     <color name="colorAccent">#303135</color>
     <color name="color_item_pressed">#f5f5f5</color>
+    <color name="colorYahei">#333333</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>

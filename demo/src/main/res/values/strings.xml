@@ -61,5 +61,27 @@
     <string name="confirm">确定</string>
     <string name="enable_swipe_up_to_home">体验类iPhone X上滑关闭功能</string>
     <string name="use_inherit">使用继承方式集成</string>
-    <string name="about_author">关于作者</string>
+    <string name="about_author">关注作者微信公众号</string>
+    <string name="snake_for_activity_support_status">当前系统是否支持Activity滑动关闭：</string>
+    <string name="update_log">更新日志</string>
+    <string name="update_log_content">
+        1）适配AndroidX \n
+        2）新增接口：获取Snake版本信息、获取当前系统Activity滑动关闭支持情况 \n
+        3）android.app.Fragment不再支持 \n
+        4）在编译阶段自动实现接口SnakeAnimationController，你不再需要自己实现该接口 \n
+        \n\n
+        ----------------------------- \n
+        注意事项 \n
+        -----------------------------\n
+        1）请使用androidx.fragment.app.Fragment代替android.app.Fragment, android.app.Fragment实现可能存
+        在一些未知问题，Snake将不再提供对该类型Fragment支持。\n
+        2）Support库版本将不再提供更新支持，请使用androidx版本Fragment库代替 \n
+        3）Snake与Navigation不兼容，如需使用Fragment滑动关闭功能，请自己实现Fragment导航，可参考Demo实现。\n
+    </string>
+    <string name="tips_app_fragment">
+        在Android 9.0中，android.app.Fragment已经被舍弃了，推荐使用androidx版本的Fragment。\n
+        因此，Snake也将不再提供对该Fragment滑动关闭支持！\n
+    </string>
+    <string name="prompt_tips">提示</string>
+    <string name="qq_group">QQ交流群：288177681</string>
 </resources>

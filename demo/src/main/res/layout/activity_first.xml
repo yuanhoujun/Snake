@@ -70,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/next"
-                android:onClick="@{() -> vm.goToNextActivity()}"/>
+                android:onClick="@{() -> vm.goToNextActivity()}"
+                android:background="@drawable/background_warn_button"/>
     </LinearLayout>
 </layout>

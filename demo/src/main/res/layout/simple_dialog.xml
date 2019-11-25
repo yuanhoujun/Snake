@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.youngfeng.snake.Snake" />
+
+        <variable
+                name="title"
+                type="String" />
+
+        <variable
+                name="content"
+                type="String" />
+    </data>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_simple_dialog"
+            android:overScrollMode="never">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{title}"
+                    android:textColor="@color/colorYahei"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    tools:text="更新日志" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@{content}"
+                    android:textColor="@color/colorYahei"
+                    android:textSize="16dp"
+                    tools:text="1）适配AndroidX \n2) 其它优化" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

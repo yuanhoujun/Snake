@@ -75,4 +75,5 @@ dependencies {
     implementation deps.jetpack.lifecycle
     annotationProcessor deps.jetpack.lifecycleCompiler
     implementation deps.jetpack.lifecycleCompilerJ8
+    implementation deps.material
 }

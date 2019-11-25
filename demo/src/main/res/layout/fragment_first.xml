@@ -30,6 +30,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="30dp"
                 android:text="@string/next"
-                android:onClick="@{() -> vm.goToSecondFrag()}"/>
+                android:onClick="@{() -> vm.goToSecondFrag()}"
+                android:background="@drawable/background_warn_button"/>
     </FrameLayout>
 </layout>

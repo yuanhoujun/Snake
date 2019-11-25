@@ -38,7 +38,8 @@ buildscript {
             'bintrayRelease': '0.9.1',
             "appcompatVersion": "1.1.0",
             "navi": "2.1.0",
-            "lifecycle": "2.1.0"
+            "lifecycle": "2.1.0",
+            "material": "1.0.0"
     ]
 
     ext.snakeVersions = [
@@ -112,7 +113,8 @@ buildscript {
                     lifecycleCompiler: "androidx.lifecycle:lifecycle-compiler:${versions.lifecycle}",
                     lifecycleCompilerJ8: "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
 
-            ]
+            ],
+            material: "com.google.android.material:material:${versions.material}"
     ]
 
     repositories {

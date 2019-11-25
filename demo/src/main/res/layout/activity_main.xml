@@ -4,60 +4,130 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.youngfeng.snake.Snake" />
+        <import type="com.youngfeng.snake.demo.BuildConfig" />
 
         <variable
                 name="vm"
                 type="com.youngfeng.snake.demo.main.MainViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
 
-        <include android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/default_toolbar"
-                app:title="@{`Snake`}"
-                app:displayHomeUp="@{false}" />
-
-        <TextView
-                android:id="@+id/text_version"
+        <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <include
+                    layout="@layout/default_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:displayHomeUp="@{false}"
+                    app:title="@{`Snake`}" />
+
+            <TextView
+                    android:id="@+id/text_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="@{`Snake版本：` + Snake.versionName()}"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    tools:text="当前版本：0.1.0" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/snake_for_activity_support_status"
+                        android:textSize="14dp" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{Snake.isSupportedForActivity() ? `支持` : `不支持`}"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textSize="16dp"
+                        tools:text="支持" />
+            </LinearLayout>
+
+            <Button
+                    android:id="@+id/btn_use_in_activity"
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:onClick="@{() -> vm.openUseCaseInActivity()}"
+                    android:text="@string/use_in_activity" />
+
+            <Button
+                    android:id="@+id/btn_use_in_fragment"
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/use_in_fragment" />
+
+            <Button
+                    android:id="@+id/btn_use_in_support_fragment"
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> vm.openUseCaseInAndroidXFrgEvent()}"
+                    android:text="@string/use_in_support_fragment" />
+
+            <Button
+                    android:id="@+id/btn_update_log"
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/update_log" />
+
+            <Button
+                    android:id="@+id/btn_about_author"
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_warn_button"
+                    android:text="@string/about_author" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:text="@{`Demo版本：` + BuildConfig.VERSION_NAME}"
+                    android:textSize="20dp"
+                    tools:text="当前版本：0.1.0" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/qq_group"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorYahei"/>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:gravity="center"
-                android:textSize="18dp" />
-
-        <Button
-                android:id="@+id/btn_use_in_activity"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/use_in_activity"
-                android:onClick="@{() -> vm.openUseCaseInActivity()}"/>
-
-        <Button
-                android:id="@+id/btn_use_in_fragment"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/use_in_fragment" />
-
-        <Button
-                android:id="@+id/btn_use_in_support_fragment"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/use_in_support_fragment"
-                android:onClick="@{() -> vm.openUseCaseInAndroidXFrgEvent()}"/>
-
-        <Button
-                android:id="@+id/btn_about_author"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/about_author" />
-    </LinearLayout>
+                android:layout_gravity="right|bottom"
+                android:src="@mipmap/ic_github"
+                android:onClick="@{() -> vm.startGitRepo()}"
+                app:backgroundTint="#393a3f"
+                app:fabSize="normal" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

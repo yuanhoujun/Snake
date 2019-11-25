@@ -17,6 +17,9 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Event<Boolean>> _openUseCaseInAndroidXFrgEvent = new MutableLiveData<>();
     public final LiveData<Event<Boolean>> openUseCaseInAndroidXFrgEvent = _openUseCaseInAndroidXFrgEvent;
 
+    private final MutableLiveData<Event<Boolean>> _startGitRepoEvent = new MutableLiveData<>();
+    public final LiveData<Event<Boolean>> startGitRepoEvent = _startGitRepoEvent;
+
     public void openUseCaseInActivity() {
         _openUseCaseInActivityEvent.setValue(new Event<>(true));
     }
@@ -25,4 +28,7 @@ public class MainViewModel extends ViewModel {
         _openUseCaseInAndroidXFrgEvent.setValue(new Event<>(true));
     }
 
+    public void startGitRepo() {
+        _startGitRepoEvent.setValue(new Event<>(true));
+    }
 }
