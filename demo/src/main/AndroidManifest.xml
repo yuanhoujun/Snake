@@ -24,7 +24,7 @@
                 android:screenOrientation="fullUser">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -48,11 +48,6 @@
 
         <activity
                 android:name=".androidx.FragmentSampleActivity"
-                android:configChanges="orientation|screenSize"
-                android:screenOrientation="fullUser" />
-
-        <activity
-                android:name=".other.AboutActivity"
                 android:configChanges="orientation|screenSize"
                 android:screenOrientation="fullUser" />
 
