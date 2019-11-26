@@ -84,6 +84,12 @@ public class MainActivity extends AppCompatActivity {
         dataBinding.btnUseInFragment.setOnClickListener(v -> {
             showDialog(getString(R.string.prompt_tips), getString(R.string.tips_app_fragment));
         });
+
+        viewModel.copyQQNumberEvent.observe(this, new EventObserver<>(content -> {
+            Util.copy(MainActivity.this, "QQ", "288177681");
+            Toast.makeText(MainActivity.this, "QQ号已复制，请粘贴到QQ搜索栏", Toast.LENGTH_LONG)
+                    .show();
+        }));
     }
 
     private void showDialog(String title, String content) {

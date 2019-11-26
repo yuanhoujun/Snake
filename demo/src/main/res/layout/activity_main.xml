@@ -128,11 +128,12 @@
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
                         android:gravity="center"
                         android:text="@string/qq_group"
                         android:textColor="@color/colorYahei"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:onClick="@{() -> vm.copyQQNumber()}"/>
             </LinearLayout>
         </ScrollView>
 

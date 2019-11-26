@@ -20,6 +20,9 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Event<Boolean>> _openUseInheritEvent = new MutableLiveData<>();
     public final LiveData<Event<Boolean>> openUseInheritEvent = _openUseInheritEvent;
 
+    private final MutableLiveData<Event<Boolean>> _copyQQNumberEvent = new MutableLiveData<>();
+    public final LiveData<Event<Boolean>> copyQQNumberEvent = _copyQQNumberEvent;
+
     private final MutableLiveData<Event<Boolean>> _startGitRepoEvent = new MutableLiveData<>();
     public final LiveData<Event<Boolean>> startGitRepoEvent = _startGitRepoEvent;
 
@@ -37,5 +40,9 @@ public class MainViewModel extends ViewModel {
 
     public void startGitRepo() {
         _startGitRepoEvent.setValue(new Event<>(true));
+    }
+
+    public void copyQQNumber() {
+        _copyQQNumberEvent.setValue(new Event<>(true));
     }
 }
