@@ -87,4 +87,5 @@
     <string name="slogan_1">一个注解</string>
     <string name="slogan_2">搞定滑动关闭</string>
     <string name="u_need_snake">You need Snake</string>
+    <string name="anno_enable_drag_to_close"> <![CDATA[@EnableDragToClose]]></string>
 </resources>

@@ -5,6 +5,15 @@
         android:gravity="center"
         android:orientation="vertical">
 
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/anno_enable_drag_to_close"
+            android:textColor="#FF3D00"
+            android:textSize="25dp"
+            android:textStyle="bold">
+    </TextView>
+
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
