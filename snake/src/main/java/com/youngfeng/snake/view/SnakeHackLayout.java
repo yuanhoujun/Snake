@@ -605,6 +605,11 @@ public class SnakeHackLayout extends FrameLayout {
         }
     }
 
+    public View getContentView() {
+        if (getChildCount() > 0) return getChildAt(0);
+        return null;
+    }
+
     public interface OnReleaseStateListener {
         /**
          * 释放完成（页面还原或关闭完成）

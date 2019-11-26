@@ -258,49 +258,56 @@ public class Snake {
 
         final FragmentManagerHelper fragmentManagerHelper = FragmentManagerHelper.get(fragment.getFragmentManager());
         snakeHackLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
-            private int mVisibility = -1;
+            private androidx.fragment.app.Fragment lastFragment;
 
             @Override
             public void onDragStart(SnakeHackLayout parent) {
                 SoftKeyboardHelper.hideKeyboard(fragment);
             }
 
-            @SuppressLint("WrongConstant")
             @Override
             public void onDrag(SnakeHackLayout parent, View view, int left) {
-                View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment(fragment);
+                if (null == lastFragment) lastFragment = fragmentManagerHelper.getLastAndroidXFragment(fragment);
+                if (null == lastFragment) return;
+                if (lastFragment.isDetached() || lastFragment.isRemoving()) return;
+
+                View viewOfLastFragment = lastFragment.getView();
+
                 if (null != viewOfLastFragment) {
                     if (View.VISIBLE != viewOfLastFragment.getVisibility()) {
-                        mVisibility = viewOfLastFragment.getVisibility();
                         viewOfLastFragment.setVisibility(View.VISIBLE);
-                        viewOfLastFragment.setX(0f);
+                    }
+
+                    View contentView = viewOfLastFragment;
+                    if (viewOfLastFragment instanceof SnakeHackLayout) {
+                        contentView = ((SnakeHackLayout) viewOfLastFragment).getContentView();
                     }
 
                     if(parent.getUIConfig().allowPageLinkage) {
                         float ratio = (left * 1.0f) / parent.getWidth();
-                        viewOfLastFragment.setX((ratio - 1) * Utils.dp2px(fragment.getActivity(), 100f));
+
+                        float offsetLeft = (ratio - 1) * Utils.dp2px(fragment.requireActivity(), 100f);
+                        contentView.setLeft((int)offsetLeft);
                     }
                 }
             }
 
             @Override
-            public void onRelease(SnakeHackLayout parent, View view, int left, boolean shouldClose, int interceptScene) {
+            public void onRelease(SnakeHackLayout parent, View view, int left, final boolean shouldClose, int interceptScene) {
                 if(shouldClose) {
+                    disableAnimation(lastFragment, true);
+
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment(fragment);
-                            if(null != viewOfLastFragment) {
-                                viewOfLastFragment.setX(0f);
-                            }
+                            if (null == lastFragment) lastFragment = fragmentManagerHelper.getLastAndroidXFragment(fragment);
+                            if (null == lastFragment) return;
 
-                            androidx.fragment.app.Fragment lastFragment = fragmentManagerHelper.getLastAndroidXFragment(fragment);
-                            disableAnimation(lastFragment, true);
-                            if (fragmentManagerHelper.backToAndroidXFragment()) {
-                                disableAnimation(lastFragment, false);
-                            } else {
-                                disableAnimation(lastFragment, false);
-                            }
+                            View viewOfLastFragment = lastFragment.getView();
+                            resetContentViewForFragment(viewOfLastFragment);
+
+                            fragmentManagerHelper.backToAndroidXFragment();
+                            disableAnimation(lastFragment, false);
                         }
                     });
                 } else {
@@ -308,18 +315,35 @@ public class Snake {
                         @SuppressLint("WrongConstant")
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            View viewOfLastFragment = fragmentManagerHelper.getViewOfLastAndroidXFragment(fragment);
+                            if (null == lastFragment) lastFragment = fragmentManagerHelper.getLastAndroidXFragment(fragment);
+                            if (null == lastFragment) return;
+
+                            View viewOfLastFragment = lastFragment.getView();
+
                             if(null != viewOfLastFragment) {
-                                if(mVisibility >= 0) {
-                                    viewOfLastFragment.setVisibility(mVisibility);
-                                }
-                                viewOfLastFragment.setX(0f);
+                                resetContentViewForFragment(viewOfLastFragment);
                             }
                         }
                     });
                 }
             }
         });
+    }
+
+    private static void resetContentViewForFragment(View root) {
+        View contentView = root;
+
+        if (root instanceof SnakeHackLayout) {
+            contentView = ((SnakeHackLayout) root).getContentView();
+        }
+
+        if (null != contentView) {
+            contentView.setLeft(0);
+
+            if (root instanceof SnakeHackLayout) {
+                ((SnakeHackLayout) root).resetUI();
+            }
+        }
     }
 
     private static void assertFragmentActive(android.app.Fragment fragment) {
@@ -415,16 +439,6 @@ public class Snake {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && activity.isDestroyed()) {
             throw new IllegalStateException("You cannot add this feature to a destroyed activity");
         }
-    }
-
-    /**
-     * Let snake host the current activity.
-     *
-     * @param activity the specified activity instance
-     * @deprecated this method will not be called in {@link Activity#onCreate(Bundle)}
-     */
-    @Deprecated
-    public static void host(@NonNull Activity activity) {
     }
 
     /**
