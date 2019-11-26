@@ -62,4 +62,9 @@ public class FirstActivity extends AppCompatActivity {
     public void setTitle(String title) {
         viewModel.setTitle(title);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

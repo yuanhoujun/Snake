@@ -25,4 +25,9 @@ public class SecondActivity extends AppCompatActivity {
         dataBinding.setLifecycleOwner(this);
         dataBinding.setTitle(SecondActivity.class.getSimpleName());
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

@@ -43,9 +43,8 @@ buildscript {
     ]
 
     ext.snakeVersions = [
-            'snake': '0.3.2',
-            'snakeAnnotations': '0.3.0',
-            'snakeCompiler': '0.3.0'
+            'versionName': '0.4.0',
+            'versionCode': 40
     ]
 
     ext.deps = [

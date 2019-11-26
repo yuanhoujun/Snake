@@ -8,8 +8,9 @@ android {
     defaultConfig {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.compileSdk
-        versionCode 10
-        versionName "0.1.0"
+
+        versionCode snakeVersions.versionCode
+        versionName snakeVersions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -39,11 +40,11 @@ android {
 publish {
     repoName = 'android'
     userOrg = 'ouyangfeng2016'
-    groupId = 'com.youngfeng.android'
+    groupId = 'com.youngfeng.androidx'
     artifactId = 'snake'
-    publishVersion = snakeVersions.snake
+    publishVersion = snakeVersions.versionName
     desc = 'Implement ios-like slide-off function by using inheritance on Fragment'
-    website = 'https://github.com/yuanhoujun/Android_Slide_To_Close'
+    website = 'https://github.com/yuanhoujun/Snake'
 }
 
 dependencies {

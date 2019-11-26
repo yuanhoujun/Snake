@@ -17,11 +17,11 @@ dependencies {
 publish {
     repoName = 'android'
     userOrg = 'ouyangfeng2016'
-    groupId = 'com.youngfeng.android'
+    groupId = 'com.youngfeng.androidx'
     artifactId = 'snake-compiler'
-    publishVersion = snakeVersions.snakeCompiler
+    publishVersion = snakeVersions.versionName
     desc = 'Snake compiler'
-    website = 'https://github.com/yuanhoujun/Android_Slide_To_Close'
+    website = 'https://github.com/yuanhoujun/Snake'
 }
 
 
