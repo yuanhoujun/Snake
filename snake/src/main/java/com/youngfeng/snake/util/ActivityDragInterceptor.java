@@ -36,6 +36,7 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
 
     public void attachToLayout(SnakeHackLayout snakeLayout) {
         snakeLayout.setOnEdgeDragListener(new SnakeHackLayout.OnEdgeDragListener() {
+            private View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(mActivity);
 
             @Override
             public void onDragStart(SnakeHackLayout parent) {
@@ -61,7 +62,6 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
 
                 if(parent.onlyListenToFastSwipe() || !parent.getUIConfig().allowPageLinkage) return;
 
-                View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(mActivity);
                 if(null != viewOfLastActivity && left > 0) {
                     float ratio = (left * 1.0f) / parent.getWidth();
 
@@ -81,7 +81,7 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
 
                 if(parent.onlyListenToFastSwipe() || INTERCEPT_SCENE_TRANSLUCENT_CONVERSION == interceptScene
                         || left <= 0) {
-                    resetLastActivityUI();
+                    resetLastActivityUI(viewOfLastActivity);
 
                     if(shouldClose) {
                         mActivity.finish();
@@ -101,8 +101,6 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            resetLastActivityUI();
-
                             mActivity.finish();
                             mActivity.overridePendingTransition(0, 0);
                         }
@@ -111,20 +109,18 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
                     parent.smoothScrollToStart(view, new SnakeHackLayout.OnReleaseStateListener() {
                         @Override
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
-                            resetLastActivityUI();
-
                             convertFromTranslucent(mActivity);
                             isTranslucent = false;
                         }
                     });
                 }
+                resetLastActivityUI(viewOfLastActivity);
             }
         });
         snakeLayout.setDragInterceptor(this);
     }
 
-    private void resetLastActivityUI() {
-        View viewOfLastActivity = ActivityManager.get().getViewOfLastActivity(mActivity);
+    private void resetLastActivityUI(View viewOfLastActivity) {
         if(null != viewOfLastActivity) {
             viewOfLastActivity.setX(0f);
         }
