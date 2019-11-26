@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.Html" />
+        
+        <variable
+                name="onNavigateUpListener"
+                type="com.youngfeng.snake.demo.utils.OnNavigateUpListener" />
+
+        <variable
+                name="vm"
+                type="com.youngfeng.snake.demo.useextends.FragmentViewModel" />
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <include android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/default_toolbar"
+                app:title="@{vm.titleText}"
+                app:displayHomeUp="@{true}"
+                app:onNavigateUpListener="@{onNavigateUpListener}"/>
+
+        <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+</layout>

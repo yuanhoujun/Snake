@@ -60,7 +60,7 @@
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
     <string name="enable_swipe_up_to_home">体验类iPhone X上滑关闭功能</string>
-    <string name="use_inherit">使用继承方式集成</string>
+    <string name="use_inherit">使用继承方式集成（推荐）</string>
     <string name="about_author">关注作者微信公众号</string>
     <string name="snake_for_activity_support_status">当前系统是否支持Activity滑动关闭：</string>
     <string name="update_log">更新日志</string>
@@ -84,4 +84,7 @@
     </string>
     <string name="prompt_tips">提示</string>
     <string name="qq_group">QQ交流群：288177681</string>
+    <string name="slogan_1">一个注解</string>
+    <string name="slogan_2">搞定滑动关闭</string>
+    <string name="u_need_snake">You need Snake</string>
 </resources>

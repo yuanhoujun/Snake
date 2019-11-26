@@ -12,6 +12,7 @@ import com.youngfeng.snake.demo.R;
 import com.youngfeng.snake.demo.activities.FirstActivity;
 import com.youngfeng.snake.demo.androidx.FragmentSampleActivity;
 import com.youngfeng.snake.demo.databinding.ActivityMainBinding;
+import com.youngfeng.snake.demo.useextends.FragmentSample2Activity;
 import com.youngfeng.snake.demo.utils.EventObserver;
 import com.youngfeng.snake.demo.utils.Util;
 import com.youngfeng.snake.demo.widget.SimpleDialog;
@@ -59,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel.startGitRepoEvent.observe(this, new EventObserver<>(content -> {
             Util.startGitRepo(MainActivity.this);
+        }));
+
+        viewModel.openUseInheritEvent.observe(this, new EventObserver<>(content -> {
+            Intent intent = new Intent(MainActivity.this, FragmentSample2Activity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left);
         }));
     }
 
