@@ -1,14 +1,14 @@
 Snake
 =====
-一个十分小巧的滑动关闭小工具，仅需一行代码即可搞定滑动关闭。
+**温馨提示**：Snake已经完成AndroidX适配，请放心使用！
 
 <img src="https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/snake_logo.png" width=300px, height=300px/>
 
-**> 小喇叭 <**：Snake已经完成AndroidX适配，请放心使用！
+# [旧版本文档](https://github.com/yuanhoujun/Snake/blob/develop/README_SUPPORT.md)
 
 # 最新版本
 模块|snake-androidx|snake-compiler-androidx
----|---|---|---
+---|---|---
 最新版本|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-androidx/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-androidx/_latestVersion)|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-compiler-androidx/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-compiler-androidx/_latestVersion)
 
 # 特性介绍
@@ -37,7 +37,7 @@ dependencies {
 **注：如果使用Kotlin，请将annotationProcessor修改为kapt**
 
 
-2）在**Application**中对**Snake**进行初始化
+2）在Application中对初始化Snake
 
 ```
 public class SnakeApplication extends Application {
