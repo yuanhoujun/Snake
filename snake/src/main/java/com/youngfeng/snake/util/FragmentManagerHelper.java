@@ -3,7 +3,6 @@ package com.youngfeng.snake.util;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.view.View;
-import androidx.navigation.NavHost;
 
 /**
  * Fragment manager utils
@@ -51,11 +50,7 @@ public class FragmentManagerHelper {
     }
 
     public androidx.fragment.app.Fragment getLastAndroidXFragment(androidx.fragment.app.Fragment fragment) {
-        androidx.fragment.app.Fragment parent = fragment.getParentFragment();
         androidx.fragment.app.FragmentManager fragmentManager = mAndroidXFragmentManager;
-        if (parent instanceof NavHost) {
-            fragmentManager = parent.getChildFragmentManager();
-        }
 
         return getLastAndroidXFragment(fragmentManager);
     }
