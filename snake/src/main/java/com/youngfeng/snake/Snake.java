@@ -87,13 +87,12 @@ public class Snake {
             Constructor<?>[] constructors = snakeProxyClass.getConstructors();
 
             Constructor<?> primaryConstructor = null;
-            if(null != constructors) {
-                for (Constructor<?> constructor : constructors) {
-                    PrimaryConstructor primaryConstructorAnno = constructor.getAnnotation(PrimaryConstructor.class);
-                    if(null != primaryConstructorAnno) {
-                        primaryConstructor = constructor;
-                        break;
-                    }
+
+            for (Constructor<?> constructor : constructors) {
+                PrimaryConstructor primaryConstructorAnno = constructor.getAnnotation(PrimaryConstructor.class);
+                if(null != primaryConstructorAnno) {
+                    primaryConstructor = constructor;
+                    break;
                 }
             }
 
@@ -135,13 +134,12 @@ public class Snake {
             Constructor<?>[] constructors = snakeProxyClass.getConstructors();
 
             Constructor<?> primaryConstructor = null;
-            if(null != constructors) {
-                for (Constructor<?> constructor : constructors) {
-                    PrimaryConstructor primaryConstructorAnno = constructor.getAnnotation(PrimaryConstructor.class);
-                    if(null != primaryConstructorAnno) {
-                        primaryConstructor = constructor;
-                        break;
-                    }
+
+            for (Constructor<?> constructor : constructors) {
+                PrimaryConstructor primaryConstructorAnno = constructor.getAnnotation(PrimaryConstructor.class);
+                if(null != primaryConstructorAnno) {
+                    primaryConstructor = constructor;
+                    break;
                 }
             }
 
