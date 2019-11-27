@@ -115,7 +115,7 @@ FirstFragment fragment = Snake.newProxySupport(FirstFragment.class, 1, 2);
 
 3）Snake与[Navigation](https://developer.android.com/guide/navigation/)暂时不兼容，如需使用Snake实现滑动关闭，需要自己控制Fragment页面导航。
 
-## 滑动参数配置
+# 滑动参数配置
 通常情况下，完成上面的步骤，你已经可以正常使用滑动关闭功能了。可是，有些同学可能希望对滑动样式进行定制化。别担心，
 **Snake**提供了两种方式对滑动参数进行配置。
 
@@ -154,7 +154,7 @@ FirstFragment fragment = Snake.newProxySupport(FirstFragment.class, 1, 2);
 public class FirstActivity extends Activity
 ```
 
-## 其它接口介绍
+# 其它接口介绍
 `Snake.enableDragToClose()`：如果你希望动态开启或关闭【滑动关闭】特性，可以使用该接口
 
 `Snake.addDragListener()`：如果你希望在滑动过程中进行一些额外的处理，可以使用该接口监听整个滑动过程。
@@ -168,10 +168,17 @@ public class FirstActivity extends Activity
 
 `Snake.swipeUpToHomeEnabled()`: 获取当前页面上滑退出到桌面功能开启状态
 
-## WebView滑动控制
-如果希望`WebView`也开启滑动控制功能，修改你的`WebView`类为`SnakeWebView`即可。目前，暂时只支持快速向左轻扫前进，快速向右轻扫回退。
+# 版本兼容问题处理
+### support替换为androidx实现
+由于`0.4.0`版本已经移除了`support`库，如果你在Fragment中使用了Snake，请将support库替换为androidx实现。
 
-## 最佳实践
+### 移除SnakeAnimationController接口
+从`0.4.0`版本开始，`snake-compiler`将自动实现该接口，无需再自行实现该接口。
+
+### android.app.Fragment替换为androidx实现
+从`0.4.0`版本开始，将逐步放弃对系统Fragment的支持，如果你在Fragment中使用了系统实现，请替换为androidx实现。
+
+# 最佳实践
 1）为了避免出现大量重复代码，推荐大家使用**继承**的方式使用Snake。
 
 2）Activity的启动是一个非常耗时的过程，为了体验效果更佳，推荐使用全**Fragment**设计，或者**单Activity+多Fragment**设计。
@@ -186,7 +193,7 @@ public class FirstActivity extends Activity
 
 5）`android.app.Fragment`与`android.support.v4.app.Fragment`都已经被Android官方舍弃，推荐大家始终使用`androidx.fragment.app.Fragment`作为Fragment类唯一选择。
 
-## 混淆配置
+# 混淆配置
 
 ```
 # 如果已经应用该规则，无需重复配置
@@ -195,12 +202,12 @@ public class FirstActivity extends Activity
 -keep @com.youngfeng.snake.annotations.EnableDragToClose public class *
 ```
 
-## 微信公众号
+# 微信公众号
 ![欧阳锋工作室](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/%E6%AC%A7%E9%98%B3%E9%94%8B%E5%B7%A5%E4%BD%9C%E5%AE%A4.jpg)
 
 **微信公众号也是一个高效的问题反馈平台，如需帮助请在微信公众号中给我留言，我会第一时间查看！***
 
-## QQ交流群
+# QQ交流群
 **QQ群**：288177681
 
 如果你在使用过程中遇到了任何问题，欢迎加群交流。如果你想给作者支持，请点击上方star支持。
