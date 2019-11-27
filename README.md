@@ -27,9 +27,8 @@ Snake
 
 ```
 dependencies {
-    // Gradle高版本这里可以使用implementation代替compile
     // x.x.x代表上方表格中对应模块最新版本
-    compile 'com.youngfeng.android:snake-androidx:x.x.x'
+    implementation 'com.youngfeng.android:snake-androidx:x.x.x'
     annotationProcessor 'com.youngfeng.android:snake-compiler-androidx:x.x.x'
 }
 ```
@@ -169,14 +168,22 @@ public class FirstActivity extends Activity
 `Snake.swipeUpToHomeEnabled()`: 获取当前页面上滑退出到桌面功能开启状态
 
 # 版本兼容问题处理
-### support替换为androidx实现
+**support替换为androidx实现**
 由于`0.4.0`版本已经移除了`support`库，如果你在Fragment中使用了Snake，请将support库替换为androidx实现。
 
-### 移除SnakeAnimationController接口
+**移除SnakeAnimationController接口***
 从`0.4.0`版本开始，`snake-compiler`将自动实现该接口，无需再自行实现该接口。
 
-### android.app.Fragment替换为androidx实现
+**android.app.Fragment替换为androidx实现**
 从`0.4.0`版本开始，将逐步放弃对系统Fragment的支持，如果你在Fragment中使用了系统实现，请替换为androidx实现。
+
+**依赖声明方式发生变化，需要增加`-androidx`后缀**
+
+```
+implementation 'com.youngfeng.android:snake-androidx:x.x.x'
+annotationProcessor 'com.youngfeng.android:snake-compiler-androidx:x.x.x'
+```
+
 
 # 最佳实践
 1）为了避免出现大量重复代码，推荐大家使用**继承**的方式使用Snake。
