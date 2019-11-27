@@ -1,40 +1,36 @@
 Snake
 =====
+一个十分小巧的滑动关闭小工具，仅需一行代码即可搞定滑动关闭。
 
+<img src="https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/snake_logo.png" width=300px, height=300px/>
 
-<img src="https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/master/image/snake_logo.png" width=400px, height=400px/>
+**> 小喇叭 <**：Snake已经完成AndroidX适配，请放心使用！
 
-## 最新版本
-模块|snake|snake-compiler|snake-annotations
+# 最新版本
+模块|snake-androidx|snake-compiler-androidx
 ---|---|---|---
-最新版本|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake/_latestVersion)|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-compiler/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-compiler/_latestVersion)|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-annotations/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-annotations/_latestVersion)
+最新版本|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-androidx/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-androidx/_latestVersion)|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-compiler-androidx/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-compiler-androidx/_latestVersion)
 
-## 特性介绍
-* 同时支持**Activity**，**Fragment**，**WebView**
-* 使用简单，无侵入性
-* 配置灵活，可以满足各种业务需求
+# 特性介绍
+* 同时支持Activity，Fragment
+* 使用简单，一行代码接入，无侵入性
+* 配置灵活，可以适配各种复杂场景
 * 适配SDK Version >= 14以上所有机型，无副作用
 
-## Demo下载体验
-![扫描图中二维码下载](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/demo_snapshot.jpg)
+# Demo下载体验
+![扫描图中二维码下载](https://raw.githubusercontent.com/yuanhoujun/Snake/develop/image/demo_qrcode.png)
 
-扫描上方二维码 或 [直接点这里下载](https://www.pgyer.com/Wd3H)
+扫描上方二维码 或 [直接点这里下载](https://yunpang2019.oss-cn-shenzhen.aliyuncs.com/snake/demo-release.apk)
 
-## 更新日志
-* [版本 **0.2.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.2.0.md)
-* [版本 **0.3.0** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.3.0.md)
-* [版本 **0.3.1** 更新说明](https://github.com/yuanhoujun/Android_Slide_To_Close/blob/develop/docs/update_log_0.3.1.md)
-* [版本 **0.3.2** 更新说明](https://github.com/yuanhoujun/Snake/blob/develop/docs/update_log_0.3.2.md)
-
-## 使用方法
+# 使用方法
 1）添加依赖
 
 ```
 dependencies {
     // Gradle高版本这里可以使用implementation代替compile
     // x.x.x代表上方表格中对应模块最新版本
-    compile 'com.youngfeng.android:snake:x.x.x'
-    annotationProcessor 'com.youngfeng.android:snake-compiler:x.x.x'
+    compile 'com.youngfeng.android:snake-androidx:x.x.x'
+    annotationProcessor 'com.youngfeng.android:snake-compiler-androidx:x.x.x'
 }
 ```
 
@@ -56,8 +52,8 @@ public class SnakeApplication extends Application {
 }
 ```
 
-## Activity集成步骤
-在需要开启滑动返回的Activity类中添加注解 **@EnableDragToClose**即可
+# Activity集成步骤
+在需要开启滑动返回的Activity类上方添加注解`@EnableDragToClose`即可。
 
 ```
 @EnableDragToClose()
@@ -65,21 +61,28 @@ public class FirstActivity extends Activity
 ```
 
 
-## Fragment集成步骤
-#### 方法一：动态配置
-1. 在需要开启滑动返回的Fragment类中添加注解 **@EnableDragToClose**
+# Fragment集成步骤
+在Fragment中使用Snake实现滑动关闭比Activity更加灵活，推荐大家使用Fragment进行页面布局。目前，Snake提供了两种方式在Fragment中开启滑动关闭。
+
+### 方法一：动态配置
+第一步：在需要开启滑动返回的Fragment类上方添加注解`@EnableDragToClose`。
  
 ```
-@EnableDragToClose()
+@EnableDragToClose(
 public class FirstFragment extends Fragment {
 ```
 
-2. 在跳转至当前 **Fragment** 时，如果你的 **Fragment** 类继承自 **android.app.Fragment** ，则使用 **Snake.newProxy(xx.class)** 创建  **Fragment** 实例。
+第二步：使用Snake提供的方法动态创建Fragment实例。
 
-而如果你的 **Fragment** 类继承自 **android.support.v4.app.Fragment** ，则使用  **Snake.newProxySupport(xx.class)** 创建 **Fragment** 实例。
+```
+// 如果Fragment继承自androidx.fragment.app.Fragment, 则使用方法newProxySupport创建实例
+FirstFragment fragment = Snake.newProxySupport(FirstFragment.class);
 
+// 如果Fragment继承自android.app.Fragment, 则使用个方法newProxy创建实例
+FirstFragment fragment = Snake.newProxy(FirstFragment.class);
+```
 
-3. 在**Fragment**中，可能不存在默认构造方法。或者使用了多个构造方法，这个时候你可以使用**PrimaryConstructor**指定主构造方法。
+注意：在不存在默认构造函数的情况下，你需要使用注解`@PrimaryConstructor`指定将要用于创建Fragment实例的构造方法。
 
 ```
 @EnableDragToClose()
@@ -94,32 +97,23 @@ public class FirstFragment extends Fragment {
 }
 ```
 
-在使用了主构造器的情况下，使用**Snake.newProxy**接口创建实例的时候需要传入构造参数，以上述代码片段为例，可以这样使用：
-
+在使用了注解标记构造函数的情况下，使用Snake方法创建实例的时候需要传入构造参数，如下所示：
 
 ```
-FirstFragment fragment = Snake.newProxy(FirstFragment.class, 1, 2);
+FirstFragment fragment = Snake.newProxySupport(FirstFragment.class, 1, 2);
 ```
 
-**Snake.newProxySupport**接口同理
-
-
-#### 方法二：使用继承
-按照下面的对应关系，改变你的Fragment父类就可以完成滑动关闭集成:
+### 方法二：使用继承方式集成
+按照下面的对应关系，改变你的Fragment父类即可完成滑动关闭集成:
 * `android.app.Fragment` => `com.youngfeng.snake.app.Fragment`
-* `android.support.v4.app.Fragment` => `com.youngfeng.snake.support.v4.app.Fragment`
+* `androidx.fragment.app.Fragment` => `com.youngfeng.snake.androidx.app`
 
-## 两种集成方案的区别
-集成方案|newProxy/newProxySupport|使用继承
-:---:|:---:|:---:
-侵入性|无|改变了顶级父类
-难易程度|较为复杂|简单
-动画处理|需要自行处理|不需要处理
-实例创建|必须使用接口newProxy/newProxySupport|可以自行处理
+### 注意
+1）从**0.4.0**版本开始，support库将不再提供支持，如需继续使用support库版本Fragment，请使用0.4.0以下版本，Activity不受影响。
 
-注意：使用继承方式集成的情况下，原来的API完全可以通用。你可以选择使用Snake的API进行滑动控制，也可以使用父类中的方法进行滑动控制，这取决于你自己。甚至实例创建你依然可以交给newProxy/newProxySupport接口。
+2）由于Android 9.0已经舍弃了`android.app.Fragment`类，Snake也将不再提供对该类支持，推荐大家使用`androidx.app.Fragment`代替。
 
-一点建议：如果你的工程有一致的编程规范，代码工整，我推荐你使用继承的方式集成。如果你的工程相对较乱，整体表现不一致，我推荐你使用newProxy/newProxySupport方式集成，灵活性更高。
+3）Snake与[Navigation](https://developer.android.com/guide/navigation/)暂时不兼容，如需使用Snake实现滑动关闭，需要自己控制Fragment页面导航。
 
 ## 滑动参数配置
 通常情况下，完成上面的步骤，你已经可以正常使用滑动关闭功能了。可是，有些同学可能希望对滑动样式进行定制化。别担心，
@@ -174,72 +168,23 @@ public class FirstActivity extends Activity
 
 `Snake.swipeUpToHomeEnabled()`: 获取当前页面上滑退出到桌面功能开启状态
 
-## 动画处理
-至此，你已经成功集成了滑动关闭功能，并且也知道了如何配置滑动关闭参数。可是，你会发现，如果使用系统返回键，Activity的
-动画表现和滑动关闭不一致，有些不协调。另外，**Fragment**似乎在滑动关闭后还会再播放一次动画，看起来很奇怪。
-
-为此，**Snake**提供了几种不同的动画实现和滑动关闭动画配合使用，使其看起来是完全一致的。
-* `R.anim.snake_slide_in_left.xml`: 从左进入
-* `R.anim.snake_slide_in_right.xml`: 从右进入
-* `R.anim.snake_slide_out_left.xml`：从左退出
-* `R.anim.snake_slide_out_right.xml`：从右退出
-* `R.animator.snake_slide_in_left.xml`: 从左进入
-* `R.animator.snake_slide_in_right.xml`: 从右进入
-* `R.animator.snake_slide_out_left.xml`：从左退出
-* `R.animator.snake_slide_out_right.xml`：从右退出
-
-具体使用方法，可以参照Demo配置。
-
-在**Activity**启动和关闭的时候，使用这几种动画配置基本就解决了滑动关闭的动画样式不一致问题。可是，**Fragment**的动画
-重复播放问题依然存在。为了使**Fragment**表现一致，你还需要额外做一个工作：
-
-* 重写`onCreateAnimation`或`onCreateAnimator`接口
-* 实现`SnakeAnimationController`接口
-
-推荐在**Fragment**基础父类中做这项工作，具体实现后的效果如下：
-
-```
-public class BaseFragment extends Fragment implements SnakeAnimationController {
-    private boolean mDisableAnimation;
-
-    @Override
-    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
-        return Snake.wrap(super.onCreateAnimator(transit, enter, nextAnim), this);
-    }
-
-    @Override
-    public void disableAnimation(boolean disable) {
-        mDisableAnimation = disable;
-    }
-
-    @Override
-    public boolean animationDisabled() {
-        return mDisableAnimation;
-    }
-}
-```
-
-**注意：在重写的`onCreateAnimator`或`onCreateAnimation`接口中，请使用`Snake.wrap`接口对父类实现进行包裹。否则，将导致设置无效，具体实现可以参照Demo实现**
-
 ## WebView滑动控制
 如果希望`WebView`也开启滑动控制功能，修改你的`WebView`类为`SnakeWebView`即可。目前，暂时只支持快速向左轻扫前进，快速向右轻扫回退。
 
-## Best Practice
-1）Activity的启动是一个耗时的过程，为了体验效果更佳，推荐使用全**Fragment**设计，或者说**Activity+多Fragment**设计。
-另外，由于Android系统的兼容性问题，在SDK版本低于21的机型中，Activity的关闭将使用快速右滑手势，只有在高于21的机型中，
-才能使用联动拖拽的方式进行滑动关闭。
+## 最佳实践
+1）为了避免出现大量重复代码，推荐大家使用**继承**的方式使用Snake。
 
-2）建议在Activity和Fragment基类中使用`@EnableDragToClose`注解，这可以避免在子类中频繁使用注解设置。Activity的托管也建议在父类中完成。
+2）Activity的启动是一个非常耗时的过程，为了体验效果更佳，推荐使用全**Fragment**设计，或者**单Activity+多Fragment**设计。
 
-3）不推荐对滑动样式进行自定义设置，默认样式在UI体现上已经比较漂亮，繁琐的设计反而会干扰你的理解。
+3）遇到问题请先查看[Wiki](https://github.com/yuanhoujun/Snake/wiki)，如果没有你想要的答案，请添加QQ交流群**288177681**及时反馈。
 
-4）遇到问题请先查看[Wiki](https://github.com/yuanhoujun/Android_Slide_To_Close/wiki)，看是否有你想要的答案。如果没有，请添加QQ交流群**288177681**及时反馈。
-
-5）虽然不设置窗体透明属性也可以使用，但依然推荐手动设置窗体透明，以获得更好体验。具体做法，复制下面属性设置到你的`style.xml`文件主题配置中:
+4）为了在Activity中获得最佳使用体验，建议大家在style文件中添加如下配置：
 
 ```
 <item name="android:windowIsTranslucent">true</item>
 ```
+
+5）`android.app.Fragment`与`android.support.v4.app.Fragment`都已经被Android官方舍弃，推荐大家始终使用`androidx.fragment.app.Fragment`作为Fragment类唯一选择。
 
 ## 混淆配置
 
@@ -250,15 +195,17 @@ public class BaseFragment extends Fragment implements SnakeAnimationController {
 -keep @com.youngfeng.snake.annotations.EnableDragToClose public class *
 ```
 
-## 追踪Snake动态，关注欧阳锋工作室
+## 微信公众号
 ![欧阳锋工作室](https://raw.githubusercontent.com/yuanhoujun/Android_Slide_To_Close/develop/image/%E6%AC%A7%E9%98%B3%E9%94%8B%E5%B7%A5%E4%BD%9C%E5%AE%A4.jpg)
 
-## 唯一官方QQ交流群
+**微信公众号也是一个高效的问题反馈平台，如需帮助请在微信公众号中给我留言，我会第一时间查看！***
+
+## QQ交流群
 **QQ群**：288177681
 
 如果你在使用过程中遇到了任何问题，欢迎加群交流。如果你想给作者支持，请点击上方star支持。
 
-PS: 如果你在产品中使用了**Snake**, 请来信告诉我！邮件地址：**626306805@qq.com**，非常感谢！
+PS: 如果你在产品中使用了`Snake`, 请来信告诉我！邮件地址：**626306805@qq.com**，非常感谢！
 
 License
 ==
