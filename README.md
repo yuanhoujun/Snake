@@ -169,12 +169,15 @@ public class FirstActivity extends Activity
 
 # 版本兼容问题处理
 **support替换为androidx实现**
+
 由于`0.4.0`版本已经移除了`support`库，如果你在Fragment中使用了Snake，请将support库替换为androidx实现。
 
-**移除SnakeAnimationController接口***
+**移除SnakeAnimationController接口**
+
 从`0.4.0`版本开始，`snake-compiler`将自动实现该接口，无需再自行实现该接口。
 
 **android.app.Fragment替换为androidx实现**
+
 从`0.4.0`版本开始，将逐步放弃对系统Fragment的支持，如果你在Fragment中使用了系统实现，请替换为androidx实现。
 
 **依赖声明方式发生变化，需要增加`-androidx`后缀**
