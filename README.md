@@ -8,7 +8,7 @@ Snake
 
 # 最新版本
 模块|snake-androidx|snake-compiler-androidx
----|---|---
+:---:|:---:|:---:
 最新版本|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-androidx/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-androidx/_latestVersion)|[![Download](https://api.bintray.com/packages/ouyangfeng2016/android/snake-compiler-androidx/images/download.svg)](https://bintray.com/ouyangfeng2016/android/snake-compiler-androidx/_latestVersion)
 
 # 特性介绍
