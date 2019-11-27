@@ -13,6 +13,6 @@ cmd=${cmd}" snake-annotations:publishMavenPublicationToMavenLocal"
 cmd=${cmd}" snake-compiler:generatePomFileForMavenPublication"
 cmd=${cmd}" snake-compiler:publishMavenPublicationToMavenLocal"
 
-#cmd=${cmd}" && sh -x gradlew build bintrayUpload -PbintrayUser=${username} -PbintrayKey=${key} -PdryRun=false"
+cmd=${cmd}" && sh -x gradlew build bintrayUpload -PbintrayUser=${username} -PbintrayKey=${key} -PdryRun=false"
 
 eval ${cmd}
