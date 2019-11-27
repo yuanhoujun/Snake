@@ -43,7 +43,7 @@ public class FirstActivity extends AppCompatActivity {
             Snake.enableDragToClose(FirstActivity.this, enable);
 
             viewModel.setDragToCloseStatusText(getString(R.string.ph_status_of_enable_drag_to_close)
-                            .replace("#status", enable ? "开启" : "关闭"));
+                            .replace("#status", enable ? getString(R.string.opened) : getString(R.string.closed)));
         });
 
         // Get enabled status of current activity.

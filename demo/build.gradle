@@ -59,8 +59,11 @@ dependencies {
     api deps.butterknife
     annotationProcessor deps.butterknifeCompiler
 
-    implementation project(":snake")
-    annotationProcessor project(":snake-compiler")
+//    implementation project(":snake")
+//    annotationProcessor project(":snake-compiler")
+
+    implementation "com.youngfeng.android:snake-androidx:0.4.0"
+    annotationProcessor "com.youngfeng.android:snake-compiler-androidx:0.4.0"
 
     implementation deps.androidx.compat
 

@@ -69,6 +69,8 @@
         2）新增接口：获取Snake版本信息、获取当前系统Activity滑动关闭支持情况 \n
         3）android.app.Fragment不再支持 \n
         4）在编译阶段自动实现接口SnakeAnimationController，你不再需要自己实现该接口 \n
+        5）修复滑动关闭过程中按下返回键页面卡死问题 \n
+
         \n\n
         ----------------------------- \n
         注意事项 \n
@@ -88,4 +90,7 @@
     <string name="slogan_2">搞定滑动关闭</string>
     <string name="u_need_snake">You need Snake</string>
     <string name="anno_enable_drag_to_close"> <![CDATA[@EnableDragToClose]]></string>
+    <string name="opened">已开启</string>
+    <string name="closed">已关闭</string>
+    <string name="wechat_public_number">公众号：欧阳锋工作室</string>
 </resources>

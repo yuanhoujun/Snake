@@ -67,16 +67,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(R.anim.snake_slide_in_right, R.anim.snake_slide_out_left);
         }));
-    }
-
-    private void setupListeners() {
-        dataBinding.btnAboutAuthor.setOnClickListener(v -> {
+        viewModel.startWechatEvent.observe(this, new EventObserver<>(v -> {
             Util.copy(MainActivity.this, "Wechat", "欧阳锋工作室");
             Toast.makeText(MainActivity.this, "公众号已复制，请粘贴到微信搜索栏", Toast.LENGTH_LONG)
                     .show();
             Util.startWechat(MainActivity.this);
-        });
+        }));
+    }
 
+    private void setupListeners() {
         dataBinding.btnUpdateLog.setOnClickListener(v -> {
             showDialog(getString(R.string.update_log), getString(R.string.update_log_content));
         });
@@ -89,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
             Util.copy(MainActivity.this, "QQ", "288177681");
             Toast.makeText(MainActivity.this, "QQ号已复制，请粘贴到QQ搜索栏", Toast.LENGTH_LONG)
                     .show();
+
+            Util.joinQQGroup(MainActivity.this, "4LmHXCYaFGhTNB1dFRFjaz36KBxqHrGD");
         }));
     }
 

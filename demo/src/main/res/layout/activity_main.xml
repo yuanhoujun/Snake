@@ -114,7 +114,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/background_warn_button"
-                        android:text="@string/about_author" />
+                        android:text="@string/about_author"
+                        android:onClick="@{() -> vm.startWechat()}"/>
 
                 <TextView
                         android:layout_width="match_parent"
@@ -134,6 +135,16 @@
                         android:textColor="@color/colorYahei"
                         android:textSize="20dp"
                         android:onClick="@{() -> vm.copyQQNumber()}"/>
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="@string/wechat_public_number"
+                        android:textColor="@color/colorYahei"
+                        android:textSize="20dp"
+                        android:onClick="@{() -> vm.startWechat()}"/>
             </LinearLayout>
         </ScrollView>
 

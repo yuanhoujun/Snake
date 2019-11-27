@@ -26,6 +26,9 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Event<Boolean>> _startGitRepoEvent = new MutableLiveData<>();
     public final LiveData<Event<Boolean>> startGitRepoEvent = _startGitRepoEvent;
 
+    private final MutableLiveData<Event<Boolean>> _startWechatEvent = new MutableLiveData<>();
+    public final LiveData<Event<Boolean>> startWechatEvent = _startWechatEvent;
+
     public void openUseCaseInActivity() {
         _openUseCaseInActivityEvent.setValue(new Event<>(true));
     }
@@ -44,5 +47,9 @@ public class MainViewModel extends ViewModel {
 
     public void copyQQNumber() {
         _copyQQNumberEvent.setValue(new Event<>(true));
+    }
+
+    public void startWechat() {
+        _startWechatEvent.setValue(new Event<>(true));
     }
 }
