@@ -40,8 +40,8 @@ android {
 publish {
     repoName = 'android'
     userOrg = 'ouyangfeng2016'
-    groupId = 'com.youngfeng.androidx'
-    artifactId = 'snake'
+    groupId = 'com.youngfeng.android'
+    artifactId = 'snake-androidx'
     publishVersion = snakeVersions.versionName
     desc = 'Implement ios-like slide-off function by using inheritance on Fragment'
     website = 'https://github.com/yuanhoujun/Snake'

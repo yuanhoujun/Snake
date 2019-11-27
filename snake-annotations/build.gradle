@@ -11,8 +11,8 @@ dependencies {
 publish {
     repoName = 'android'
     userOrg = 'ouyangfeng2016'
-    groupId = 'com.youngfeng.androidx'
-    artifactId = 'snake-annotations'
+    groupId = 'com.youngfeng.android'
+    artifactId = 'snake-annotations-androidx'
     publishVersion = snakeVersions.versionName
     desc = 'Snake annotations'
     website = 'https://github.com/yuanhoujun/Snake'
