@@ -96,6 +96,7 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
                     return;
                 }
 
+                resetLastActivityUI(viewOfLastActivity);
 
                 if(shouldClose) {
                     parent.smoothScrollToLeave(view, new SnakeHackLayout.OnReleaseStateListener() {
@@ -103,6 +104,7 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
                             mActivity.finish();
                             mActivity.overridePendingTransition(0, 0);
+                            resetLastActivityUI(viewOfLastActivity);
                         }
                     });
                 } else {
@@ -111,10 +113,10 @@ public class ActivityDragInterceptor extends SnakeHackLayout.DragInterceptor {
                         public void onReleaseCompleted(SnakeHackLayout parent, View view) {
                             convertFromTranslucent(mActivity);
                             isTranslucent = false;
+                            resetLastActivityUI(viewOfLastActivity);
                         }
                     });
                 }
-                resetLastActivityUI(viewOfLastActivity);
             }
         });
         snakeLayout.setDragInterceptor(this);
