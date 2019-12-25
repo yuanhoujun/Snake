@@ -8,8 +8,8 @@ android {
         applicationId "com.youngfeng.snake.demo"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.compileSdk
-        versionCode 120
-        versionName "1.2.0"
+        versionCode 121
+        versionName "1.2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -62,8 +62,8 @@ dependencies {
 //    implementation project(":snake")
 //    annotationProcessor project(":snake-compiler")
 
-    implementation "com.youngfeng.android:snake-androidx:0.4.0"
-    annotationProcessor "com.youngfeng.android:snake-compiler-androidx:0.4.0"
+    implementation "com.youngfeng.android:snake-androidx:0.4.1"
+    annotationProcessor "com.youngfeng.android:snake-compiler-androidx:0.4.1"
 
     implementation deps.androidx.compat
 

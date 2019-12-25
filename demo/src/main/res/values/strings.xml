@@ -65,11 +65,7 @@
     <string name="snake_for_activity_support_status">当前系统是否支持Activity滑动关闭：</string>
     <string name="update_log">更新日志</string>
     <string name="update_log_content">
-        1）适配AndroidX \n
-        2）新增接口：获取Snake版本信息、获取当前系统Activity滑动关闭支持情况 \n
-        3）android.app.Fragment不再支持 \n
-        4）在编译阶段自动实现接口SnakeAnimationController，你不再需要自己实现该接口 \n
-        5）修复滑动关闭过程中按下返回键页面卡死问题 \n
+        修复Activity滑动关闭回到原始位置后，点击按钮返回到上一个Activity，Activity右侧出现空白的问题
 
         \n\n
         ----------------------------- \n
